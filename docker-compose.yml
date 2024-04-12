@@ -1,0 +1,49 @@
+version: "3.3"
+
+services:
+
+  db:
+    container_name: postgres
+    build:
+      dockerfile: ./Dockerfile.postgresql
+      context: .
+    tty: true
+    environment:
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'projectdb'
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
+    volumes:
+      - ./docker/dbdata:/var/lib/postgresql/data
+    networks:
+      - rede_node
+
+  library_nest_api:
+    container_name: node
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/app
+    networks:
+      - rede_node
+    depends_on:
+      - db
+    command: bash -c "tail -f /dev/null"  # <- faz o container funcionar sem rodar nada
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: postgres
+      PMA_ARBITRARY: "1"
+    ports:
+      - "8080:80"
+    networks:
+      - rede_node
+
+networks:
+  rede_node:
+    driver: bridge
