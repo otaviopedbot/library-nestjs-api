@@ -1,10 +1,11 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Rent } from "src/modules/rent/entity/rent.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
 
     @PrimaryGeneratedColumn({
-        unsigned: true
+        // unsigned: true
     })
     id: number;
 
@@ -64,6 +65,10 @@ export class User {
         enum: [0,1]
     })
     is_admin: number;
+
+
+    @OneToMany(type => Rent, rent => rent.user)
+    rents: Rent[];
 
 
     @CreateDateColumn()
