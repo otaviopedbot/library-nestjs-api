@@ -1,6 +1,9 @@
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Author } from "src/modules/author/entity/author.entity";
 import { Rent } from "src/modules/rent/entity/rent.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Favorite } from "src/modules/favorite/entity/favorite.entity";
+import { Review } from "src/modules/review/entity/review.entity";
+
 
 @Entity()
 export class Book {
@@ -47,10 +50,18 @@ export class Book {
     rents: Rent[];
 
 
+    @OneToMany(type => Favorite, favorite => favorite.book)
+    favorites: Favorite[];
+
+
+    @OneToMany(type => Review, review => review.book)
+    reviews: Review[];
+
+
     @CreateDateColumn()
     createdAt: string;
 
-    
+
     @UpdateDateColumn()
     updatedAt: string;
 

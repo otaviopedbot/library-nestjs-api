@@ -1,5 +1,7 @@
-import { Rent } from "src/modules/rent/entity/rent.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Review } from "../../review/entity/review.entity";
+import { Rent } from "src/modules/rent/entity/rent.entity";
+import { Favorite } from "../../favorite/entity/favorite.entity";
 
 @Entity()
 export class User {
@@ -62,7 +64,7 @@ export class User {
 
 
     @Column({
-        enum: [0,1]
+        enum: [0, 1]
     })
     is_admin: number;
 
@@ -71,10 +73,18 @@ export class User {
     rents: Rent[];
 
 
+    @OneToMany(type => Review, review => review.user)
+    review: Review[];
+
+
+    @OneToMany(type => Favorite, favorite => favorite.user)
+    favorite: Favorite[];
+
+
     @CreateDateColumn()
     createdAt: string;
 
-    
+
     @UpdateDateColumn()
     updatedAt: string;
 

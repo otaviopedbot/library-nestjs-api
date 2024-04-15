@@ -7,6 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './modules/user/entities/user.entity';
 import { Author } from './modules/author/entity/author.entity';
 import { Book } from './modules/book/entity/book.entity';
+import { Rent } from './modules/rent/entity/rent.entity';
+import { Review } from './modules/review/entity/review.entity';
+import { Favorite } from './modules/favorite/entity/favorite.entity';
 
 @Module({
   imports: [
@@ -18,7 +21,7 @@ import { Book } from './modules/book/entity/book.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Author, Book],
+      entities: [User, Author, Book, Rent, Review, Favorite],
       synchronize: true
     })
   ],
