@@ -11,6 +11,7 @@ export class CreateUserDTO {
     @IsString()
     address: string
 
+    @IsString()
     username: string
 
     @IsEmail()

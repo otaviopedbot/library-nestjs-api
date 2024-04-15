@@ -64,9 +64,9 @@ export class User {
 
 
     @Column({
-        enum: [0, 1]
+        default: false
     })
-    is_admin: number;
+    is_admin: boolean;
 
 
     @OneToMany(type => Rent, rent => rent.user)

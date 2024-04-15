@@ -1,6 +1,6 @@
 
 import { Book } from "src/modules/book/entity/book.entity";
-import { User } from "src/modules/user/entities/user.entity";
+import { User } from "src/modules/user/entity/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()

@@ -1,5 +1,5 @@
 import { CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { User } from "../../user/entities/user.entity";
+import { User } from "../../user/entity/user.entity";
 import { Book } from "src/modules/book/entity/book.entity";
 
 
