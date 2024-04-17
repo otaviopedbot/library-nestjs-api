@@ -31,14 +31,6 @@ export class FavoriteService {
         return this.favoritesRepository.save(favorite)
     }
 
-    async listUserFavorites(userId: number) {
-
-        const favorites = await this.favoritesRepository.find({
-            where: {user_id: userId},
-            relations: ["book"]
-        })
-        return favorites
-    }
 
     async delete(id: number) {
         await this.exists(id);

@@ -23,11 +23,6 @@ export class BookController {
         return this.bookService.show(id);
     }
 
-    @Put(':id')
-    async update(@Body() data: CreateBookDTO, @Param('id', ParseIntPipe) id: number) {
-        return this.bookService.update(id, data);
-    }
-
     @Patch(':id')
     async updatePartial(@Body() data: UpdatePatchBookDTO, @Param('id', ParseIntPipe) id: number) {
         return this.bookService.updatePartial(id, data);

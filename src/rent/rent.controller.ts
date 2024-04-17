@@ -9,7 +9,6 @@ export class RentController {
 
     @Post()
     async create(@Body() data: CreateRentDTO) {
-
         return this.rentService.create(data);
     }
 
@@ -23,10 +22,6 @@ export class RentController {
         return this.rentService.show(id);
     }
 
-    @Put(':id')
-    async update(@Body() data: CreateRentDTO, @Param('id', ParseIntPipe) id: number) {
-        return this.rentService.update(id, data);
-    }
 
     @Patch(':id')
     async updatePartial(@Body() data: UpdatePatchRentDTO, @Param('id', ParseIntPipe) id: number) {

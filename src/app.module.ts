@@ -15,6 +15,7 @@ import { AuthorModule } from './author/author.module';
 import { BookModule } from './book/book.module';
 import { RentModule } from './rent/rent.module';
 import { FavoriteModule } from './favorite/author.module';
+import { ReviewModule } from './review/review.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { FavoriteModule } from './favorite/author.module';
     BookModule,
     RentModule,
     FavoriteModule,
+    ReviewModule,
 
     TypeOrmModule.forRoot({
       type: 'mysql',

@@ -13,12 +13,6 @@ export class FavoriteController {
         return this.favoriteService.create(data);
     }
 
-    @Get(':userId')
-    async listUserFavorites(@Param('userId', ParseIntPipe) userId: number) {
-        return this.favoriteService.listUserFavorites(userId);
-    }
-
-
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number) {
         return {

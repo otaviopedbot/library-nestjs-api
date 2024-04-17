@@ -23,11 +23,6 @@ export class AuthorController {
         return this.authorService.show(id);
     }
 
-    @Put(':id')
-    async update(@Body() data: CreateAuthorDTO, @Param('id', ParseIntPipe) id: number) {
-        return this.authorService.update(id, data);
-    }
-
     @Patch(':id')
     async updatePartial(@Body() data: UpdatePatchAuthorDTO, @Param('id', ParseIntPipe) id: number) {
         return this.authorService.updatePartial(id, data);

@@ -27,7 +27,7 @@ export class BookService {
                 throw new BadRequestException('Title already exists');
             }
 
-            await this.authorService.show(data.author_id);
+            await this.authorService.exists(data.author_id);
 
             const book = this.booksRepository.create(data);
 
@@ -49,33 +49,6 @@ export class BookService {
             id
         })
     }
-
-    async update(
-        id: number,
-        { title, page, quantity, author_id, synopsis, cover }: CreateBookDTO
-    ) {
-
-        await this.exists(id)
-
-        try {
-            await this.authorService.show(author_id)
-
-            await this.booksRepository.update(id, {
-                title,
-                page,
-                quantity,
-                author_id,
-                synopsis,
-                cover
-            });
-
-            return this.show(id)
-
-        } catch (err) {
-            throw err
-        }
-    }
-
 
     async updatePartial(
         id: number,

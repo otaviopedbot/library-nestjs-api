@@ -1,9 +1,6 @@
-import { IsEmail, IsNumber, IsOptional, IsString, Max, Min } from "class-validator"
+import { IsNumber, IsOptional, IsString, Max, Min } from "class-validator"
 
 export class CreateReviewDTO {
-
-    @IsString()
-    complete_name: string
 
     @IsOptional()
     @IsNumber()

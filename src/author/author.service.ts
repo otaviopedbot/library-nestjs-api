@@ -44,20 +44,6 @@ export class AuthorService {
         })
     }
 
-    async update(
-        id: number,
-        { name }: CreateAuthorDTO
-    ) {
-
-        await this.exists(id)
-
-        await this.authorsRepository.update(id, {
-            name
-        });
-
-        return this.show(id)
-    }
-
     async updatePartial(
         id: number,
         { name }: UpdatePatchAuthorDTO
