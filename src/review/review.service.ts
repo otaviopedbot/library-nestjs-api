@@ -28,19 +28,19 @@ export class ReviewService {
 
             const review = this.reviewsRepository.create(data);
 
+            if (!review.book) {
+                return `the book with id ${data.book_id} does not exist`
+            }
+
+            if (!review.user) {
+                return `the user with id ${data.user_id} does not exist`
+            }
+
             return this.reviewsRepository.save(review);
 
         } catch (err) {
             throw err;
         }
-    }
-
-    async listBookReviews(bookId: number) {
-        
-        const reviews = await this.reviewsRepository.find({
-            where: { book_id: bookId },
-        })
-        return reviews
     }
 
     async updatePartial(

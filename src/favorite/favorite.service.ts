@@ -28,6 +28,14 @@ export class FavoriteService {
 
         const favorite = this.favoritesRepository.create(data)
 
+        if (!favorite.user){
+            return `the user with id ${data.user_id} does not exist`
+        }
+
+        if (!favorite.book){
+            return `the book with id ${data.book_id} does not exist`
+        }
+
         return this.favoritesRepository.save(favorite)
     }
 

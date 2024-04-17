@@ -12,11 +12,6 @@ export class ReviewController {
         return this.reviewService.create(data);
     }
 
-    @Get()
-    async listBookReviews(@Param('bookId', ParseIntPipe) bookId: number) {
-        return this.reviewService.listBookReviews(bookId);
-    }
-
     @Patch(':id')
     async updatePartial(@Body() data: UpdatePatchReviewDTO, @Param('id', ParseIntPipe) id: number) {
         return this.reviewService.updatePartial(id, data);

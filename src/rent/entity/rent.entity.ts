@@ -14,11 +14,6 @@ export class Rent {
 
     @Column({
     })
-    date: string;
-
-
-    @Column({
-    })
     user_id: number;
 
 

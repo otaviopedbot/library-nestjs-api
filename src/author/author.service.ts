@@ -39,8 +39,9 @@ export class AuthorService {
     async show(id: number) {
         await this.exists(id);
 
-        return this.authorsRepository.findOneBy({
-            id
+        return this.authorsRepository.findOne({
+            where: { id: id },
+            relations: ["books"]
         })
     }
 
@@ -48,18 +49,22 @@ export class AuthorService {
         id: number,
         { name }: UpdatePatchAuthorDTO
     ) {
+        try {
+            await this.exists(id);
 
-        await this.exists(id);
+            const data: any = {};
 
-        const data: any = {};
+            if (name) {
+                data.name = name;
+            }
 
-        if (name) {
-            data.name = name;
+            await this.authorsRepository.update(id, data);
+
+            return this.show(id);
+            
+        } catch (err) {
+            throw err
         }
-
-        await this.authorsRepository.update(id, data);
-
-        return this.show(id);
     }
 
     async delete(id: number) {
