@@ -13,6 +13,7 @@ import { Review } from './review/entity/review.entity';
 import { Favorite } from './favorite/entity/favorite.entity';
 import { AuthorModule } from './author/author.module';
 import { BookModule } from './book/book.module';
+import { RentModule } from './rent/rent.module';
 
 
 @Module({
@@ -21,6 +22,7 @@ import { BookModule } from './book/book.module';
     UserModule,
     AuthorModule,
     BookModule,
+    RentModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,

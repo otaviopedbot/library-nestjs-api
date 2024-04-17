@@ -32,6 +32,7 @@ export class BookService {
             const book = this.booksRepository.create(data);
 
             return this.booksRepository.save(book);
+
         } catch (err) {
             throw err;
         }

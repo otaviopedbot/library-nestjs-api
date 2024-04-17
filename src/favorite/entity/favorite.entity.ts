@@ -1,4 +1,4 @@
-import { CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "../../user/entity/user.entity";
 import { Book } from "src/book/entity/book.entity";
 
@@ -12,12 +12,24 @@ export class Favorite {
     id: number;
 
 
-    @ManyToOne(type => User, user => user.favorite)
+    @Column({
+    })
+    user_id: number;
+
+
+    @Column({
+    })
+    book_id: number;
+
+
+    @ManyToOne(() => User, user => user.review)
+    @JoinColumn({ name: 'user_id' })
     user: User[];
 
 
-    @ManyToOne(type => Book, book => book.favorite)
-    book: Book[];
+    @ManyToOne(() => Book, book => book.review)
+    @JoinColumn({ name: 'author_id' })
+    book: Book[]
 
 
     @CreateDateColumn()

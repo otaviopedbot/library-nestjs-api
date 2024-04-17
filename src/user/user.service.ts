@@ -51,7 +51,7 @@ export class UserService {
 
     async update(
         id: number,
-        { complete_name, phone, address, username, email, password }: CreateUserDTO
+        { complete_name, phone, address, username, email, password, image, details }: CreateUserDTO
     ) {
 
         await this.exists(id)
@@ -66,7 +66,9 @@ export class UserService {
             address,
             username,
             email,
-            password
+            password,
+            image,
+            details
         });
 
         return this.show(id)
@@ -74,7 +76,7 @@ export class UserService {
 
     async updatePartial(
         id: number,
-        { complete_name, phone, address, username, email, password }: UpdatePatchUserDTO
+        { complete_name, phone, address, username, email, password, image, details }: UpdatePatchUserDTO
     ) {
 
         await this.exists(id);
@@ -104,6 +106,14 @@ export class UserService {
         if (password) {
             const salt = await bcrypt.genSalt();
             data.password = await bcrypt.hash(password, salt);
+        }
+
+        if (image) {
+            data.image = image;
+        }
+
+        if (details) {
+            data.details = details;
         }
 
         await this.usersRepository.update(id, data);

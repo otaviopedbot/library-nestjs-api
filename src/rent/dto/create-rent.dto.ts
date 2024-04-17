@@ -1,9 +1,10 @@
-import { IsDate, IsNumber, IsString} from "class-validator"
+import { IsDate, IsNumber, IsOptional} from "class-validator"
 
 export class CreateRentDTO {
 
+    // @IsOptional()
     @IsDate()
-    title: string
+    date: string
 
     @IsNumber()
     user_id: number

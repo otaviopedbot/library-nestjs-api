@@ -23,19 +23,17 @@ export class RentService {
         if (
             await this.rentsRepository.exist({
                 where: {
-                    email: data.email,
-                    username: data.username
+                    user_id: data.user_id,
+                    book_id: data.book_id
                 },
             })
         ) {
-            throw new BadRequestException('e-mail or username already in use');
+            throw new BadRequestException('book already rented by this user');
         }
 
+        const rent = this.rentsRepository.create(data)
 
-
-        const user = this.rentsRepository.create(data)
-
-        return this.rentsRepository.save(user)
+        return this.rentsRepository.save(rent)
     }
 
     async list() {
@@ -52,18 +50,15 @@ export class RentService {
 
     async update(
         id: number,
-        { complete_name, phone, address, username, email, password }: CreateRentDTO
+        { date, user_id, book_id }: CreateRentDTO
     ) {
 
         await this.exists(id)
 
         await this.rentsRepository.update(id, {
-            complete_name,
-            phone,
-            address,
-            username,
-            email,
-            password
+            date,
+            user_id,
+            book_id
         });
 
         return this.show(id)
@@ -71,34 +66,25 @@ export class RentService {
 
     async updatePartial(
         id: number,
-        { complete_name, phone, address, username, email, password }: UpdatePatchRentDTO
+        { date, user_id, book_id }: UpdatePatchRentDTO
     ) {
 
         await this.exists(id);
 
         const data: any = {};
 
-        if (complete_name) {
-            data.complete_name = complete_name;
+        if (date) {
+            data.date = date;
         }
 
-        if (phone) {
-            data.phone = phone;
+        if (user_id) {
+            data.user_id = user_id;
         }
 
-        if (address) {
-            data.address = address;
+        if (book_id) {
+            data.book_id = book_id;
         }
-
-        if (username) {
-            data.username = username;
-        }
-
-        if (email) {
-            data.email = email;
-        }
-
-
+        
         await this.rentsRepository.update(id, data);
 
         return this.show(id);
