@@ -56,11 +56,11 @@ export class Book {
 
 
     @OneToMany(type => Favorite, favorite => favorite.book)
-    favorite: Favorite[];
+    favorites: Favorite[];
 
 
     @OneToMany(type => Review, review => review.book)
-    review: Review[];
+    reviews: Review[];
 
 
     @CreateDateColumn()

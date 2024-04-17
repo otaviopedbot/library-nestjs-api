@@ -22,12 +22,12 @@ export class Favorite {
     book_id: number;
 
 
-    @ManyToOne(() => User, user => user.review)
+    @ManyToOne(() => User, user => user.favorites)
     @JoinColumn({ name: 'user_id' })
     user: User[];
 
 
-    @ManyToOne(() => Book, book => book.review)
+    @ManyToOne(() => Book, book => book.favorites)
     @JoinColumn({ name: 'author_id' })
     book: Book[]
 

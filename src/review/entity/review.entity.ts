@@ -34,12 +34,12 @@ export class Review {
     book_id: number;
 
 
-    @ManyToOne(() => User, user => user.review)
+    @ManyToOne(() => User, user => user.reviews)
     @JoinColumn({ name: 'user_id' })
     user: User[];
 
 
-    @ManyToOne(() => Book, book => book.review)
+    @ManyToOne(() => Book, book => book.reviews)
     @JoinColumn({ name: 'author_id' })
     book: Book[]
 
