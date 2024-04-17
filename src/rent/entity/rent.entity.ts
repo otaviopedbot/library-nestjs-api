@@ -1,7 +1,6 @@
-
 import { Book } from "src/book/entity/book.entity";
 import { User } from "src/user/entity/user.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Rent {
@@ -20,6 +19,10 @@ export class Rent {
     @Column({
     })
     book_id: number;
+
+
+    @Column({ type: 'timestamp', default: null })
+    finished_in: Date;
 
 
     @ManyToOne(() => User, user => user.rents)

@@ -6,6 +6,7 @@ import { Rent } from "./entity/rent.entity";
 import { UpdatePatchRentDTO } from "./dto/update-patch-rent.dto";
 import { UserService } from "src/user/user.service";
 import { BookService } from "src/book/book.service";
+import { timeStamp } from "console";
 
 
 @Injectable()
@@ -45,7 +46,9 @@ export class RentService {
     }
 
     async list() {
-        return this.rentsRepository.find()
+        return this.rentsRepository.find({
+            where: { finished_in: null }
+        })
     }
 
     async show(id: number) {
@@ -87,12 +90,22 @@ export class RentService {
         }
     }
 
-    async delete(id: number) {
-        await this.exists(id);
+    async finish(id: number) {
 
-        await this.rentsRepository.delete(id);
+        try {
+            await this.exists(id);
 
-        return true;
+            const data: any = {};
+
+            data.finished_in = 'a';
+
+            await this.rentsRepository.update(id, data);
+
+            return `The rent with id ${id} was finished`;
+        } catch (err) {
+            throw err
+        }
+
     }
 
     async exists(id: number) {

@@ -27,11 +27,9 @@ export class RentController {
         return this.rentService.updatePartial(id, data);
     }
 
-    @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: number) {
-        return {
-            success: await this.rentService.delete(id),
-        };
+    @Patch('/finish/:id')
+    async finish(@Param('id', ParseIntPipe) id: number) {
+        return await this.rentService.finish(id)
     }
 
 }
