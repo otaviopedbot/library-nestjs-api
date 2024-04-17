@@ -31,7 +31,6 @@ export class FavoriteService {
         return this.favoritesRepository.save(favorite)
     }
 
-
     async delete(id: number) {
         await this.exists(id);
 

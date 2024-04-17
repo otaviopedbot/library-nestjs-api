@@ -22,7 +22,6 @@ export class RentController {
         return this.rentService.show(id);
     }
 
-
     @Patch(':id')
     async updatePartial(@Body() data: UpdatePatchRentDTO, @Param('id', ParseIntPipe) id: number) {
         return this.rentService.updatePartial(id, data);

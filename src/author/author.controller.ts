@@ -9,7 +9,6 @@ export class AuthorController {
 
     @Post()
     async create(@Body() data: CreateAuthorDTO) {
-
         return this.authorService.create(data);
     }
 

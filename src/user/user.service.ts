@@ -44,34 +44,11 @@ export class UserService {
     async show(id: number) {
         await this.exists(id);
 
-        return this.usersRepository.findBy({
-            id
+        const user = await this.usersRepository.findOne({
+           where:{id: id},
+           relations: ["favorites", "reviews", "rents"]
         })
-    }
-
-    async update(
-        id: number,
-        { complete_name, phone, address, username, email, password, image, details }: CreateUserDTO
-    ) {
-
-        await this.exists(id)
-
-        const salt = await bcrypt.genSalt();
-
-        password = await bcrypt.hash(password, salt)
-
-        await this.usersRepository.update(id, {
-            complete_name,
-            phone,
-            address,
-            username,
-            email,
-            password,
-            image,
-            details
-        });
-
-        return this.show(id)
+        return user
     }
 
     async updatePartial(
