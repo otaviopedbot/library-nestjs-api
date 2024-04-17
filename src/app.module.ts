@@ -14,15 +14,19 @@ import { Favorite } from './favorite/entity/favorite.entity';
 import { AuthorModule } from './author/author.module';
 import { BookModule } from './book/book.module';
 import { RentModule } from './rent/rent.module';
+import { FavoriteModule } from './favorite/author.module';
 
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+
     UserModule,
     AuthorModule,
     BookModule,
     RentModule,
+    FavoriteModule,
+
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,

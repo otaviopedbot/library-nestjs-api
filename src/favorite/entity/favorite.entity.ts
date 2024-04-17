@@ -24,12 +24,12 @@ export class Favorite {
 
     @ManyToOne(() => User, user => user.favorites)
     @JoinColumn({ name: 'user_id' })
-    user: User[];
+    user: User;
 
 
     @ManyToOne(() => Book, book => book.favorites)
-    @JoinColumn({ name: 'author_id' })
-    book: Book[]
+    @JoinColumn({ name: 'book_id' })
+    book: Book
 
 
     @CreateDateColumn()
