@@ -21,8 +21,10 @@ export class Rent {
     book_id: number;
 
 
-    @Column({ type: 'timestamp', default: null })
-    finished_in: Date;
+    @Column({
+        default: ''
+    })
+    finished_in: string;
 
 
     @ManyToOne(() => User, user => user.rents)

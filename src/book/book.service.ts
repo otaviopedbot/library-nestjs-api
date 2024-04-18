@@ -29,7 +29,7 @@ export class BookService {
 
             const book = this.booksRepository.create(data);
 
-            if (!book.author){
+            if (!book.author) {
                 return `the author with id ${data.author_id} does not exist`
             }
 
@@ -48,7 +48,7 @@ export class BookService {
         await this.exists(id);
 
         return this.booksRepository.findOne({
-            where:{id: id},
+            where: { id: id },
             relations: ["author", "rents", "favorites", "reviews"]
         })
     }
@@ -93,7 +93,7 @@ export class BookService {
             await this.booksRepository.update(id, data);
 
             return this.show(id);
-            
+
         } catch (err) {
             throw err
         }
@@ -116,6 +116,44 @@ export class BookService {
             }))
         ) {
             throw new NotFoundException(`the book with id ${id} does not exist`);
+        }
+    }
+
+    async addBookQuantity(id: number) {
+        try {
+
+            await this.exists(id);
+            const book = await this.booksRepository.findOneBy({ id: id })
+
+            const data: any = {};
+
+            data.quantity += book.quantity
+
+            await this.booksRepository.update(id, data);
+
+            return this.show(id);
+
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async removeBookQuantity(id: number) {
+        try {
+
+            await this.exists(id);
+            const book = await this.booksRepository.findOneBy({ id: id })
+
+            const data: any = {};
+
+            data.quantity -= book.quantity
+
+            await this.booksRepository.update(id, data);
+
+            return this.show(id);
+
+        } catch (err) {
+            throw err
         }
     }
 

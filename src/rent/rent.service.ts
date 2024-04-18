@@ -6,7 +6,6 @@ import { Rent } from "./entity/rent.entity";
 import { UpdatePatchRentDTO } from "./dto/update-patch-rent.dto";
 import { UserService } from "src/user/user.service";
 import { BookService } from "src/book/book.service";
-import { timeStamp } from "console";
 
 
 @Injectable()
@@ -42,19 +41,22 @@ export class RentService {
             return `the user with id ${data.user_id} does not exist`
         }
 
+        await this.bookService.addBookQuantity(data.book_id)
+
         return this.rentsRepository.save(rent)
     }
 
     async list() {
-        return this.rentsRepository.find({
-            where: { finished_in: null }
+        return await this.rentsRepository.find({
+            where: { finished_in: '' },
+            relations: ["book", "user"]
         })
     }
 
     async show(id: number) {
         await this.exists(id);
 
-        return this.rentsRepository.findOne({
+        return await this.rentsRepository.findOne({
             where: { id: id },
             relations: ["book", "user"]
         })
@@ -91,13 +93,14 @@ export class RentService {
     }
 
     async finish(id: number) {
-
         try {
             await this.exists(id);
 
             const data: any = {};
+            const time = new Date();
 
-            data.finished_in = 'a';
+            data.finished_in = time;
+            await this.bookService.addBookQuantity(id)
 
             await this.rentsRepository.update(id, data);
 
@@ -105,7 +108,6 @@ export class RentService {
         } catch (err) {
             throw err
         }
-
     }
 
     async exists(id: number) {
