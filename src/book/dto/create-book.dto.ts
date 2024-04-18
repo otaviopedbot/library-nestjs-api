@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString} from "class-validator"
+import { IsNumber, IsOptional, IsString,} from "class-validator"
 
 export class CreateBookDTO {
 
@@ -17,9 +17,5 @@ export class CreateBookDTO {
     @IsOptional()
     @IsString()
     synopsis: string
-
-    @IsOptional()
-    @IsString()
-    cover: string
 
 }

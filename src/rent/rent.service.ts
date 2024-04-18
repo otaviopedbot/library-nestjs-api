@@ -41,7 +41,7 @@ export class RentService {
             return `the user with id ${data.user_id} does not exist`
         }
 
-        await this.bookService.addBookQuantity(data.book_id)
+        await this.bookService.removeBookQuantity(data.book_id)
 
         return this.rentsRepository.save(rent)
     }

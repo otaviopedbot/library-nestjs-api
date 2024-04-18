@@ -16,6 +16,7 @@ import { BookModule } from './book/book.module';
 import { RentModule } from './rent/rent.module';
 import { FavoriteModule } from './favorite/author.module';
 import { ReviewModule } from './review/review.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 
 @Module({
@@ -28,6 +29,7 @@ import { ReviewModule } from './review/review.module';
     RentModule,
     FavoriteModule,
     ReviewModule,
+    CloudinaryModule,
 
     TypeOrmModule.forRoot({
       type: 'mysql',

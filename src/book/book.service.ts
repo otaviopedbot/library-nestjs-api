@@ -5,6 +5,7 @@ import { Book } from "./entity/book.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthorService } from "../author/author.service";
 import { UpdatePatchBookDTO } from "./dto/update-patch-book.dto";
+import { CloudinaryService } from "src/cloudinary/cloudinary.service";
 
 
 @Injectable()
@@ -13,10 +14,11 @@ export class BookService {
     constructor(
         @InjectRepository(Book)
         private booksRepository: Repository<Book>,
-        private readonly authorService: AuthorService
+        private readonly authorService: AuthorService,
+        private readonly cloudinaryService: CloudinaryService
     ) { }
 
-    async create(data: CreateBookDTO) {
+    async create(data: CreateBookDTO, cover) {
         try {
             const existingBook = await this.booksRepository.findOne({
                 where: {
@@ -27,10 +29,14 @@ export class BookService {
                 throw new BadRequestException('Title already exists');
             }
 
-            const book = this.booksRepository.create(data);
+            await this.authorService.exists(data.author_id)
 
-            if (!book.author) {
-                return `the author with id ${data.author_id} does not exist`
+            const book = this.booksRepository.create(data);
+            book.cover = process.env.CLOUDINARY_DEFAULT_BOOK_IMG
+
+            if (cover) {
+                const coverPath = await this.cloudinaryService.uploadFile(cover)
+                book.cover = coverPath.url
             }
 
             return this.booksRepository.save(book);
@@ -55,7 +61,7 @@ export class BookService {
 
     async updatePartial(
         id: number,
-        { title, page, quantity, author_id, synopsis, cover }: UpdatePatchBookDTO
+        { title, page, quantity, author_id, synopsis }: UpdatePatchBookDTO
     ) {
 
         try {
@@ -86,9 +92,9 @@ export class BookService {
                 data.synopsis = synopsis;
             }
 
-            if (cover) {
-                data.cover = cover;
-            }
+            // if (cover) {
+            //     data.cover = cover;
+            // }
 
             await this.booksRepository.update(id, data);
 
@@ -123,15 +129,16 @@ export class BookService {
         try {
 
             await this.exists(id);
-            const book = await this.booksRepository.findOneBy({ id: id })
+
+            const book = await this.booksRepository.findOne({
+                where: { id: id }
+            })
 
             const data: any = {};
 
-            data.quantity += book.quantity
+            data.quantity = book.quantity += 1
 
             await this.booksRepository.update(id, data);
-
-            return this.show(id);
 
         } catch (err) {
             throw err
@@ -142,15 +149,16 @@ export class BookService {
         try {
 
             await this.exists(id);
-            const book = await this.booksRepository.findOneBy({ id: id })
+
+            const book = await this.booksRepository.findOne({
+                where: { id: id }
+            })
 
             const data: any = {};
 
-            data.quantity -= book.quantity
+            data.quantity = book.quantity -= 1
 
             await this.booksRepository.update(id, data);
-
-            return this.show(id);
 
         } catch (err) {
             throw err
