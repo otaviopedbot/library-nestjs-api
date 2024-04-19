@@ -1,11 +1,11 @@
-import { IsNumber } from "class-validator"
+import { IsNumber, IsNumberString } from "class-validator"
 
 export class CreateRentDTO {
 
-    @IsNumber()
+    @IsNumberString()
     user_id: number
 
-    @IsNumber()
+    @IsNumberString()
     book_id: number
 
 }

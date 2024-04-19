@@ -20,6 +20,7 @@ export class BookService {
 
     async create(data: CreateBookDTO, cover) {
         try {
+
             const existingBook = await this.booksRepository.findOne({
                 where: {
                     title: data.title,
@@ -61,7 +62,8 @@ export class BookService {
 
     async updatePartial(
         id: number,
-        { title, page, quantity, author_id, synopsis }: UpdatePatchBookDTO
+        { title, page, quantity, author_id, synopsis }: UpdatePatchBookDTO,
+        cover
     ) {
 
         try {
@@ -92,9 +94,12 @@ export class BookService {
                 data.synopsis = synopsis;
             }
 
-            // if (cover) {
-            //     data.cover = cover;
-            // }
+            if (cover) {
+                const coverPath = await this.cloudinaryService.uploadFile(cover)
+                data.cover = coverPath.url
+            }
+
+            data.cover = process.env.CLOUDINARY_DEFAULT_BOOK_IMG
 
             await this.booksRepository.update(id, data);
 

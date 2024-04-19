@@ -25,8 +25,9 @@ export class BookController {
     }
 
     @Patch(':id')
-    async updatePartial(@Body() data: UpdatePatchBookDTO, @Param('id', ParseIntPipe) id: number) {
-        return this.bookService.updatePartial(id, data);
+    @UseInterceptors(FileInterceptor('cover'))
+    async updatePartial(@Body() data: UpdatePatchBookDTO, @Param('id', ParseIntPipe) id: number, @UploadedFile() cover) {
+        return this.bookService.updatePartial(id, data, cover);
     }
 
     @Delete(':id')
