@@ -5,7 +5,9 @@ import { Favorite } from "src/favorite/entity/favorite.entity";
 import { Review } from "src/review/entity/review.entity";
 
 
-@Entity()
+@Entity({
+    name: 'books',
+})
 export class Book {
 
     @PrimaryGeneratedColumn({

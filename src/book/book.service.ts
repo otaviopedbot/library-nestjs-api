@@ -32,13 +32,14 @@ export class BookService {
 
             await this.authorService.exists(data.author_id)
 
-            const book = this.booksRepository.create(data);
-            book.cover = process.env.CLOUDINARY_DEFAULT_BOOK_IMG
-
             if (cover) {
                 const coverPath = await this.cloudinaryService.uploadFile(cover)
-                book.cover = coverPath.url
+                data.cover = coverPath.url
             }
+
+            data.cover = process.env.CLOUDINARY_DEFAULT_BOOK_IMG
+
+            const book = this.booksRepository.create(data);
 
             return this.booksRepository.save(book);
 
@@ -68,7 +69,7 @@ export class BookService {
 
         try {
 
-            await this.exists(id);
+            const oldBook = await this.show(id);
 
             await this.authorService.exists(author_id)
 
@@ -94,13 +95,16 @@ export class BookService {
                 data.synopsis = synopsis;
             }
 
+            const regex = /\/([^\/]+)\.[^\/]+$/;
+            const match = oldBook.cover.match(regex);
+            const oldCoverId = match[1];
+
             if (cover) {
-                const coverPath = await this.cloudinaryService.uploadFile(cover)
-                data.cover = coverPath.url
+                await this.cloudinaryService.deleteFile(oldCoverId)
+                const newCover = await this.cloudinaryService.uploadFile(cover)
+                data.cover = newCover.url
             }
-
-            data.cover = process.env.CLOUDINARY_DEFAULT_BOOK_IMG
-
+            
             await this.booksRepository.update(id, data);
 
             return this.show(id);

@@ -3,7 +3,9 @@ import { Review } from "../../review/entity/review.entity";
 import { Rent } from "src/rent/entity/rent.entity";
 import { Favorite } from "../../favorite/entity/favorite.entity";
 
-@Entity()
+@Entity({
+    name: 'users',
+})
 export class User {
 
     @PrimaryGeneratedColumn({

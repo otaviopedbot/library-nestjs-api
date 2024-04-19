@@ -2,10 +2,10 @@ import { IsNumber, IsNumberString } from "class-validator"
 
 export class CreateRentDTO {
 
-    @IsNumberString()
+    @IsNumber()
     user_id: number
 
-    @IsNumberString()
+    @IsNumber()
     book_id: number
 
 }

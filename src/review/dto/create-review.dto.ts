@@ -3,7 +3,7 @@ import { IsNumber, IsNumberString, IsOptional, IsString, Max, Min } from "class-
 export class CreateReviewDTO {
 
     @IsOptional()
-    @IsNumberString()
+    @IsNumber()
     @Min(0)
     @Max(5)
     rating: number
@@ -11,10 +11,10 @@ export class CreateReviewDTO {
     @IsString()
     body: string
 
-    @IsNumberString()
+    @IsNumber()
     user_id: number
 
-    @IsNumberString()
+    @IsNumber()
     book_id: number
 
 }

@@ -2,7 +2,9 @@ import { Book } from "src/book/entity/book.entity";
 import { User } from "src/user/entity/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
-@Entity()
+@Entity({
+    name: 'rents',
+})
 export class Rent {
 
     @PrimaryGeneratedColumn({

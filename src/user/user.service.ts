@@ -5,6 +5,7 @@ import { User } from "./entity/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from 'bcryptjs'
 import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
+import { CloudinaryService } from "src/cloudinary/cloudinary.service";
 
 
 @Injectable()
@@ -12,10 +13,11 @@ export class UserService {
 
     constructor(
         @InjectRepository(User)
-        private usersRepository: Repository<User>
+        private usersRepository: Repository<User>,
+        private readonly cloudinaryService: CloudinaryService
     ) { }
 
-    async create(data: CreateUserDTO) {
+    async create(data: CreateUserDTO, image) {
 
         if (
             await this.usersRepository.exist({
@@ -31,6 +33,13 @@ export class UserService {
         const salt = await bcrypt.genSalt(); true
 
         data.password = await bcrypt.hash(data.password, salt)
+
+        if (image) {
+            const imagePath = await this.cloudinaryService.uploadFile(image)
+            data.image = imagePath.url
+        }
+
+        data.image = process.env.CLOUDINARY_DEFAULT_USER_IMG
 
         const user = this.usersRepository.create(data)
 
@@ -53,10 +62,11 @@ export class UserService {
 
     async updatePartial(
         id: number,
-        { complete_name, phone, address, username, email, password, image, details }: UpdatePatchUserDTO
+        { complete_name, phone, address, username, email, password, details }: UpdatePatchUserDTO,
+        image
     ) {
         try {
-            await this.exists(id);
+            const oldUser = await this.show(id);
 
             const data: any = {};
 
@@ -85,12 +95,18 @@ export class UserService {
                 data.password = await bcrypt.hash(password, salt);
             }
 
-            if (image) {
-                data.image = image;
-            }
-
             if (details) {
                 data.details = details;
+            }
+
+            const regex = /\/([^\/]+)\.[^\/]+$/;
+            const match = oldUser.image.match(regex);
+            const oldImageId = match[1];
+
+            if (image) {
+                await this.cloudinaryService.deleteFile(oldImageId)
+                const newImage = await this.cloudinaryService.uploadFile(image)
+                data.cover = newImage.url
             }
 
             await this.usersRepository.update(id, data);

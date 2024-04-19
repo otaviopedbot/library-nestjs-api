@@ -1,17 +1,18 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { CreateUserDTO } from "./dto/create-user.dto";
 
 import { UserService } from "./user.service";
 import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
     @Post()
-    async create(@Body() data: CreateUserDTO) {
-
-        return this.userService.create(data);
+    @UseInterceptors(FileInterceptor('image'))
+    async create(@Body() data: CreateUserDTO, @UploadedFile() image) {
+        return this.userService.create(data, image);
     }
 
     @Get()
@@ -25,8 +26,9 @@ export class UserController {
     }
 
     @Patch(':id')
-    async updatePartial(@Body() data: UpdatePatchUserDTO, @Param('id', ParseIntPipe) id: number) {
-        return this.userService.updatePartial(id, data);
+    @UseInterceptors(FileInterceptor('image'))
+    async updatePartial(@Body() data: UpdatePatchUserDTO, @Param('id', ParseIntPipe) id: number, @UploadedFile() image) {
+        return this.userService.updatePartial(id, data, image);
     }
 
     @Delete(':id')
