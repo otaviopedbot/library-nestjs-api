@@ -100,11 +100,13 @@ export class BookService {
             const oldCoverId = match[1];
 
             if (cover) {
-                await this.cloudinaryService.deleteFile(oldCoverId)
-                const newCover = await this.cloudinaryService.uploadFile(cover)
-                data.cover = newCover.url
+                if (oldCoverId != process.env.CLOUDINARY_DEFAULT_USER_IMG_ID) {
+                    await this.cloudinaryService.deleteFile(oldCoverId)
+                    const newCover = await this.cloudinaryService.uploadFile(cover)
+                    data.cover = newCover.url
+                }
             }
-            
+
             await this.booksRepository.update(id, data);
 
             return this.show(id);

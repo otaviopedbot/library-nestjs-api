@@ -104,15 +104,19 @@ export class UserService {
             const oldImageId = match[1];
 
             if (image) {
-                await this.cloudinaryService.deleteFile(oldImageId)
-                const newImage = await this.cloudinaryService.uploadFile(image)
-                data.cover = newImage.url
+
+                if (oldImageId != process.env.CLOUDINARY_DEFAULT_USER_IMG_ID) {
+                    await this.cloudinaryService.deleteFile(oldImageId)
+                    const newImage = await this.cloudinaryService.uploadFile(image)
+                    data.image = newImage.url
+                }
+
             }
 
             await this.usersRepository.update(id, data);
 
             return this.show(id);
-            
+
         } catch (err) {
             throw err
         }
