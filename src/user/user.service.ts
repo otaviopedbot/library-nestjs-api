@@ -17,7 +17,7 @@ export class UserService {
         private readonly cloudinaryService: CloudinaryService
     ) { }
 
-    async create(data: CreateUserDTO, image) {
+    async create(data: CreateUserDTO) {
 
         if (
             await this.usersRepository.exist({
@@ -34,10 +34,10 @@ export class UserService {
 
         data.password = await bcrypt.hash(data.password, salt)
 
-        if (image) {
-            const imagePath = await this.cloudinaryService.uploadFile(image)
-            data.image = imagePath.url
-        }
+        // if (image) {
+        //     const imagePath = await this.cloudinaryService.uploadFile(image)
+        //     data.image = imagePath.url
+        // }
 
         data.image = process.env.CLOUDINARY_DEFAULT_USER_IMG
 

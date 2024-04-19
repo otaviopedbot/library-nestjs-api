@@ -12,7 +12,7 @@ export class UserController {
     @Post()
     @UseInterceptors(FileInterceptor('image'))
     async create(@Body() data: CreateUserDTO, @UploadedFile() image) {
-        return this.userService.create(data, image);
+        return this.userService.create(data);
     }
 
     @Get()

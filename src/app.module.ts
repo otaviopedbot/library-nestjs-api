@@ -17,6 +17,7 @@ import { RentModule } from './rent/rent.module';
 import { FavoriteModule } from './favorite/author.module';
 import { ReviewModule } from './review/review.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -30,6 +31,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     FavoriteModule,
     ReviewModule,
     CloudinaryModule,
+    AuthModule,
 
     TypeOrmModule.forRoot({
       type: 'mysql',
