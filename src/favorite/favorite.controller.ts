@@ -9,7 +9,6 @@ export class FavoriteController {
 
     @Post()
     async create(@Body() data: CreateFavoriteDTO) {
-
         return this.favoriteService.create(data);
     }
 
@@ -19,5 +18,4 @@ export class FavoriteController {
             success: await this.favoriteService.delete(id),
         };
     }
-
 }

@@ -19,6 +19,10 @@ export class FavoriteService {
 
     async create(data: CreateFavoriteDTO) {
 
+        await this.userService.exists(data.user_id)
+
+        await this.bookService.exists(data.book_id)
+
         if (
             await this.favoritesRepository.exist({
                 where: {
@@ -31,10 +35,6 @@ export class FavoriteService {
         }
 
         const favorite = this.favoritesRepository.create(data)
-
-        await this.userService.exists(data.user_id)
-
-        await this.bookService.exists(data.book_id)
 
         return this.favoritesRepository.save(favorite)
     }

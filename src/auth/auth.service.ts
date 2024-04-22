@@ -44,8 +44,9 @@ export class AuthService {
     // }
 
     async login(email: string, password: string) {
-        const user = await this.usersRepository.findOneBy({
-            email,
+        const user = await this.usersRepository.findOne({
+           where:{email: email},
+           relations: ["favorites.book"]
         });
 
         if (!user) {
