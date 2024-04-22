@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete, U
 import { CreateAuthorDTO } from "./dto/create-author.dto";
 import { AuthorService } from "./author.service";
 import { UpdatePatchAuthorDTO } from "./dto/update-patch-author.dto";
-import { FileInterceptor } from "@nestjs/platform-express";
+
 
 @Controller('authors')
 export class AuthorController {

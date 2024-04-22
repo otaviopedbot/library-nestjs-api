@@ -33,12 +33,14 @@ export class RentService {
 
         const rent = this.rentsRepository.create(data)
 
-        if (!rent.book) {
-            return `the book with id ${data.book_id} does not exist`
-        }
+        await this.bookService.exists(data.book_id)
 
-        if (!rent.user) {
-            return `the user with id ${data.user_id} does not exist`
+        await this.userService.exists(data.user_id)
+
+        const book = await this.bookService.show(data.book_id)
+
+        if (book.quantity == 0){
+            throw new BadRequestException('book not available');
         }
 
         await this.bookService.removeBookQuantity(data.book_id)
@@ -49,7 +51,7 @@ export class RentService {
     async list() {
         return await this.rentsRepository.find({
             where: { finished_in: '' },
-            relations: ["book", "user"]
+
         })
     }
 

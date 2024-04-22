@@ -41,8 +41,8 @@ export class Review {
     user: User[];
 
 
-    @ManyToOne(() => Book, book => book.reviews)
-    @JoinColumn({ name: 'author_id' })
+    @ManyToOne(() => Book, book => book.reviews, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'book_id' })
     book: Book[]
 
 

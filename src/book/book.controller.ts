@@ -3,15 +3,15 @@ import { CreateBookDTO } from "./dto/create-book.dto";
 import { BookService } from "./book.service";
 import { UpdatePatchBookDTO } from "./dto/update-patch-book.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Multer } from 'multer'; // Importe Multer diretamente
 
 @Controller('books')
 export class BookController {
     constructor(private readonly bookService: BookService) { }
 
     @Post()
-    @UseInterceptors(FileInterceptor('cover'))
-    async create(@Body() data: CreateBookDTO, @UploadedFile() cover) {
-        return this.bookService.create(data, cover);
+    async create(@Body() data: CreateBookDTO) {
+        return this.bookService.create(data);
     }
 
     @Get()
@@ -25,9 +25,17 @@ export class BookController {
     }
 
     @Patch(':id')
+    async updatePartial(@Body() data: UpdatePatchBookDTO, @Param('id', ParseIntPipe) id: number) {
+        return this.bookService.updatePartial(id, data);
+    }
+
+    @Patch('cover/:id')
     @UseInterceptors(FileInterceptor('cover'))
-    async updatePartial(@Body() data: UpdatePatchBookDTO, @Param('id', ParseIntPipe) id: number, @UploadedFile() cover) {
-        return this.bookService.updatePartial(id, data, cover);
+    async updateCover(@Param('id', ParseIntPipe) id: number, @UploadedFile() cover: Express.Multer.File) {
+
+        console.log(cover)
+
+        return this.bookService.updateCover(id, cover);
     }
 
     @Delete(':id')

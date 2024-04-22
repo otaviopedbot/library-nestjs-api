@@ -3,7 +3,7 @@ import { Author } from "src/author/entity/author.entity";
 import { Rent } from "src/rent/entity/rent.entity";
 import { Favorite } from "src/favorite/entity/favorite.entity";
 import { Review } from "src/review/entity/review.entity";
-
+require('dotenv').config();
 
 @Entity({
     name: 'books',
@@ -43,7 +43,7 @@ export class Book {
 
 
     @Column({
-        nullable: true
+        default: process.env.CLOUDINARY_DEFAULT_BOOK_IMG
     })
     cover: string;
 

@@ -79,7 +79,7 @@ export class AuthorService {
         if (
             !(await this.authorsRepository.exists({
                 where: {
-                    id,
+                    id
                 },
             }))
         ) {

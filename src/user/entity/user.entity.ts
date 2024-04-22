@@ -2,6 +2,8 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Up
 import { Review } from "../../review/entity/review.entity";
 import { Rent } from "src/rent/entity/rent.entity";
 import { Favorite } from "../../favorite/entity/favorite.entity";
+require('dotenv').config();
+
 
 @Entity({
     name: 'users',
@@ -54,7 +56,8 @@ export class User {
 
 
     @Column({
-        nullable: true
+        nullable: true,
+        default: process.env.CLOUDINARY_DEFAULT_USER_IMG
     })
     image: string;
 
@@ -66,9 +69,9 @@ export class User {
 
 
     @Column({
-        default: false
+        default: 0
     })
-    is_admin: boolean;
+    is_admin: number;
 
 
     @OneToMany(type => Rent, rent => rent.user)

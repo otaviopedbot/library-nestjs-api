@@ -4,6 +4,8 @@ import { Repository } from "typeorm";
 import { Review } from "./entity/review.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UpdatePatchReviewDTO } from "./dto/update-patch-review.dto";
+import { BookService } from "src/book/book.service";
+import { UserService } from "src/user/user.service";
 
 
 @Injectable()
@@ -12,6 +14,8 @@ export class ReviewService {
     constructor(
         @InjectRepository(Review)
         private reviewsRepository: Repository<Review>,
+        private readonly booksService: BookService,
+        private readonly usersService: UserService
     ) { }
 
     async create(data: CreateReviewDTO) {
@@ -26,15 +30,10 @@ export class ReviewService {
                 throw new BadRequestException('This book has already been reviwed');
             }
 
+            await this.booksService.exists(data.book_id)
+            await this.usersService.exists(data.user_id)
+
             const review = this.reviewsRepository.create(data);
-
-            if (!review.book) {
-                return `the book with id ${data.book_id} does not exist`
-            }
-
-            if (!review.user) {
-                return `the user with id ${data.user_id} does not exist`
-            }
 
             return this.reviewsRepository.save(review);
 

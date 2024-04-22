@@ -9,11 +9,10 @@ import { FileInterceptor } from "@nestjs/platform-express";
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
-    @Post()
-    @UseInterceptors(FileInterceptor('image'))
-    async create(@Body() data: CreateUserDTO, @UploadedFile() image) {
-        return this.userService.create(data);
-    }
+    // @Post()
+    // async create(@Body() data: CreateUserDTO) {
+    //     return this.userService.create(data);
+    // }
 
     @Get()
     async list() {

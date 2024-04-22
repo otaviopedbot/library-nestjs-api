@@ -10,7 +10,7 @@ export class CloudinaryController {
     @Post()
     @UseInterceptors(FileInterceptor('cover'))
     async create(@UploadedFile() cover) {
-        return this.cloudinaryService.uploadFile(cover);
+       return this.cloudinaryService.uploadFile(cover);
     }
 
     @Delete()

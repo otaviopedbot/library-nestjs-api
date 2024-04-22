@@ -5,7 +5,7 @@ export class CreateReviewDTO {
     @IsOptional()
     @IsNumber()
     @Min(0)
-    @Max(5)
+    @Max(10)
     rating: number
 
     @IsString()

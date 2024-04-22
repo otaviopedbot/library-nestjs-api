@@ -18,7 +18,7 @@ export class BookService {
         private readonly cloudinaryService: CloudinaryService
     ) { }
 
-    async create(data: CreateBookDTO, cover) {
+    async create(data: CreateBookDTO) {
         try {
 
             const existingBook = await this.booksRepository.findOne({
@@ -32,13 +32,6 @@ export class BookService {
 
             await this.authorService.exists(data.author_id)
 
-            if (cover) {
-                const coverPath = await this.cloudinaryService.uploadFile(cover)
-                data.cover = coverPath.url
-            }
-
-            data.cover = process.env.CLOUDINARY_DEFAULT_BOOK_IMG
-
             const book = this.booksRepository.create(data);
 
             return this.booksRepository.save(book);
@@ -49,7 +42,9 @@ export class BookService {
     }
 
     async list() {
-        return this.booksRepository.find()
+        return this.booksRepository.find({
+            // relations: ["author"]
+        })
     }
 
     async show(id: number) {
@@ -57,19 +52,18 @@ export class BookService {
 
         return this.booksRepository.findOne({
             where: { id: id },
-            relations: ["author", "rents", "favorites", "reviews"]
+            relations: ["author", "rents", "favorites", "reviews.user"]
         })
     }
 
     async updatePartial(
         id: number,
-        { title, page, quantity, author_id, synopsis }: UpdatePatchBookDTO,
-        cover
+        { title, page, quantity, author_id, synopsis }: UpdatePatchBookDTO
     ) {
 
         try {
 
-            const oldBook = await this.show(id);
+            await this.exists(id);
 
             await this.authorService.exists(author_id)
 
@@ -88,12 +82,31 @@ export class BookService {
             }
 
             if (author_id) {
-                data.authorId = author_id;
+                data.author_id = author_id;
             }
 
             if (synopsis) {
                 data.synopsis = synopsis;
             }
+
+            await this.booksRepository.update(id, data);
+
+            return this.show(id);
+
+        } catch (err) {
+            throw err
+        }
+    }
+
+    async updateCover(
+        id,
+        cover
+    ) {
+        try {
+
+            const oldBook = await this.show(id);
+
+            const data: any = {};
 
             const regex = /\/([^\/]+)\.[^\/]+$/;
             const match = oldBook.cover.match(regex);
