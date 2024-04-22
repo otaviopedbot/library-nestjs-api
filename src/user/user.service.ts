@@ -5,7 +5,8 @@ import { User } from "./entity/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from 'bcryptjs'
 import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
-import { CloudinaryService } from "src/cloudinary/cloudinary.service";
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
+
 
 
 @Injectable()

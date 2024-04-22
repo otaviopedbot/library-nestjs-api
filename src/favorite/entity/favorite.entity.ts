@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "../../user/entity/user.entity";
-import { Book } from "src/book/entity/book.entity";
+import { Book } from "../../book/entity/book.entity";
+
 
 
 @Entity({

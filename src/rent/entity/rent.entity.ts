@@ -1,6 +1,6 @@
-import { Book } from "src/book/entity/book.entity";
-import { User } from "src/user/entity/user.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { User } from "../../user/entity/user.entity";
+import { Book } from "../../book/entity/book.entity";
 
 @Entity({
     name: 'rents',

@@ -1,8 +1,9 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Author } from "src/author/entity/author.entity";
-import { Rent } from "src/rent/entity/rent.entity";
-import { Favorite } from "src/favorite/entity/favorite.entity";
-import { Review } from "src/review/entity/review.entity";
+import { Author } from "../../author/entity/author.entity";
+import { Favorite } from "../../favorite/entity/favorite.entity";
+import { Rent } from "../../rent/entity/rent.entity";
+import { Review } from "../../review/entity/review.entity";
+
 require('dotenv').config();
 
 @Entity({
