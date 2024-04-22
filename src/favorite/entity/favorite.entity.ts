@@ -29,7 +29,7 @@ export class Favorite {
     user: User;
 
 
-    @ManyToOne(() => Book, book => book.favorites)
+    @ManyToOne(() => Book, book => book.favorites,{ onDelete: 'CASCADE' })
     @JoinColumn({ name: 'book_id' })
     book: Book
 

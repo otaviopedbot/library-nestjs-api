@@ -1,11 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { Not, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateRentDTO } from "./dto/create-rent.dto";
 import { Rent } from "./entity/rent.entity";
 import { UpdatePatchRentDTO } from "./dto/update-patch-rent.dto";
 import { UserService } from "src/user/user.service";
 import { BookService } from "src/book/book.service";
+import { finished } from "stream";
 
 
 @Injectable()
@@ -24,7 +25,8 @@ export class RentService {
             await this.rentsRepository.exists({
                 where: {
                     user_id: data.user_id,
-                    book_id: data.book_id
+                    book_id: data.book_id,
+                    finished_in: ""
                 },
             })
         ) {
@@ -96,13 +98,14 @@ export class RentService {
 
     async finish(id: number) {
         try {
-            await this.exists(id);
+            const rent = await this.show(id);
 
             const data: any = {};
             const time = new Date();
 
             data.finished_in = time;
-            await this.bookService.addBookQuantity(id)
+
+            await this.bookService.addBookQuantity(rent.book_id)
 
             await this.rentsRepository.update(id, data);
 

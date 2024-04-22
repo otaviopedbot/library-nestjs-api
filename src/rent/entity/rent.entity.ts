@@ -34,7 +34,7 @@ export class Rent {
     user: User
 
 
-    @ManyToOne(() => Book, book => book.rents)
+    @ManyToOne(() => Book, book => book.rents, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'book_id' })
     book: Book
 
