@@ -4,7 +4,6 @@ services:
 
   db:
 
-
     image: mysql:5.7
     container_name: mysql_db
     ports: 
@@ -16,8 +15,6 @@ services:
       MYSQL_DATABASE: "library"
     networks:
       - rede_node
-
-
 
     # container_name: postgres
     # build:
@@ -36,6 +33,7 @@ services:
     # networks:
     #   - rede_node
 
+  
   # library_nest_api:
   #   container_name: node
   #   build: .
@@ -47,7 +45,6 @@ services:
   #     - rede_node
   #   depends_on:
   #     - db
-  #   command: bash -c "tail -f /dev/null"  # <- faz o container funcionar sem rodar nada
 
   phpmyadmin:
     image: phpmyadmin

@@ -8,6 +8,10 @@ if [ "${1#-}" != "${1}" ] || [ -z "$(command -v "${1}")" ] || { [ -f "${1}" ] &&
   set -- node "$@"
 fi
 
-# npm install
+
+
+npm install
+
+nest start --watch
 
 exec "$@"

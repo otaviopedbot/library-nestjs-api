@@ -9,11 +9,6 @@ import { FileInterceptor } from "@nestjs/platform-express";
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
-    // @Post()
-    // async create(@Body() data: CreateUserDTO) {
-    //     return this.userService.create(data);
-    // }
-
     @Get()
     async list() {
         return this.userService.list();
@@ -28,6 +23,13 @@ export class UserController {
     @UseInterceptors(FileInterceptor('image'))
     async updatePartial(@Body() data: UpdatePatchUserDTO, @Param('id', ParseIntPipe) id: number, @UploadedFile() image) {
         return this.userService.updatePartial(id, data, image);
+    }
+
+    @Patch('image/:id')
+    @UseInterceptors(FileInterceptor('image'))
+    async updateImager(@Param('id', ParseIntPipe) id: number, @UploadedFile() image: Express.Multer.File) {
+
+        return this.userService.updateImage(id, image);
     }
 
     @Delete(':id')

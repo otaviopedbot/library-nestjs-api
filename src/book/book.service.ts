@@ -118,6 +118,10 @@ export class BookService {
                     const newCover = await this.cloudinaryService.uploadFile(cover)
                     data.cover = newCover.url
                 }
+                else{
+                    const newCover = await this.cloudinaryService.uploadFile(cover)
+                    data.cover = newCover.url
+                }
             }
 
             await this.booksRepository.update(id, data);
