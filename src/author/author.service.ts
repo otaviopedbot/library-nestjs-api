@@ -18,7 +18,7 @@ export class AuthorService {
     async create(data: CreateAuthorDTO) {
 
         if (
-            await this.authorsRepository.exist({
+            await this.authorsRepository.exists({
                 where: {
                     name: data.name,
                 },
