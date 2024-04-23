@@ -16,20 +16,12 @@ export class AuthorService {
     ) { }
 
     async create(data: CreateAuthorDTO) {
-
-        if (
-            await this.authorsRepository.exist({
-                where: {
-                    name: data.name,
-                },
-            })
-        ) {
+        if (await this.authorsRepository.exists({ where: { name: data.name } })) {
             throw new BadRequestException('name already in use');
         }
-
-        const author = this.authorsRepository.create(data)
-
-        return this.authorsRepository.save(author)
+    
+        const author = this.authorsRepository.create(data);
+        return this.authorsRepository.save(author);
     }
 
     async list() {
