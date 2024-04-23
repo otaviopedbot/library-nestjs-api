@@ -1,18 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthorService } from '../author.service';
-import { CreateAuthorDTO } from '../dto/create-author.dto'
-import { Author } from '../entity/author.entity';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { validate } from 'class-validator';
+import { AuthorsService } from '../../authors.service';
+import { CreateAuthorDto } from 'src/authors/dto/create-author.dto';
+import { AuthorEntity } from 'src/authors/entities/author.entity';
+import { mock } from 'node:test';
+import { NotFoundException } from '@nestjs/common';
 
 const mockAuthorRepository = {
+    exists: jest.fn(),
     create: jest.fn(),
     save: jest.fn(),
-    findOne: jest.fn(),
     find: jest.fn(),
+    findOne: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
-    exists: jest.fn(),
+    
 };
 
 describe('AuthorService', () => {
@@ -65,9 +66,10 @@ describe('AuthorService', () => {
     // Teste do metodo create
 
     describe('create', () => {
+
         it('should create a new author', async () => {
-            const data: CreateAuthorDTO = { name: 'John' };
-            const mockAuthor: Author = { id: 1, ...data, books: [], createdAt: '', updatedAt: '' };
+            const createAuthorDto: CreateAuthorDto = { name: 'John Doe' };
+            const mockAuthor: AuthorEntity = { id: 1, ...createAuthorDto };
 
             mockAuthorRepository.exists.mockResolvedValueOnce(null);
             mockAuthorRepository.create.mockReturnValueOnce(mockAuthor);
@@ -86,14 +88,15 @@ describe('AuthorService', () => {
         
             await expect(service.create(createAuthorDTO)).rejects.toThrow(BadRequestException);
         });
+        
     });
 
-    // describe('findAll', () => {
-    //     it('Should return all authors', async () => {
-    //         const mockAuthor: AuthorEntity[] = [
-    //             { id: 1, name: 'Author 1' },
-    //             { id: 2, name: 'Author 2' },
-    //         ]
+    describe('findAll', () => {
+        it('Should return all authors', async () => {
+            const mockAuthor: AuthorEntity[] = [
+                { id: 1, name: 'Author 1' },
+                { id: 2, name: 'Author 2' },
+            ]
 
     //         mockAuthorRepository.find.mockResolvedValueOnce(mockAuthor)
 
