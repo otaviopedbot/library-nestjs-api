@@ -30,7 +30,7 @@ export class BookService {
                 throw new BadRequestException('Title already exists');
             }
 
-            await this.authorService.exists(data.author_id)
+            await this.authorService.exist(data.author_id)
 
             const book = this.booksRepository.create(data);
 
@@ -48,7 +48,7 @@ export class BookService {
     }
 
     async show(id: number) {
-        await this.exists(id);
+        await this.exist(id);
 
         return this.booksRepository.findOne({
             where: { id: id },
@@ -63,9 +63,9 @@ export class BookService {
 
         try {
 
-            await this.exists(id);
+            await this.exist(id);
 
-            await this.authorService.exists(author_id)
+            await this.authorService.exist(author_id)
 
             const data: any = {};
 
@@ -134,14 +134,14 @@ export class BookService {
     }
 
     async delete(id: number) {
-        await this.exists(id);
+        await this.exist(id);
 
         await this.booksRepository.delete(id);
 
         return true;
     }
 
-    async exists(id: number) {
+    async exist(id: number) {
         if (
             !(await this.booksRepository.exists({
                 where: {
@@ -156,7 +156,7 @@ export class BookService {
     async addBookQuantity(id: number) {
         try {
 
-            await this.exists(id);
+            await this.exist(id);
 
             const book = await this.booksRepository.findOne({
                 where: { id: id }
@@ -176,7 +176,7 @@ export class BookService {
     async removeBookQuantity(id: number) {
         try {
 
-            await this.exists(id);
+            await this.exist(id);
 
             const book = await this.booksRepository.findOne({
                 where: { id: id }
