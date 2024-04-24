@@ -93,20 +93,20 @@ describe('AuthorService', () => {
         
     });
 
-    // describe('findAll', () => {
-    //     it('Should return all authors', async () => {
-    //         const mockAuthor: AuthorEntity[] = [
-    //             { id: 1, name: 'Author 1' },
-    //             { id: 2, name: 'Author 2' },
-    //         ]
+    describe('List', () => {
+        it('Should return all authors', async () => {
+            const mockAuthor: Author[] = [
+                { id: 1, name: 'Author 1', books: [], createdAt: "", updatedAt: "" },
+                { id: 2, name: 'Author 2', books: [], createdAt: "", updatedAt: "" },
+            ]
 
-    //         mockAuthorRepository.find.mockResolvedValueOnce(mockAuthor)
+            mockAuthorRepository.find.mockResolvedValueOnce(mockAuthor)
 
-    //         const result = await service.findAll();
+            const result = await service.list();
 
-    //         expect(result).toEqual(mockAuthor);
-    //     })
-    // })
+            expect(result).toEqual(mockAuthor);
+        })
+    })
 
     // describe('findOne', () => {
     //     it('Should return one Author', async () => {
