@@ -109,18 +109,18 @@ describe('AuthorService', () => {
 
     describe('show', () => {
         
-        // it('Should return one Author', async () => {
-        //     const mockAuthor: Author = { id: 1, name: 'Author 1', books: [], createdAt: "", updatedAt: "" }
+        it('Should return one Author', async () => {
+            const mockAuthor: Author = { id: 1, name: 'Author 1', books: [], createdAt: "", updatedAt: "" }
 
-        //     jest.spyOn(AuthorService, 'exist').mockResolvedValue()
+            jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
 
-        //     mockAuthorRepository.findOne.mockResolvedValue(mockAuthor)
+            mockAuthorRepository.findOne.mockResolvedValue(mockAuthor)
 
-        //     const result = await service.show(1);
+            const result = await service.show(1);
 
-        //     expect(result).toEqual(mockAuthor);
+            expect(result).toEqual(mockAuthor);
 
-        // })
+        })
         it('should throw NotFoundException if author with the specified ID is not found', async () => {
             mockAuthorRepository.findOne.mockResolvedValueOnce(null);
             const invalidId = 999;
@@ -129,29 +129,32 @@ describe('AuthorService', () => {
 
     });
 
-        describe('updatePartial', () => {
-            it('should update the author with the specified ID and return the updated author', async () => {
-                const existingAuthor: Author = { id: 1, name: 'John Doe', books: [], createdAt: "", updatedAt: "" };
+    describe('updatePartial', () => {
+        it('should update the author with the specified ID and return the updated author', async () => {
+            const updatedAuthor: Author = { id: 1, name: 'Jane Doe', books: [], createdAt: "", updatedAt: "" };
+    
+            jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined); // Simula que o autor existe
 
-                const updatedAuthor: Author = { id: 1, name: 'Jane Doe', books: [], createdAt: "", updatedAt: "" };
+            mockAuthorRepository.update.mockResolvedValueOnce({}); // Simula a atualização do autor
 
-                mockAuthorRepository.show.mockResolvedValueOnce(existingAuthor);
-
-                mockAuthorRepository.update.mockResolvedValueOnce(updatedAuthor);
-
-                const result = await service.updatePartial(1, { name: 'Jane Doe' });
-
-                expect(result).toEqual(updatedAuthor);
-            });
-
-            it('should throw NotFoundException if author with the specified ID is not found', async () => {
-                mockAuthorRepository.findOne.mockResolvedValueOnce(null);
-
-                const invalidId = 999;
-
-                await expect(service.update(invalidId, { name: 'Jane Doe' })).rejects.toThrow(NotFoundException);
-            });
+            jest.spyOn(service, 'show').mockResolvedValueOnce(updatedAuthor); // Simula a exibição do autor atualizado
+    
+            const result = await service.updatePartial(1, { name: 'Jane Doe' });
+    
+            expect(result).toEqual(updatedAuthor);
+            expect(service.exist).toHaveBeenCalledWith(1); // Verifica se exist foi chamado com o ID correto
         });
+    
+        it('should throw NotFoundException if author with the specified ID is not found', async () => {
+
+            jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException()); // Simula que o autor não existe
+
+            const invalidId = 999;
+    
+            await expect(service.updatePartial(invalidId, { name: 'Jane Doe' })).rejects.toThrow(NotFoundException);
+        });
+    });
+    
 
     //describe('delete', () => {
 
