@@ -35,7 +35,7 @@ export class RentService {
 
         const rent = this.rentsRepository.create(data)
 
-        await this.bookService.exists(data.book_id)
+        await this.bookService.exist(data.book_id)
 
         await this.userService.exists(data.user_id)
 
@@ -76,7 +76,7 @@ export class RentService {
 
             await this.userService.exists(user_id)
 
-            await this.bookService.exists(book_id)
+            await this.bookService.exist(book_id)
 
             const data: any = {};
 

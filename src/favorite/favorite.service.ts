@@ -21,7 +21,7 @@ export class FavoriteService {
 
         await this.userService.exists(data.user_id)
 
-        await this.bookService.exists(data.book_id)
+        await this.bookService.exist(data.book_id)
 
         if (
             await this.favoritesRepository.exist({

@@ -30,7 +30,7 @@ export class ReviewService {
                 throw new BadRequestException('This book has already been reviwed');
             }
 
-            await this.booksService.exists(data.book_id)
+            await this.booksService.exist(data.book_id)
             await this.usersService.exists(data.user_id)
 
             const review = this.reviewsRepository.create(data);

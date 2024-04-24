@@ -5,7 +5,7 @@ import { Book } from "./entity/book.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthorService } from "../author/author.service";
 import { UpdatePatchBookDTO } from "./dto/update-patch-book.dto";
-import { CloudinaryService } from "src/cloudinary/cloudinary.service";
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 
 @Injectable()
@@ -20,14 +20,8 @@ export class BookService {
 
     async create(data: CreateBookDTO) {
         try {
-
-            const existingBook = await this.booksRepository.findOne({
-                where: {
-                    title: data.title,
-                },
-            });
-            if (existingBook) {
-                throw new BadRequestException('Title already exists');
+            if (await this.booksRepository.exists({ where: { title: data.title } })) {
+                throw new BadRequestException('Title already in use');
             }
 
             await this.authorService.exist(data.author_id)
