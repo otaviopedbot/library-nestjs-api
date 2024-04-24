@@ -14,7 +14,6 @@ const mockAuthorRepository = {
     findOne: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
-    
 };
 
 describe('AuthorService', () => {
@@ -108,50 +107,54 @@ describe('AuthorService', () => {
         })
     })
 
-    // describe('findOne', () => {
-    //     it('Should return one Author', async () => {
-    //         const mockAuthor: AuthorEntity = { id: 1, name: 'Author 1' }
+    describe('show', () => {
+        
+        // it('Should return one Author', async () => {
+        //     const mockAuthor: Author = { id: 1, name: 'Author 1', books: [], createdAt: "", updatedAt: "" }
 
-    //         mockAuthorRepository.findOne.mockResolvedValue(mockAuthor)
+        //     jest.spyOn(AuthorService, 'exist').mockResolvedValue()
 
-    //         const result = await service.findOne(1);
+        //     mockAuthorRepository.findOne.mockResolvedValue(mockAuthor)
 
-    //         expect(result).toEqual(mockAuthor);
+        //     const result = await service.show(1);
 
-    //     })
-    //     it('should throw NotFoundException if author with the specified ID is not found', async () => {
-    //         mockAuthorRepository.findOne.mockResolvedValueOnce(null);
-    //         const invalidId = 999;
-    //         await expect(service.findOne(invalidId)).rejects.toThrow(NotFoundException);
-    //     });
+        //     expect(result).toEqual(mockAuthor);
 
-    //     describe('update', () => {
-    //         it('should update the author with the specified ID and return the updated author', async () => {
-    //             const existingAuthor: AuthorEntity = { id: 1, name: 'John Doe' };
+        // })
+        it('should throw NotFoundException if author with the specified ID is not found', async () => {
+            mockAuthorRepository.findOne.mockResolvedValueOnce(null);
+            const invalidId = 999;
+            await expect(service.show(invalidId)).rejects.toThrow(NotFoundException);
+        });
 
-    //             const updatedAuthor: AuthorEntity = { id: 1, name: 'Jane Doe' };
+    });
 
-    //             mockAuthorRepository.findOne.mockResolvedValueOnce(existingAuthor);
+        describe('updatePartial', () => {
+            it('should update the author with the specified ID and return the updated author', async () => {
+                const existingAuthor: Author = { id: 1, name: 'John Doe', books: [], createdAt: "", updatedAt: "" };
 
-    //             mockAuthorRepository.update.mockResolvedValueOnce({});
+                const updatedAuthor: Author = { id: 1, name: 'Jane Doe', books: [], createdAt: "", updatedAt: "" };
 
-    //             mockAuthorRepository.findOne.mockResolvedValueOnce(updatedAuthor);
+                mockAuthorRepository.show.mockResolvedValueOnce(existingAuthor);
 
-    //             const result = await service.update(1, { name: 'Jane Doe' });
+                mockAuthorRepository.update.mockResolvedValueOnce(updatedAuthor);
 
-    //             expect(result).toEqual(updatedAuthor);
-    //         });
+                const result = await service.updatePartial(1, { name: 'Jane Doe' });
 
-    //         it('should throw NotFoundException if author with the specified ID is not found', async () => {
-    //             mockAuthorRepository.findOne.mockResolvedValueOnce(null);
+                expect(result).toEqual(updatedAuthor);
+            });
 
-    //             const invalidId = 999;
+            it('should throw NotFoundException if author with the specified ID is not found', async () => {
+                mockAuthorRepository.findOne.mockResolvedValueOnce(null);
 
-    //             await expect(service.update(invalidId, { name: 'Jane Doe' })).rejects.toThrow(NotFoundException);
-    //         });
-    //     });
+                const invalidId = 999;
 
-    //     describe('remove', () => {
+                await expect(service.update(invalidId, { name: 'Jane Doe' })).rejects.toThrow(NotFoundException);
+            });
+        });
+
+    //describe('delete', () => {
+
     //         it('should remove the author with the specified ID and return the deletion information', async () => {
     //             // Mocking the existing author to be returned by the repository
     //             const existingAuthor: AuthorEntity = { id: 1, name: 'John Doe' };
@@ -176,6 +179,36 @@ describe('AuthorService', () => {
 
     //             await expect(service.remove(invalidId)).rejects.toThrow(NotFoundException);
     //         });
+
     //     });
+
+
+    // describe('exist', () => {
+
+    //     it('should throw NotFoundException if author does not exist', async () => {
+    
+    //         const nonExistentAuthorId = 999;
+    //         mockAuthorRepository.exists.mockResolvedValue(false); // Simula que o autor não existe no banco de dados
+
+     
+    //         await expect(AuthorService.exist(nonExistentAuthorId)).rejects.toThrowError(NotFoundException);
+    //         expect(mockAuthorRepository.exists).toHaveBeenCalledWith({
+    //             where: { id: nonExistentAuthorId }
+    //         });
+    //     });
+
+    //     it('should not throw NotFoundException if author exists', async () => {
+
+    //         const existingAuthorId = 1;
+    //         mockAuthorRepository.exists.mockResolvedValue(true); // Simula que o autor existe no banco de dados
+
+  
+    //         await expect(AuthorService.exist(existingAuthorId)).resolves.not.toThrowError(NotFoundException);
+    //         expect(mockAuthorRepository.exists).toHaveBeenCalledWith({
+    //             where: { id: existingAuthorId }
+    //         });
+    //     });
+
+    // });
 
 });
