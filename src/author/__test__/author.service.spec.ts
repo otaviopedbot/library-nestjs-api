@@ -3,7 +3,7 @@ import { AuthorService } from '../author.service';
 import { CreateAuthorDTO } from '../dto/create-author.dto';
 import { Author } from '../entity/author.entity';
 import { mock } from 'node:test';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 
 const mockAuthorRepository = {
@@ -64,33 +64,34 @@ describe('AuthorService', () => {
         // });
     });
 
-    // Teste do metodo create
 
-    // describe('create', () => {
+    // Testes do metodo create
 
-    //     it('should create a new author', async () => {
-    //         const createAuthorDto: CreateAuthorDto = { name: 'John Doe' };
-    //         const mockAuthor: AuthorEntity = { id: 1, ...createAuthorDto };
+    describe('create', () => {
 
-    //         mockAuthorRepository.exists.mockResolvedValueOnce(null);
-    //         mockAuthorRepository.create.mockReturnValueOnce(mockAuthor);
-    //         mockAuthorRepository.save.mockResolvedValueOnce(mockAuthor);
+        it('should create a new author', async () => {
+            const data: CreateAuthorDTO = { name: 'John Doe' };
+            const mockAuthor: Author = { id: 1, ...data, books: [], createdAt: "", updatedAt: "" };
 
-    //         const result = await service.create(data);
+            mockAuthorRepository.exists.mockResolvedValueOnce(null);
+            mockAuthorRepository.create.mockReturnValueOnce(mockAuthor);
+            mockAuthorRepository.save.mockResolvedValueOnce(mockAuthor);
+
+            const result = await service.create(data);
 
 
-    //         expect(result).toEqual(mockAuthor);
-    //     });
+            expect(result).toEqual(mockAuthor);
+        });
 
-    //     it('should throw BadRequestException if name already exists', async () => {
-    //         const createAuthorDTO: CreateAuthorDTO = { name: 'John' };
+        it('should throw BadRequestException if name already exists', async () => {
+            const data: CreateAuthorDTO = { name: 'John' };
         
-    //         mockAuthorRepository.exists.mockResolvedValue(true); // Simulando que o autor já existe
+            mockAuthorRepository.exists.mockResolvedValue(true);
         
-    //         await expect(service.create(createAuthorDTO)).rejects.toThrow(BadRequestException);
-    //     });
+            await expect(service.create(data)).rejects.toThrow(BadRequestException);
+        });
         
-    // });
+    });
 
     // describe('findAll', () => {
     //     it('Should return all authors', async () => {
