@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthorService } from '../author.service';
-import { CreateAuthorDTO } from '../dto/create-author.dto';
-import { Author } from '../entity/author.entity';
+import { BookService } from '../book.service';
+import { CreateBookDTO } from '../dto/create-book.dto';
+import { Book } from '../entity/book.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 
-const mockAuthorRepository = {
+const mockBookRepository = {
     exists: jest.fn(),
     create: jest.fn(),
     save: jest.fn(),
@@ -16,17 +16,17 @@ const mockAuthorRepository = {
 };
 
 describe('AuthorService', () => {
-    let service: AuthorService;
+    let service: BookService;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
-                AuthorService,
-                { provide: 'AuthorRepository', useValue: mockAuthorRepository },
+                BookService,
+                { provide: 'BookRepository', useValue: mockBookRepository },
             ],
         }).compile();
 
-        service = module.get<AuthorService>(AuthorService);
+        service = module.get<BookService>(BookService);
     });
 
     // testes de DTO
