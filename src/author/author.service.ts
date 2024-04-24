@@ -29,7 +29,7 @@ export class AuthorService {
     }
 
     async show(id: number) {
-        await this.exists(id);
+        await this.exist(id);
 
         return this.authorsRepository.findOne({
             where: { id: id },
@@ -42,7 +42,7 @@ export class AuthorService {
         { name }: UpdatePatchAuthorDTO
     ) {
         try {
-            await this.exists(id);
+            await this.exist(id);
 
             const data: any = {};
 
@@ -60,14 +60,14 @@ export class AuthorService {
     }
 
     async delete(id: number) {
-        await this.exists(id);
+        await this.exist(id);
 
         await this.authorsRepository.delete(id);
 
         return true;
     }
 
-    async exists(id: number) {
+    async exist(id: number) {
         if (
             !(await this.authorsRepository.exists({
                 where: {
