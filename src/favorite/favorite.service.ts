@@ -24,7 +24,7 @@ export class FavoriteService {
         await this.bookService.exist(data.book_id)
 
         if (
-            await this.favoritesRepository.exist({
+            await this.favoritesRepository.exists({
                 where: {
                     book_id: data.book_id,
                     user_id: data.user_id
@@ -40,14 +40,14 @@ export class FavoriteService {
     }
 
     async delete(id: number) {
-        await this.exists(id);
+        await this.exist(id);
 
         await this.favoritesRepository.delete(id);
 
         return true;
     }
 
-    async exists(id: number) {
+    async exist(id: number) {
         if (
             !(await this.favoritesRepository.exists({
                 where: {
