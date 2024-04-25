@@ -4,8 +4,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CreateRentDTO } from "./dto/create-rent.dto";
 import { Rent } from "./entity/rent.entity";
 import { UpdatePatchRentDTO } from "./dto/update-patch-rent.dto";
-import { UserService } from "src/user/user.service";
-import { BookService } from "src/book/book.service";
+import { UserService } from "../user/user.service";
+import { BookService } from "../book/book.service";
 import { finished } from "stream";
 
 
@@ -37,7 +37,7 @@ export class RentService {
 
         await this.bookService.exist(data.book_id)
 
-        await this.userService.exists(data.user_id)
+        await this.userService.exist(data.user_id)
 
         const book = await this.bookService.show(data.book_id)
 
@@ -74,7 +74,7 @@ export class RentService {
         try {
             await this.exists(id);
 
-            await this.userService.exists(user_id)
+            await this.userService.exist(user_id)
 
             await this.bookService.exist(book_id)
 

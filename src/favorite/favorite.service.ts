@@ -3,8 +3,8 @@ import { CreateFavoriteDTO } from "./dto/create-favorite.dto";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Favorite } from "./entity/favorite.entity";
-import { UserService } from "src/user/user.service";
-import { BookService } from "src/book/book.service";
+import { UserService } from "../user/user.service";
+import { BookService } from "../book/book.service";
 
 
 @Injectable()
@@ -19,7 +19,7 @@ export class FavoriteService {
 
     async create(data: CreateFavoriteDTO) {
 
-        await this.userService.exists(data.user_id)
+        await this.userService.exist(data.user_id)
 
         await this.bookService.exist(data.book_id)
 
@@ -27,7 +27,7 @@ export class FavoriteService {
             await this.favoritesRepository.exists({
                 where: {
                     book_id: data.book_id,
-                    user_id: data.user_id
+                    user_id: data.user_id,
                 },
             })
         ) {

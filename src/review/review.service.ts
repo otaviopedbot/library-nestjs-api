@@ -4,8 +4,8 @@ import { Repository } from "typeorm";
 import { Review } from "./entity/review.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UpdatePatchReviewDTO } from "./dto/update-patch-review.dto";
-import { BookService } from "src/book/book.service";
-import { UserService } from "src/user/user.service";
+import { BookService } from "../book/book.service";
+import { UserService } from "../user/user.service";
 
 
 @Injectable()
@@ -31,7 +31,7 @@ export class ReviewService {
             }
 
             await this.booksService.exist(data.book_id)
-            await this.usersService.exists(data.user_id)
+            await this.usersService.exist(data.user_id)
 
             const review = this.reviewsRepository.create(data);
 
@@ -49,7 +49,7 @@ export class ReviewService {
 
         try {
 
-            await this.exists(id);
+            await this.exist(id);
 
             const data: any = {};
 
@@ -69,14 +69,14 @@ export class ReviewService {
     }
 
     async delete(id: number) {
-        await this.exists(id);
+        await this.exist(id);
 
         await this.reviewsRepository.delete(id);
 
         return true;
     }
 
-    async exists(id: number) {
+    async exist(id: number) {
         if (
             !(await this.reviewsRepository.exists({
                 where: {

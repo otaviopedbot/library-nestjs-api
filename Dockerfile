@@ -1,11 +1,11 @@
 FROM node:18.17.1
 
-COPY . .
+WORKDIR /usr/app
 
 COPY package*.json ./
 
-WORKDIR /usr/app
-
+COPY . .
+    
 EXPOSE 3000
 
 COPY ./docker-entrypoint.sh /entrypoint.sh
