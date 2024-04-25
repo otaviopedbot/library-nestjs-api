@@ -6,8 +6,8 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { BookService } from '../../book/book.service';
 import { UserService } from '../../user/user.service';
-import { CloudinaryModule } from '../../cloudinary/cloudinary.module';
-import { AuthorModule } from '../../author/author.module';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
+import { AuthorService } from '../../author/author.service';
 
 const mockReviewRepository = {
     exists: jest.fn(),
@@ -17,14 +17,17 @@ const mockReviewRepository = {
     update: jest.fn(),
     delete: jest.fn(),
 };
-
 const mockUserRepository = {
-    exists: jest.fn(),
-}
+    exists: jest.fn()
+};
 
 const mockBookRepository = {
-    exists: jest.fn(),
-}
+    exists: jest.fn()
+};
+
+const mockAuthorRepository = {
+    exists: jest.fn()
+};
 
 describe('AuthorService', () => {
     let service: ReviewService;
@@ -33,14 +36,16 @@ describe('AuthorService', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            imports: [CloudinaryModule],
             providers: [
                 ReviewService,
+                CloudinaryService,
+                AuthorService,
                 { provide: 'ReviewRepository', useValue: mockReviewRepository },
                 UserService,
                 { provide: 'UserRepository', useValue: mockUserRepository },
                 BookService,
                 { provide: 'BookRepository', useValue: mockBookRepository },
+                { provide: 'AuthorRepository', useValue: mockAuthorRepository },
             ],
         }).compile();
 
@@ -51,36 +56,32 @@ describe('AuthorService', () => {
 
     // testes de DTO
 
-    // describe('DTO validation', () => {
-    //     it('should pass validation with a valid name', async () => {
-    //         const data = new CreateAuthorDTO();
-    //         data.name = 'John';
+    describe('DTO validation', () => {
+        it('should pass validation with a valid review data', async () => {
+            const data = new CreateReviewDTO();
+            data.rating = 5;
+            data.body = "review";
+            data.user_id = 1;
+            data.book_id = 1;
 
-    //         const errors = await validate(data);
+            const errors = await validate(data);
 
-    //         expect(errors.length).toEqual(0);
-    //     });
+            expect(errors.length).toEqual(0);
+        });
 
-    //     it('should fail validation with an empty name', async () => {
-    //         const data = new CreateAuthorDTO();
-    //         data.name = '';
+        it('should fail validation with a invalid review data', async () => {
+            const data = new CreateReviewDTO();
+            data.rating = -5;
+            data.body = "review";
+            data.user_id = null;
+            data.book_id = null;
 
-    //         const errors = await validate(data);
+            const errors = await validate(data);
 
-    //         expect(errors.length).toBeGreaterThan(0);
-    //         expect(errors[0].constraints).toHaveProperty('isNotEmpty');
-    //     });
-
-    //     // it('should fail validation if name is not a string', async () => {
-    //     //     const createAuthorDTO = new CreateAuthorDTO();
-    //     //     createAuthorDTO.name = 123; // Set the name to a non-string value
-
-    //     //     const errors = await validate(createAuthorDTO);
-
-    //     //     expect(errors.length).toBeGreaterThan(0);
-    //     //     expect(errors[0].constraints).toHaveProperty('isString');
-    //     // });
-    // });
+            expect(errors.length).toBeGreaterThan(0);
+            expect(errors[0].constraints)
+        });
+    });
 
     // Testes do metodo create
 
@@ -118,82 +119,55 @@ describe('AuthorService', () => {
 
     });
 
-    // Testes do metodo updatePartial
-
-    // describe('updatePartial', () => {
-    //     it('should update the author with the specified ID and return the updated author', async () => {
-    //         const updatedAuthor: Author = { id: 1, name: 'Jane Doe', books: [], createdAt: "", updatedAt: "" };
-
-    //         jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined); // Simula que o autor existe
-
-    //         mockAuthorRepository.update.mockResolvedValueOnce({}); // Simula a atualização do autor
-
-    //         jest.spyOn(service, 'show').mockResolvedValueOnce(updatedAuthor); // Simula a exibição do autor atualizado
-
-    //         const result = await service.updatePartial(1, { name: 'Jane Doe' });
-
-    //         expect(result).toEqual(updatedAuthor);
-    //         expect(service.exist).toHaveBeenCalledWith(1); // Verifica se exist foi chamado com o ID correto
-    //     });
-
-    //     it('should throw NotFoundException if author with the specified ID is not found', async () => {
-    //         jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException()); // Simula que o autor não existe
-
-    //         const invalidId = 999;
-
-    //         await expect(service.updatePartial(invalidId, { name: 'Jane Doe' })).rejects.toThrow(NotFoundException);
-    //     });
-    // });
-
     // Testes do metodo delete
 
-    // describe('delete', () => {
+    describe('delete', () => {
 
-    //     it('should remove the author with the specified ID and return the deletion information', async () => {
-    //         jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
+        it('should remove the review with the specified ID and return the deletion information', async () => {
+            jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
 
-    //         const deleteInfo = true;
+            const deleteInfo = true;
 
-    //         mockAuthorRepository.delete.mockResolvedValueOnce(deleteInfo);
+            mockReviewRepository.delete.mockResolvedValueOnce(deleteInfo);
 
-    //         const result = await service.delete(1);
-    //         expect(result).toEqual(deleteInfo);
-    //     });
+            const result = await service.delete(1);
+            expect(result).toEqual(deleteInfo);
+        });
 
-    //     it('should throw NotFoundException if author with the specified ID is not found', async () => {
-    //         jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
+        it('should throw NotFoundException if the review with the specified ID is not found', async () => {
+            jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
 
-    //         const invalidId = 99999;
+            const invalidId = 99999;
 
-    //         await expect(service.delete(invalidId)).rejects.toThrow(NotFoundException);
-    //     });
+            await expect(service.delete(invalidId)).rejects.toThrow(NotFoundException);
+        });
 
-    // });
+    });
 
     // Testes do metodo exist
 
-    // describe('exist', () => {
+    describe('exist', () => {
 
-    //     it('should throw NotFoundException if author does not exist', async () => {
-    //         const nonExistentAuthorId = 999;
-    //         mockAuthorRepository.exists.mockResolvedValue(false);
+        it('should throw NotFoundException if the Review does not exist', async () => {
+            const nonExistentReviewId = 999;
+            mockReviewRepository.exists.mockResolvedValue(false);
 
-    //         await expect(service.exist(nonExistentAuthorId)).rejects.toThrowError(NotFoundException);
-    //         expect(mockAuthorRepository.exists).toHaveBeenCalledWith({
-    //             where: { id: nonExistentAuthorId }
-    //         });
-    //     });
+            await expect(service.exist(nonExistentReviewId)).rejects.toThrow(NotFoundException);
+            expect(mockReviewRepository.exists).toHaveBeenCalledWith({
+                where: { id: nonExistentReviewId }
+            });
+        });
 
-    //     it('should not throw NotFoundException if author exists', async () => {
-    //         const existingAuthorId = 1;
-    //         mockAuthorRepository.exists.mockResolvedValue(true);
+        it('should not throw NotFoundException if the review exists', async () => {
+            const existingReviewId = 1;
+            mockReviewRepository.exists.mockResolvedValue(true);
 
-    //         await expect(service.exist(existingAuthorId)).resolves.not.toThrowError(NotFoundException);
-    //         expect(mockAuthorRepository.exists).toHaveBeenCalledWith({
-    //             where: { id: existingAuthorId }
-    //         });
-    //     });
+            await expect(service.exist(existingReviewId)).resolves.not.toThrow(NotFoundException);
+            expect(mockReviewRepository.exists).toHaveBeenCalledWith({
+                where: { id: existingReviewId }
+            });
+        });
 
-    // });
+    });
 
 });

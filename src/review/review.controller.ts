@@ -12,11 +12,6 @@ export class ReviewController {
         return this.reviewService.create(data);
     }
 
-    @Patch(':id')
-    async updatePartial(@Body() data: UpdatePatchReviewDTO, @Param('id', ParseIntPipe) id: number) {
-        return this.reviewService.updatePartial(id, data);
-    }
-
     @Delete(':id')
     async delete(@Param('id', ParseIntPipe) id: number) {
         return {

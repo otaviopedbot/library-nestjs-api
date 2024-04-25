@@ -57,36 +57,28 @@ describe('FavoriteService', () => {
 
     // testes de DTO
 
-    // describe('DTO validation', () => {
-        // it('should pass validation with a valid name', async () => {
-        //     const data = new CreateAuthorDTO();
-        //     data.name = 'John';
+    describe('DTO validation', () => {
+        it('should pass validation with a valid data', async () => {
+            const data = new CreateFavoriteDTO();
+            data.user_id = 1;
+            data.book_id = 1;
 
-        //     const errors = await validate(data);
+            const errors = await validate(data);
 
-        //     expect(errors.length).toEqual(0);
-        // });
+            expect(errors.length).toEqual(0);
+        });
 
-        // it('should fail validation with an empty name', async () => {
-        //     const data = new CreateAuthorDTO();
-        //     data.name = '';
+        it('should fail validation with a not valid data', async () => {
+            const data = new CreateFavoriteDTO();
+            data.user_id = null;
+            data.book_id = null;
 
-        //     const errors = await validate(data);
+            const errors = await validate(data);
 
-        //     expect(errors.length).toBeGreaterThan(0);
-        //     expect(errors[0].constraints).toHaveProperty('isNotEmpty');
-        // });
-
-        // it('should fail validation if name is not a string', async () => {
-        //     const createAuthorDTO = new CreateAuthorDTO();
-        //     createAuthorDTO.name = 123; // Set the name to a non-string value
-
-        //     const errors = await validate(createAuthorDTO);
-
-        //     expect(errors.length).toBeGreaterThan(0);
-        //     expect(errors[0].constraints).toHaveProperty('isString');
-        // });
-    // });
+            expect(errors.length).toBeGreaterThan(0);
+            expect(errors[0].constraints);
+        });
+    });
 
     // Testes do metodo create
 
@@ -154,60 +146,60 @@ describe('FavoriteService', () => {
         
             mockFavoriteRepository.exists.mockResolvedValue(true);
         
-            await expect(service.create(data)).rejects.toThrow(BadRequestException);
+            await expect(service.create(data)).rejects.toThrow(NotFoundException);
         });
         
     });
 
     // Testes do metodo delete
     
-    // describe('delete', () => {
+    describe('delete', () => {
 
-    //     it('should remove the favorite with the specified ID and return the deletion information', async () => {
-    //         jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
+        it('should remove the favorite with the specified ID and return the deletion information', async () => {
+            jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
 
-    //         const deleteInfo = true;
+            const deleteInfo = true;
 
-    //         mockFavoriteRepository.delete.mockResolvedValueOnce(deleteInfo);
+            mockFavoriteRepository.delete.mockResolvedValueOnce(deleteInfo);
 
-    //         const result = await service.delete(1);
-    //         expect(result).toEqual(deleteInfo);
-    //     });
+            const result = await service.delete(1);
+            expect(result).toEqual(deleteInfo);
+        });
 
-    //     it('should throw NotFoundException if author with the specified ID is not found', async () => {
-    //         jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
+        it('should throw NotFoundException if author with the specified ID is not found', async () => {
+            jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
 
-    //         const invalidId = 99999;
+            const invalidId = 99999;
 
-    //         await expect(service.delete(invalidId)).rejects.toThrow(NotFoundException);
-    //     });
+            await expect(service.delete(invalidId)).rejects.toThrow(NotFoundException);
+        });
 
-    // });
+    });
 
     // Testes do metodo exist
 
-    // describe('exist', () => {
+    describe('exist', () => {
 
-    //     it('should throw NotFoundException if author does not exist', async () => {
-    //         const nonExistentAuthorId = 999;
-    //         mockAuthorRepository.exists.mockResolvedValue(false);
+        it('should throw NotFoundException if author favorite not exist', async () => {
+            const nonExistentFavoriteId = 9999;
+            mockFavoriteRepository.exists.mockResolvedValue(false);
      
-    //         await expect(service.exist(nonExistentAuthorId)).rejects.toThrowError(NotFoundException);
-    //         expect(mockAuthorRepository.exists).toHaveBeenCalledWith({
-    //             where: { id: nonExistentAuthorId }
-    //         });
-    //     });
+            await expect(service.exist(nonExistentFavoriteId)).rejects.toThrow(NotFoundException);
+            expect(mockFavoriteRepository.exists).toHaveBeenCalledWith({
+                where: { id: nonExistentFavoriteId }
+            });
+        });
 
-    //     it('should not throw NotFoundException if author exists', async () => {
-    //         const existingAuthorId = 1;
-    //         mockAuthorRepository.exists.mockResolvedValue(true);
+        it('should not throw NotFoundException if favorite exists', async () => {
+            const existingFavoriteId = 1;
+            mockFavoriteRepository.exists.mockResolvedValue(true);
 
-    //         await expect(service.exist(existingAuthorId)).resolves.not.toThrowError(NotFoundException);
-    //         expect(mockAuthorRepository.exists).toHaveBeenCalledWith({
-    //             where: { id: existingAuthorId }
-    //         });
-    //     });
+            await expect(service.exist(existingFavoriteId)).resolves.not.toThrow(NotFoundException);
+            expect(mockFavoriteRepository.exists).toHaveBeenCalledWith({
+                where: { id: existingFavoriteId }
+            });
+        });
 
-    // });
+    });
 
 });

@@ -42,31 +42,31 @@ export class ReviewService {
         }
     }
 
-    async updatePartial(
-        id: number,
-        { rating, body, }: UpdatePatchReviewDTO
-    ) {
+    // async updatePartial(
+    //     id: number,
+    //     { rating, body, }: UpdatePatchReviewDTO
+    // ) {
 
-        try {
+    //     try {
 
-            await this.exist(id);
+    //         await this.exist(id);
 
-            const data: any = {};
+    //         const data: any = {};
 
-            if (rating) {
-                data.rating = rating;
-            }
+    //         if (rating) {
+    //             data.rating = rating;
+    //         }
 
-            if (body) {
-                data.body = body;
-            }
+    //         if (body) {
+    //             data.body = body;
+    //         }
 
-            return await this.reviewsRepository.update(id, data);
+    //         return await this.reviewsRepository.update(id, data);
 
-        } catch (err) {
-            throw err
-        }
-    }
+    //     } catch (err) {
+    //         throw err
+    //     }
+    // }
 
     async delete(id: number) {
         await this.exist(id);
