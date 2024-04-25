@@ -50,16 +50,6 @@ describe('AuthorService', () => {
             expect(errors.length).toBeGreaterThan(0);
             expect(errors[0].constraints).toHaveProperty('isNotEmpty');
         });
-
-        // it('should fail validation if name is not a string', async () => {
-        //     const createAuthorDTO = new CreateAuthorDTO();
-        //     createAuthorDTO.name = 123; // Set the name to a non-string value
-
-        //     const errors = await validate(createAuthorDTO);
-
-        //     expect(errors.length).toBeGreaterThan(0);
-        //     expect(errors[0].constraints).toHaveProperty('isString');
-        // });
     });
 
     // Testes do metodo create

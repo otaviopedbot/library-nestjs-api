@@ -9,6 +9,7 @@ import { BookService } from '../../book/book.service';
 import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 import { CloudinaryModule } from '../../cloudinary/cloudinary.module';
 import { AuthorModule } from '../../author/author.module';
+import { AuthorService } from '../../author/author.service';
 
 const mockFavoriteRepository = {
     exists: jest.fn(),
@@ -25,6 +26,10 @@ const mockBookRepository = {
     exists: jest.fn()
 };
 
+const mockAuthorRepository = {
+    exists: jest.fn()
+};
+
 describe('FavoriteService', () => {
     let service: FavoriteService;
     let serviceUser: UserService;
@@ -32,14 +37,16 @@ describe('FavoriteService', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            imports:[CloudinaryModule, AuthorModule],
             providers: [
                 FavoriteService,
+                CloudinaryService,
+                AuthorService,
                 { provide: 'FavoriteRepository', useValue: mockFavoriteRepository },
                 UserService,
                 { provide: 'UserRepository', useValue: mockUserRepository },
                 BookService,
                 { provide: 'BookRepository', useValue: mockBookRepository },
+                { provide: 'AuthorRepository', useValue: mockAuthorRepository },
             ],
         }).compile();
 
