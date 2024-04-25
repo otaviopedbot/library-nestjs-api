@@ -9,14 +9,6 @@ import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 import { AuthorModule } from '../../author/author.module';
 import { CloudinaryModule } from '../../cloudinary/cloudinary.module';
 
-// .mockImplementation((id) => {
-//     if (id.where.id == 1) {
-//         return Promise.resolve(true)
-//     }
-//     return false
-// }),
-
-
 const mockBookRepository = {
     exists: jest.fn(),
     create: jest.fn(),
@@ -26,13 +18,6 @@ const mockBookRepository = {
     update: jest.fn(),
     delete: jest.fn(),
 };
-
-// .mockImplementation((id) => {
-//     if (id.where.id == 1) {
-//         return Promise.resolve(true)
-//     }
-//     return false
-// }),
 
 const mockAuthorRepository = {
     exists: jest.fn()
