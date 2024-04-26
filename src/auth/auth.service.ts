@@ -67,13 +67,6 @@ export class AuthService {
 
         const user = await this.userService.create(data);
 
-        // mockUserRepository.exists.mockReturnValueOnce(undefined);
-
-        // mockUserRepository.create.mockReturnValueOnce(mockUser);
-
-        // mockUserRepository.save.mockResolvedValueOnce(mockUser);
-
-
         const token = this.createToken(user)
 
         return { token, user };
