@@ -58,7 +58,7 @@ export class RentService {
     }
 
     async show(id: number) {
-        await this.exists(id);
+        await this.exist(id);
 
         return await this.rentsRepository.findOne({
             where: { id: id },
@@ -72,7 +72,7 @@ export class RentService {
     ) {
 
         try {
-            await this.exists(id);
+            await this.exist(id);
 
             await this.userService.exist(user_id)
 
@@ -115,7 +115,7 @@ export class RentService {
         }
     }
 
-    async exists(id: number) {
+    async exist(id: number) {
         if (
             !(await this.rentsRepository.exists({
                 where: {
