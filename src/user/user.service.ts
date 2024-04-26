@@ -35,11 +35,6 @@ export class UserService {
 
         data.password = await bcrypt.hash(data.password, salt)
 
-        // if (image) {
-        //     const imagePath = await this.cloudinaryService.uploadFile(image)
-        //     data.image = imagePath.url
-        // }
-
         data.image = process.env.CLOUDINARY_DEFAULT_USER_IMG
 
         const user = this.usersRepository.create(data)
