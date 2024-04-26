@@ -86,13 +86,14 @@ describe('BookService', () => {
 
     describe('create', () => {
 
-        it('should create a new rent', async () => {
+        it('should create a new rent if quantiti-y >= 1', async () => {
             const data: CreateRentDTO = {
-                user_id: 0,
+                user_id: 1,
                 book_id: 1
             };
             const mockRent: Rent = {
-                id: 1, ...data,
+                id: 1,
+                ...data,
                 finished_in: '',
                 user: {
                     id: 0,
@@ -116,10 +117,10 @@ describe('BookService', () => {
                     title: '',
                     author_id: 0,
                     page: 0,
-                    quantity: 0,
+                    quantity: 1,
                     synopsis: '',
                     cover: '',
-                    author:{
+                    author: {
                         id: 0,
                         name: '',
                         books: [],
@@ -134,16 +135,20 @@ describe('BookService', () => {
                 },
                 createdAt: '',
                 updatedAt: ''
-            }
+            };
 
-            jest.spyOn(serviceBook, 'exist').mockResolvedValueOnce(undefined); //Simula que o livro existe
-            jest.spyOn(serviceUser, 'exist').mockResolvedValueOnce(undefined); //Simula que o usuario existe
+            jest.spyOn(serviceBook, 'exist').mockResolvedValueOnce(undefined); // Simula que o livro existe
+
+            // Simula que o livro com ID 1 existe ao chamar BookService.show
+            jest.spyOn(serviceBook, 'show').mockResolvedValueOnce(mockRent.book);
+
+            jest.spyOn(serviceUser, 'exist').mockResolvedValueOnce(undefined); // Simula que o usuário existe
 
             mockRentRepository.create.mockReturnValueOnce(mockRent);
 
-            jest.spyOn(service, 'show').mockResolvedValueOnce(undefined); //Simula que o livro foi mostrado
+            jest.spyOn(service, 'show').mockResolvedValueOnce(undefined); // Simula que o livro foi mostrado
 
-            jest.spyOn(serviceBook, 'removeBookQuantity').mockResolvedValueOnce(undefined); //Simula que a quantidade foi reduzida
+            jest.spyOn(serviceBook, 'removeBookQuantity').mockResolvedValueOnce(undefined); // Simula que a quantidade foi reduzida
 
             mockRentRepository.save.mockResolvedValueOnce(mockRent);
 
@@ -151,6 +156,7 @@ describe('BookService', () => {
 
             expect(result).toEqual(mockRent);
         });
+
 
         it('should throw BadRequestException if title already exists', async () => {
             const data: CreateRentDTO = {
@@ -200,7 +206,7 @@ describe('BookService', () => {
                         quantity: 0,
                         synopsis: '',
                         cover: '',
-                        author:{
+                        author: {
                             id: 0,
                             name: '',
                             books: [],
@@ -246,7 +252,7 @@ describe('BookService', () => {
                         quantity: 0,
                         synopsis: '',
                         cover: '',
-                        author:{
+                        author: {
                             id: 0,
                             name: '',
                             books: [],
@@ -299,7 +305,7 @@ describe('BookService', () => {
                     createdAt: '',
                     updatedAt: ''
                 },
-                book:{
+                book: {
                     id: 0,
                     title: '',
                     author_id: 0,
@@ -426,19 +432,79 @@ describe('BookService', () => {
 
     describe('finish', () => {
 
-        // it('should remove the book with the specified ID and return the deletion information', async () => {
+        it('should remove the book with the specified ID and return the deletion information', async () => {
+            // Mock do objeto de aluguel
+            const mockRent: Rent = {
+                id: 1,
+                user_id: 1,
+                book_id: 1,
+                finished_in: '',
+                user: {
+                    id: 0,
+                    complete_name: '',
+                    phone: '',
+                    address: '',
+                    username: '',
+                    email: '',
+                    password: '',
+                    image: '',
+                    details: '',
+                    is_admin: 0,
+                    rents: [],
+                    reviews: [],
+                    favorites: [],
+                    createdAt: '',
+                    updatedAt: ''
+                },
+                book: {
+                    id: 0,
+                    title: '',
+                    author_id: 0,
+                    page: 0,
+                    quantity: 0,
+                    synopsis: '',
+                    cover: '',
+                    author: {
+                        id: 0,
+                        name: '',
+                        books: [],
+                        createdAt: '',
+                        updatedAt: ''
+                    },
+                    rents: [],
+                    favorites: [],
+                    reviews: [],
+                    createdAt: '',
+                    updatedAt: ''
+                },
+                createdAt: '',
+                updatedAt: ''
+            };
+        
+            // Mock do método findOne para retornar o objeto de aluguel
+            jest.spyOn(mockRentRepository, 'findOne').mockResolvedValueOnce(mockRent);
+        
+            // Mock de retorno do método update do repositório de aluguéis
+            const updatedRent = {}; // O objeto de aluguel atualizado pode ser qualquer valor
+            jest.spyOn(mockRentRepository, 'update').mockResolvedValueOnce(updatedRent);
+        
+            // Mock de retorno do método addBookQuantity do serviço de livro
+            jest.spyOn(serviceBook, 'addBookQuantity').mockResolvedValueOnce(undefined);
+        
+            // Chama o método finish do serviço de aluguel
+            const result = await service.finish(1); // Supondo que o ID do aluguel seja 1
+        
+            // Verifica se o método update do repositório de aluguéis foi chamado com os parâmetros corretos
+            expect(mockRentRepository.update).toHaveBeenCalledWith(1, { finished_in: expect.any(String) });
+        
+            // Verifica se o método addBookQuantity do serviço de livro foi chamado com o ID do livro do aluguel
+            expect(serviceBook.addBookQuantity).toHaveBeenCalledWith(mockRent.book_id);
+        
+            // Verifica se o resultado retornado é o objeto de aluguel atualizado
+            expect(result).toEqual(updatedRent);
+        });
 
-        //     jest.spyOn(service, 'show').mockResolvedValueOnce(undefined);
 
-        //     jest.spyOn(serviceBook, 'addBookQuantity').mockResolvedValueOnce(undefined);
-
-        //    const updatedRent = mockRentRepository.update.mockResolvedValueOnce({});
-
-        //    const result = await service.finish(1);
-
-        //     expect(result).toEqual(updatedRent);
-
-        // });
 
         it('should throw NotFoundException if book with the specified ID is not found', async () => {
             jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());

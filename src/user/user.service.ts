@@ -58,8 +58,7 @@ export class UserService {
 
     async updatePartial(
         id: number,
-        { complete_name, phone, address, username, email, password, details }: UpdatePatchUserDTO,
-        image
+        { complete_name, phone, address, username, email, password, details }: UpdatePatchUserDTO
     ) {
         try {
             const oldUser = await this.show(id);
@@ -93,20 +92,6 @@ export class UserService {
 
             if (details) {
                 data.details = details;
-            }
-
-            const regex = /\/([^\/]+)\.[^\/]+$/;
-            const match = oldUser.image.match(regex);
-            const oldImageId = match[1];
-
-            if (image) {
-
-                if (oldImageId != process.env.CLOUDINARY_DEFAULT_USER_IMG_ID) {
-                    await this.cloudinaryService.deleteFile(oldImageId)
-                    const newImage = await this.cloudinaryService.uploadFile(image)
-                    data.image = newImage.url
-                }
-
             }
 
             await this.usersRepository.update(id, data);

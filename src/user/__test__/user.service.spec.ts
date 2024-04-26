@@ -97,8 +97,8 @@ describe('Userervice', () => {
                 favorites: []
             };
 
-            // jest.spyOn(service, 'exists').mockResolvedValueOnce(undefined);// Simula que o autor existe
-            mockUserRepository.exists.mockReturnValueOnce(mockUser);
+            // jest.spyOn(service, 'exists').mockResolvedValueOnce(undefined);// Simula que o usuario existe
+            mockUserRepository.exists.mockReturnValueOnce(undefined);
 
             mockUserRepository.create.mockReturnValueOnce(mockUser);
 
@@ -128,149 +128,191 @@ describe('Userervice', () => {
 
     });
 
-    // // Testes do metodo list
+    // Testes do metodo list
 
-    // describe('List', () => {
-    //     it('Should return all books', async () => {
-    //         const mockBook = [
-    //             { id: 1, title: 'Livro', page: 1, quantity: 1, author_id: 1, synopsis: "", cover: "" },
-    //             { id: 2, title: 'Livro', page: 1, quantity: 1, author_id: 1, synopsis: "", cover: "" },
-    //         ]
+    describe('List', () => {
+        it('Should return all users', async () => {
+            const mockUser = [
+                {
+                    id: 1,
+                    complete_name: '',
+                    phone: '',
+                    address: '',
+                    username: '',
+                    email: '',
+                    password: '',
+                    image: '',
+                    details: '',
+                    createdAt: "",
+                    updatedAt: "",
+                    is_admin: 0,
+                    rents: [],
+                    reviews: [],
+                    favorites: []
+                },
+                {
+                    id: 2,
+                    complete_name: '',
+                    phone: '',
+                    address: '',
+                    username: '',
+                    email: '',
+                    password: '',
+                    image: '',
+                    details: '',
+                    createdAt: "",
+                    updatedAt: "",
+                    is_admin: 0,
+                    rents: [],
+                    reviews: [],
+                    favorites: []
+                },
+            ]
 
-    //         mockBookRepository.find.mockResolvedValueOnce(mockBook)
+            mockUserRepository.find.mockResolvedValueOnce(mockUser)
 
-    //         const result = await service.list();
+            const result = await service.list();
 
-    //         expect(result).toEqual(mockBook);
-    //     })
-    // })
+            expect(result).toEqual(mockUser);
+        })
+    })
 
-    // // Testes do metodo show
+    // Testes do metodo show
 
-    // describe('show', () => {
+    describe('show', () => {
 
-    //     it('Should return one Book', async () => {
-    //         const mockBook: Book = {
-    //             id: 1, title: 'Livro', page: 1, quantity: 1, author_id: 1, synopsis: "", cover: "", createdAt: "", updatedAt: "", rents: [], favorites: [], reviews: [], author: {
-    //                 id: 1,
-    //                 name: '',
-    //                 books: [],
-    //                 createdAt: '',
-    //                 updatedAt: ''
-    //             }
-    //         }
+        it('Should return one user', async () => {
+            const mockUser: User = {
+                id: 0,
+                complete_name: '',
+                phone: '',
+                address: '',
+                username: '',
+                email: '',
+                password: '',
+                image: '',
+                details: '',
+                is_admin: 0,
+                rents: [],
+                reviews: [],
+                favorites: [],
+                createdAt: '',
+                updatedAt: ''
+            }
 
-    //         jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
+            jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
 
-    //         mockBookRepository.findOne.mockResolvedValue(mockBook)
+            mockUserRepository.findOne.mockResolvedValue(mockUser)
 
-    //         const result = await service.show(1);
+            const result = await service.show(1);
 
-    //         expect(result).toEqual(mockBook);
+            expect(result).toEqual(mockUser);
 
-    //     })
-    //     it('should throw NotFoundException if book with the specified ID is not found', async () => {
-    //         jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
+        })
+        it('should throw NotFoundException if the user with the specified ID is not found', async () => {
+            jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
 
-    //         mockBookRepository.findOne.mockResolvedValueOnce(null);
+            mockUserRepository.findOne.mockResolvedValueOnce(null);
 
-    //         const invalidId = 999;
-    //         await expect(service.show(invalidId)).rejects.toThrow(NotFoundException);
+            const invalidId = 999;
+            await expect(service.show(invalidId)).rejects.toThrow(NotFoundException);
 
-    //     });
+        });
 
-    // });
+    });
 
-    // // Testes do metodo updatePartial
+    // Testes do metodo updatePartial
 
-    // describe('updatePartial', () => {
-    //     it('should update the book with the specified ID and return the updated book', async () => {
-    //         const updatedBook: Book = {
-    //             id: 1, title: 'Livro', page: 1, quantity: 1, author_id: 1, synopsis: "", cover: "", createdAt: "", updatedAt: "",
-    //             author: {
-    //                 id: 0,
-    //                 name: '',
-    //                 books: [],
-    //                 createdAt: '',
-    //                 updatedAt: ''
-    //             },
-    //             rents: [],
-    //             favorites: [],
-    //             reviews: []
-    //         };
+    describe('updatePartial', () => {
+        it('should update the User with the specified ID and return the updated book', async () => {
+            const updatedUser: User = {
+                id: 1,
+                complete_name: '',
+                phone: '',
+                address: '',
+                username: '',
+                email: '',
+                password: '',
+                image: '',
+                details: '',
+                is_admin: 0,
+                rents: [],
+                reviews: [],
+                favorites: [],
+                createdAt: '',
+                updatedAt: ''
+            };
 
-    //         jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined); // Simula que o livro existe
+            jest.spyOn(service, 'show').mockResolvedValueOnce(undefined);
 
-    //         jest.spyOn(serviceAuthor, 'exist').mockResolvedValueOnce(undefined); // Simula que o autor existe
+            mockUserRepository.update.mockResolvedValueOnce({});
 
-    //         mockBookRepository.update.mockResolvedValueOnce({});
+            jest.spyOn(service, 'show').mockResolvedValueOnce(updatedUser);
 
-    //         jest.spyOn(service, 'show').mockResolvedValueOnce(updatedBook);
+            const result = await service.updatePartial(1, { complete_name: 'teste' });
 
-    //         const result = await service.updatePartial(1, { title: 'Livro' });
+            expect(result).toEqual(updatedUser);
+        });
 
-    //         expect(result).toEqual(updatedBook);
-    //     });
+        it('should throw NotFoundException if the user with the specified ID is not found', async () => {
+            jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
 
-    //     it('should throw NotFoundException if book with the specified ID is not found', async () => {
-    //         jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
+            const invalidId = 999;
 
-    //         const invalidId = 999;
+            await expect(service.updatePartial(invalidId, { complete_name: 'testeste' })).rejects.toThrow(NotFoundException);
+        });
+    });
 
-    //         await expect(service.updatePartial(invalidId, { title: 'testeste' })).rejects.toThrow(NotFoundException);
-    //     });
-    // });
+    // Testes do metodo delete
 
-    // // Testes do metodo delete
+    describe('delete', () => {
 
-    // describe('delete', () => {
+        it('should remove the user with the specified ID and return the deletion information', async () => {
+            jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
 
-    //     it('should remove the book with the specified ID and return the deletion information', async () => {
-    //         jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
+            const deleteInfo = true;
 
-    //         const deleteInfo = true;
+            mockUserRepository.delete.mockResolvedValueOnce(deleteInfo);
 
-    //         mockBookRepository.delete.mockResolvedValueOnce(deleteInfo);
+            const result = await service.delete(1);
 
-    //         const result = await service.delete(1);
+            expect(result).toEqual(deleteInfo);
+        });
 
-    //         expect(result).toEqual(deleteInfo);
-    //     });
+        it('should throw NotFoundException if the user with the specified ID is not found', async () => {
+            jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
 
-    //     it('should throw NotFoundException if book with the specified ID is not found', async () => {
-    //         jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
+            const invalidId = 99999;
 
-    //         const invalidId = 99999;
+            await expect(service.delete(invalidId)).rejects.toThrow(NotFoundException);
+        });
 
-    //         await expect(service.delete(invalidId)).rejects.toThrow(NotFoundException);
-    //     });
+    });
 
-    // });
+    // Testes do metodo exist
 
-    // // Testes do metodo exist
+    describe('exist', () => {
 
-    // describe('exist', () => {
+        it('should throw NotFoundException if the user does not exist', async () => {
+            const nonExistentUserId = 999;
+            mockUserRepository.exists.mockResolvedValue(false);
 
-    //     it('should throw NotFoundException if book does not exist', async () => {
-    //         const nonExistentBookId = 999;
-    //         mockBookRepository.exists.mockResolvedValue(false);
+            await expect(service.exist(nonExistentUserId)).rejects.toThrow(NotFoundException);
+            expect(mockUserRepository.exists).toHaveBeenCalledWith({
+                where: { id: nonExistentUserId }
+            });
+        });
 
-    //         await expect(service.exist(nonExistentBookId)).rejects.toThrow(NotFoundException);
-    //         expect(mockBookRepository.exists).toHaveBeenCalledWith({
-    //             where: { id: nonExistentBookId }
-    //         });
-    //     });
+        it('should not throw NotFoundException if User exists', async () => {
+            const existingUserId = 1;
+            mockUserRepository.exists.mockResolvedValue(true);
 
-    //     it('should not throw NotFoundException if book exists', async () => {
-    //         const existingBookId = 1;
-    //         mockBookRepository.exists.mockResolvedValue(true);
+            await expect(service.exist(existingUserId)).resolves.not.toThrow(NotFoundException);
+            expect(mockUserRepository.exists).toHaveBeenCalledWith({
+                where: { id: existingUserId }
+            });
+        });
 
-    //         await expect(service.exist(existingBookId)).resolves.not.toThrow(NotFoundException);
-    //         expect(mockBookRepository.exists).toHaveBeenCalledWith({
-    //             where: { id: existingBookId }
-    //         });
-    //     });
-
-    // });
+    });
 
 });
