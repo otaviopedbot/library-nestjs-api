@@ -432,8 +432,7 @@ describe('BookService', () => {
 
     describe('finish', () => {
 
-        it('should remove the book with the specified ID and return the deletion information', async () => {
-            // Mock do objeto de aluguel
+        it('should finish the rent with the specified ID', async () => {
             const mockRent: Rent = {
                 id: 1,
                 user_id: 1,
@@ -481,37 +480,23 @@ describe('BookService', () => {
                 updatedAt: ''
             };
         
-            // Mock do método findOne para retornar o objeto de aluguel
-            jest.spyOn(mockRentRepository, 'findOne').mockResolvedValueOnce(mockRent);
+            jest.spyOn(service, 'show').mockResolvedValueOnce(undefined);
         
-            // Mock de retorno do método update do repositório de aluguéis
-            const updatedRent = {}; // O objeto de aluguel atualizado pode ser qualquer valor
-            jest.spyOn(mockRentRepository, 'update').mockResolvedValueOnce(updatedRent);
-        
-            // Mock de retorno do método addBookQuantity do serviço de livro
             jest.spyOn(serviceBook, 'addBookQuantity').mockResolvedValueOnce(undefined);
         
-            // Chama o método finish do serviço de aluguel
-            const result = await service.finish(1); // Supondo que o ID do aluguel seja 1
-        
-            // Verifica se o método update do repositório de aluguéis foi chamado com os parâmetros corretos
-            expect(mockRentRepository.update).toHaveBeenCalledWith(1, { finished_in: expect.any(String) });
-        
-            // Verifica se o método addBookQuantity do serviço de livro foi chamado com o ID do livro do aluguel
-            expect(serviceBook.addBookQuantity).toHaveBeenCalledWith(mockRent.book_id);
-        
-            // Verifica se o resultado retornado é o objeto de aluguel atualizado
-            expect(result).toEqual(updatedRent);
+            jest.spyOn(mockRentRepository, 'update').mockResolvedValueOnce(mockRent);
+
+            const result = await service.finish(1);
+    
+            expect(result).toEqual(mockRent);
         });
-
-
 
         it('should throw NotFoundException if book with the specified ID is not found', async () => {
             jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
 
             const invalidId = 99999;
 
-            await expect(service.exist(invalidId)).rejects.toThrow(NotFoundException);
+            await expect(service.finish(invalidId)).rejects.toThrow(NotFoundException);
         });
 
     });

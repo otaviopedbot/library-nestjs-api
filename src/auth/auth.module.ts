@@ -9,7 +9,7 @@ import { AuthService } from "./auth.service";
 @Module({
     imports: [
         JwtModule.register({
-        secret: "segredosecretosegredosecreto0123456789"
+        secret: process.env.JWT_SECRET
     }),
         UserModule,
         TypeOrmModule.forFeature([User]),

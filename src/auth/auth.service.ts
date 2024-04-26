@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "src/user/entity/user.entity";
-import { UserService } from "src/user/user.service";
+import { User } from "../user/entity/user.entity";
+import { UserService } from "../user/user.service";
 import { Repository } from "typeorm";
 import * as bcrypt from 'bcryptjs';
 import { AuthRegisterDTO } from "./dto/auth-register.dto";
@@ -22,12 +22,13 @@ export class AuthService {
     createToken(user: User) {
         return this.jwtService.sign(
             {
-              id: user.id,
+                id: user.id,
             },
             {
-              expiresIn: '7 days',
+                expiresIn: '7 days',
+                secret: process.env.JWT_SECRET
             }
-          )
+        )
     }
 
     // checkToken(token: string) {
@@ -45,8 +46,8 @@ export class AuthService {
 
     async login(email: string, password: string) {
         const user = await this.usersRepository.findOne({
-           where: {email: email},
-           relations: ["favorites.book"]
+            where: { email: email },
+            relations: ["favorites.book"]
         });
 
         if (!user) {
@@ -65,6 +66,13 @@ export class AuthService {
     async register(data: AuthRegisterDTO) {
 
         const user = await this.userService.create(data);
+
+        // mockUserRepository.exists.mockReturnValueOnce(undefined);
+
+        // mockUserRepository.create.mockReturnValueOnce(mockUser);
+
+        // mockUserRepository.save.mockResolvedValueOnce(mockUser);
+
 
         const token = this.createToken(user)
 

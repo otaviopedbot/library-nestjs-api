@@ -23,7 +23,7 @@ const mockUserRepository = {
 //     exists: jest.fn()
 // };
 
-describe('Userervice', () => {
+describe('Userservice', () => {
     let service: UserService;
     // let serviceAuthor: AuthorService;
     // let serviceCloudinary: CloudinaryService;
