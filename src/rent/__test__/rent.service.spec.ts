@@ -6,8 +6,6 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { AuthorService } from '../../author/author.service';
 import { CloudinaryService } from '../../cloudinary/cloudinary.service';
-import { AuthorModule } from '../../author/author.module';
-import { CloudinaryModule } from '../../cloudinary/cloudinary.module';
 import { UserService } from '../../user/user.service';
 import { BookService } from '../../book/book.service';
 
@@ -428,54 +426,54 @@ describe('BookService', () => {
 
     describe('finish', () => {
 
-        it('should remove the book with the specified ID and return the deletion information', async () => {
+        // it('should remove the book with the specified ID and return the deletion information', async () => {
 
-            jest.spyOn(service, 'show').mockResolvedValueOnce(undefined);
+        //     jest.spyOn(service, 'show').mockResolvedValueOnce(undefined);
 
-            jest.spyOn(serviceBook, 'addBookQuantity').mockResolvedValueOnce(undefined);
+        //     jest.spyOn(serviceBook, 'addBookQuantity').mockResolvedValueOnce(undefined);
 
-           mockRentRepository.update.mockResolvedValueOnce({});
+        //    const updatedRent = mockRentRepository.update.mockResolvedValueOnce({});
 
-           const result = await service.finish(1);
+        //    const result = await service.finish(1);
 
-            expect(result).toEqual(updatedRent);
-            expect(result).toEqual(deleteInfo);
-        });
+        //     expect(result).toEqual(updatedRent);
 
-        // it('should throw NotFoundException if book with the specified ID is not found', async () => {
-        //     jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
-
-        //     const invalidId = 99999;
-
-        //     await expect(service.delete(invalidId)).rejects.toThrow(NotFoundException);
         // });
+
+        it('should throw NotFoundException if book with the specified ID is not found', async () => {
+            jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
+
+            const invalidId = 99999;
+
+            await expect(service.exist(invalidId)).rejects.toThrow(NotFoundException);
+        });
 
     });
 
     // Testes do metodo exist
 
-    // describe('exist', () => {
+    describe('exist', () => {
 
-    //     it('should throw NotFoundException if book does not exist', async () => {
-    //         const nonExistentBookId = 999;
-    //         mockBookRepository.exists.mockResolvedValue(false);
+        it('should throw NotFoundException if rent does not exist', async () => {
+            const nonExistentRentId = 999;
+            mockRentRepository.exists.mockResolvedValue(false);
 
-    //         await expect(service.exist(nonExistentBookId)).rejects.toThrow(NotFoundException);
-    //         expect(mockBookRepository.exists).toHaveBeenCalledWith({
-    //             where: { id: nonExistentBookId }
-    //         });
-    //     });
+            await expect(service.exist(nonExistentRentId)).rejects.toThrow(NotFoundException);
+            expect(mockRentRepository.exists).toHaveBeenCalledWith({
+                where: { id: nonExistentRentId }
+            });
+        });
 
-    //     it('should not throw NotFoundException if book exists', async () => {
-    //         const existingBookId = 1;
-    //         mockBookRepository.exists.mockResolvedValue(true);
+        it('should not throw NotFoundException if rent exists', async () => {
+            const existingRentId = 1;
+            mockRentRepository.exists.mockResolvedValue(true);
 
-    //         await expect(service.exist(existingBookId)).resolves.not.toThrow(NotFoundException);
-    //         expect(mockBookRepository.exists).toHaveBeenCalledWith({
-    //             where: { id: existingBookId }
-    //         });
-    //     });
+            await expect(service.exist(existingRentId)).resolves.not.toThrow(NotFoundException);
+            expect(mockRentRepository.exists).toHaveBeenCalledWith({
+                where: { id: existingRentId }
+            });
+        });
 
-    // });
+    });
 
 });

@@ -42,32 +42,6 @@ export class ReviewService {
         }
     }
 
-    // async updatePartial(
-    //     id: number,
-    //     { rating, body, }: UpdatePatchReviewDTO
-    // ) {
-
-    //     try {
-
-    //         await this.exist(id);
-
-    //         const data: any = {};
-
-    //         if (rating) {
-    //             data.rating = rating;
-    //         }
-
-    //         if (body) {
-    //             data.body = body;
-    //         }
-
-    //         return await this.reviewsRepository.update(id, data);
-
-    //     } catch (err) {
-    //         throw err
-    //     }
-    // }
-
     async delete(id: number) {
         await this.exist(id);
 

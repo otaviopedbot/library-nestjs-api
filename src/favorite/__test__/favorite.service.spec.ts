@@ -7,8 +7,6 @@ import { FavoriteService } from '../favorite.service';
 import { UserService } from '../../user/user.service';
 import { BookService } from '../../book/book.service';
 import { CloudinaryService } from '../../cloudinary/cloudinary.service';
-import { CloudinaryModule } from '../../cloudinary/cloudinary.module';
-import { AuthorModule } from '../../author/author.module';
 import { AuthorService } from '../../author/author.service';
 
 const mockFavoriteRepository = {
