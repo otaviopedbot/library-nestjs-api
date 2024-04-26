@@ -491,6 +491,83 @@ describe('BookService', () => {
             expect(result).toEqual(mockRent);
         });
 
+
+
+        // describe('returnBook', () => {
+        //     it('should return the rent with the specified ID and return the saved information', async () => {
+        //         const date = new Date();
+        //         date.setDate(date.getDate() + 5);
+        //         const mockBook: Books = {
+        //             id: 1,
+        //             title: '',
+        //             author_id: 1,
+        //             qty_available: 5,
+        //             release_date: '',
+        //             description: null,
+        //             image: '',
+        //             author: {
+        //                 id: 1,
+        //                 name: '',
+        //                 books: [],
+        //                 image: null,
+        //                 description: null
+        //             },
+        //             rents: [],
+        //             favorite: [],
+        //             comments: [],
+        //         };
+    
+        //         const mockRent: Rents = {
+        //             id: 1,
+        //             user_id: 1,
+        //             book_id: 1,
+        //             status: 'active',
+        //             date_rented: new Date().toISOString(),
+        //             date_for_return: date.toISOString(),
+        //             date_returned: null,
+        //             user: {
+        //                 id: 1,
+        //                 username: '',
+        //                 email: '',
+        //                 password: '',
+        //                 image: '',
+        //                 type: 'user',
+        //                 description: '',
+        //                 favorite_book: null,
+        //                 rents: [],
+        //                 comments: [],
+        //                 book: null
+        //             },
+        //             book: mockBook
+        //         };
+        
+        //         jest.spyOn(mockRentRepository, 'findOne').mockResolvedValueOnce(mockRent);
+        //         jest.spyOn(bookService, 'show').mockResolvedValueOnce(mockBook);
+        //         jest.spyOn(bookService, 'updatePartial').mockResolvedValueOnce(mockBook);
+        
+        //         const updatedRent = { ...mockRent, status: 'returned', date_returned: new Date().toISOString().split('T')[0] };
+        //         jest.spyOn(mockRentRepository, 'save').mockResolvedValueOnce(updatedRent);
+        
+        //         const result = await rentsService.returnBook(1);
+        
+        //         expect(mockRentRepository.save).toHaveBeenCalledWith(updatedRent);
+        //         expect(result).toEqual(updatedRent);
+        //     });
+    
+        //     it('should throw NotFoundException if book with the specified ID is not found', async () => {
+        //         jest.spyOn(rentsService, 'exists').mockRejectedValueOnce(new NotFoundException());
+    
+        //         await expect(rentsService.exists(99999)).rejects.toThrow(NotFoundException);
+        //     });
+        // });
+
+
+
+
+
+
+
+
         it('should throw NotFoundException if book with the specified ID is not found', async () => {
             jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
 
