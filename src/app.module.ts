@@ -1,23 +1,34 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
-import { User } from './user/entity/user.entity';
-import { Author } from './author/entity/author.entity';
-import { Book } from './book/entity/book.entity';
-import { Rent } from './rent/entity/rent.entity';
-import { Review } from './review/entity/review.entity';
-import { Favorite } from './favorite/entity/favorite.entity';
-import { AuthorModule } from './author/author.module';
-import { BookModule } from './book/book.module';
-import { RentModule } from './rent/rent.module';
-import { FavoriteModule } from './favorite/author.module';
-import { ReviewModule } from './review/review.module';
-import { CloudinaryModule } from './cloudinary/cloudinary.module';
-import { AuthModule } from './auth/auth.module';
+
+// modules
+
+import { Author } from '././GraphQL/author/entity/author.entity';
+import { AuthorModule } from '././GraphQL/author/author.module';
+
+import { User } from '././GraphQL/user/entity/user.entity';
+import { UserModule } from './GraphQL/user/user.module';
+
+import { Rent } from '././GraphQL/rent/entity/rent.entity';
+import { RentModule } from '././GraphQL/rent/rent.module';
+
+import { Review } from '././GraphQL/review/entity/review.entity';
+import { ReviewModule } from '././GraphQL/review/review.module';
+
+import { Book } from './GraphQL/book/entity/book.entity';
+import { BookModule } from './GraphQL/book/book.module';
+
+import { Favorite } from './GraphQL/favorite/entity/favorite.entity';
+import { FavoriteModule } from './GraphQL/favorite/favorite.module';
+
+import { CloudinaryModule } from '././GraphQL/cloudinary/cloudinary.module';
 
 
 @Module({
@@ -31,7 +42,7 @@ import { AuthModule } from './auth/auth.module';
     FavoriteModule,
     ReviewModule,
     CloudinaryModule,
-    AuthModule,
+    // AuthModule,
 
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -40,9 +51,16 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Author, Book, Rent, Review, Favorite],
+      entities: [Author, Book, Favorite, Rent, Review, User],
       synchronize: true
+    }),
+
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      include: [AuthorModule, BookModule, FavoriteModule, RentModule, ReviewModule, UserModule],
+      autoSchemaFile: true,
     })
+    
   ],
   controllers: [AppController],
   providers: [AppService],
