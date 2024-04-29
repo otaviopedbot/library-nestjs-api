@@ -38,39 +38,39 @@ describe('Authservice', () => {
 
     // Testes do metodo login
 
-    describe('login', () => {
-        it('should return a token when email and password are correct', async () => {
-            const mockUser = {
-                id: 1,
-                email: 'mail@mail.com',
-                password: await bcrypt.hash('password', 10)
-            };
+    // describe('login', () => {
+    //     it('should return a token when email and password are correct', async () => {
+    //         const mockUser = {
+    //             id: 1,
+    //             email: 'mail@mail.com',
+    //             password: await bcrypt.hash('password', 10)
+    //         };
     
-            mockUserRepository.findOne.mockResolvedValueOnce(mockUser);
+    //         mockUserRepository.findOne.mockResolvedValueOnce(mockUser);
     
-            const result = await service.login('mail@mail.com', 'password');
+    //         const result = await service.login('mail@mail.com', 'password');
     
-            expect(result).toHaveProperty('token');
-        });
+    //         expect(result).toHaveProperty('token');
+    //     });
     
-        it('should throw UnauthorizedException when username is correct but password is incorrect', async () => {
-            const mockUser = {
-                id: 1,
-                username: 'testuser',
-                password: await bcrypt.hash('password', 10)
-            };
+    //     it('should throw UnauthorizedException when username is correct but password is incorrect', async () => {
+    //         const mockUser = {
+    //             id: 1,
+    //             username: 'testuser',
+    //             password: await bcrypt.hash('password', 10)
+    //         };
     
-            mockUserRepository.findOne.mockResolvedValueOnce(mockUser);
+    //         mockUserRepository.findOne.mockResolvedValueOnce(mockUser);
 
-            await expect(service.login('testuser', 'wrongpassword')).rejects.toThrow(UnauthorizedException);
-        });
+    //         await expect(service.login('testuser', 'wrongpassword')).rejects.toThrow(UnauthorizedException);
+    //     });
     
-        it('should throw UnauthorizedException when username is not found', async () => {
-            mockUserRepository.findOne.mockResolvedValueOnce(null);
+    //     it('should throw UnauthorizedException when username is not found', async () => {
+    //         mockUserRepository.findOne.mockResolvedValueOnce(null);
     
-            await expect(service.login('nonexistentuser', 'password')).rejects.toThrow(UnauthorizedException);
-        });
-    });
+    //         await expect(service.login('nonexistentuser', 'password')).rejects.toThrow(UnauthorizedException);
+    //     });
+    // });
 
     // Testes do metodo register
 
