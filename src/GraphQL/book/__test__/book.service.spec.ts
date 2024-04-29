@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BookService } from '../book.service';
-import { CreateBookDTO } from '../inputs/create-book.dto';
-import { Book } from '../types/book.entity';
+import { CreateBookDTO } from '../inputs/create-book.input';
+import { Book } from '../types/book.type';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { AuthorService } from '../../author/author.service';

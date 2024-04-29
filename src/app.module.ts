@@ -22,7 +22,7 @@ import { RentModule } from '././GraphQL/rent/rent.module';
 import { Review } from './GraphQL/review/types/review.entity';
 import { ReviewModule } from '././GraphQL/review/review.module';
 
-import { Book } from './GraphQL/book/types/book.entity';
+import { Book } from './GraphQL/book/book.entity';
 import { BookModule } from './GraphQL/book/book.module';
 
 import { Favorite } from './GraphQL/favorite/types/favorite.entity';
@@ -57,8 +57,8 @@ import { CloudinaryModule } from '././GraphQL/cloudinary/cloudinary.module';
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      include: [AuthorModule, BookModule, FavoriteModule, RentModule, ReviewModule, UserModule],
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      //include: [AuthorModule, BookModule, FavoriteModule, RentModule, ReviewModule, UserModule],
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql')
     }),
 
   ],

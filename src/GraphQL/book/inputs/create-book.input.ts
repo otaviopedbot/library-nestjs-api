@@ -2,7 +2,7 @@ import { Field, InputType } from "@nestjs/graphql"
 import { IsNumber, IsOptional, IsString,} from "class-validator"
 
 @InputType()
-export class CreateBookDTO {
+export class CreateBookInput {
 
     @Field()
     @IsString()
@@ -20,12 +20,12 @@ export class CreateBookDTO {
     @IsNumber()
     author_id: number
 
-    @Field()
+    @Field({ nullable: true })
     @IsOptional()
     @IsString()
     synopsis: string
 
-    @Field()
+    @Field({ nullable: true })
     @IsOptional()
     @IsString()
     cover: string

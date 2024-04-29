@@ -1,37 +1,38 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete, UseInterceptors, UploadedFile } from "@nestjs/common";
-import { CreateBookDTO } from "../inputs/create-book.dto";
 import { BookService } from "../book.service";
-import { UpdatePatchBookDTO } from "../inputs/update-patch-book.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { Book } from "../types/book.entity";
+import { BookType } from "../types/book.type";
+import { CreateBookArgs } from "../args/create-book.args";
+import { UpdateBookArgs } from "../args/apdate-book.args";
+import { Book } from "../book.entity";
 
 
 @Resolver('books')
 export class BookResolver {
     constructor(private readonly bookService: BookService) { }
 
-    @Mutation(() => Book)
-    async createBook(@Args('data') data: CreateBookDTO) {
-        return this.bookService.create(data);
+    @Mutation(() => BookType)
+    async createBook(@Args() args: CreateBookArgs): Promise<BookType> {
+        return this.bookService.create(args.data);
     }
 
-    @Query(() => [Book])
-    async listBooks() {
-        return this.bookService.list();
-    }
+    // @Query(() => [BookType])
+    // async listBooks() {
+    //     return this.bookService.list();
+    // }
 
-    @Query(() => Book)
-    async showBook(@Args('id') id: number) {
-        return this.bookService.show(id);
-    }
+    // @Query(() => BookType)
+    // async showBook(@Args('id') id: number): Promise<BookType> {
+    //     return this.bookService.show(id);
+    // }
 
-    @Mutation(() => Book)
-    async updatePartialBook(@Args('data') data: UpdatePatchBookDTO, @Args('id') id: number) {
-        return this.bookService.updatePartial(id, data);
-    }
+    // @Mutation(() => BookType)
+    // async updatePartialBook(@Args() args: UpdateBookArgs, @Args('id') id: number): Promise<BookType> {
+    //     return this.bookService.updatePartial(id, args.data);
+    // }
 
-    // @Mutation(() => Book)
+    // @Mutation(() => BoBookTypeok)
     // @UseInterceptors(FileInterceptor('cover'))
     // async updateCoverBook(@Args('id', ParseIntPipe) id: number, @UploadedFile() cover: Express.Multer.File) {
 
@@ -40,11 +41,9 @@ export class BookResolver {
     //     return this.bookService.updateCover(id, cover);
     // }
 
-    @Mutation(() => Boolean)
-    async deleteBook(@Args('id') id: number) {
-        return {
-            success: await this.bookService.delete(id),
-        };
-    }
+    // @Mutation(() => Boolean)
+    // async deleteBook(@Args('id') id: number) {
+    //     return await this.bookService.delete(id)
+    // }
 
 }

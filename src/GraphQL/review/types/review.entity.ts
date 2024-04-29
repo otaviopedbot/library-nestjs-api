@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, JoinColumn } from "typeorm";
 import { User } from "../../user/types/user.entity";
-import { Book } from "../../book/types/book.entity";
+import { Book } from "../../book/book.entity"
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 

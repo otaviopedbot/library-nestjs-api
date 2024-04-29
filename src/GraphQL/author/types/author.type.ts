@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Book } from "../../book/types/book.entity"
+import { Book } from "../../book/book.entity"
 
 
 @ObjectType()
@@ -24,11 +24,11 @@ export class Author {
     @OneToMany(type => Book, book => book.author)
     books: Book[];
 
-    @Field({nullable: true})
+    @Field({ nullable: true })
     @CreateDateColumn()
     createdAt: string;
 
-    @Field({nullable: true})
+    @Field({ nullable: true })
     @UpdateDateColumn()
     updatedAt: string;
 

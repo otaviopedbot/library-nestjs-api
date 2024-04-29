@@ -54,7 +54,7 @@ type Rent {
 }
 
 type Book {
-  id: ID!
+  id: Float!
   title: String!
   author_id: Float!
   page: Float!
@@ -79,8 +79,6 @@ type Author {
 type Query {
   listUsers: [User!]!
   showUser(id: Float!): User!
-  listBooks: [Book!]!
-  showBook(id: Float!): Book!
   listAuthors: [Author!]!
   showAuthor(id: Float!): Author!
   listRents: [Rent!]!
@@ -88,28 +86,19 @@ type Query {
 }
 
 type Mutation {
-  create(data: CreateReviewDTO!): Review!
-  delete(id: Float!): Boolean!
   updatePartial(data: UpdatePatchUserDTO!, id: Float!): User!
   deleteUser(id: Float!): Boolean!
-  createBook(data: CreateBookDTO!): Book!
-  updatePartialBook(data: UpdatePatchBookDTO!, id: Float!): Book!
-  deleteBook(id: Float!): Boolean!
   createAuthor(data: CreateAuthorInput!): Author!
   updatePartialAuthor(data: UpdatePatchAuthorInput!, id: Float!): Author!
   deleteAuthor(id: Float!): Boolean!
-  createFavorite(data: CreateFavoriteDTO!): Favorite!
-  deleteFavorite(id: Float!): Boolean!
+  createBook(data: CreateBookInput!): Book!
   createRent(data: CreateRentDTO!): Rent!
   updatePartialRent(data: UpdatePatchRentDTO!, id: Float!): Rent!
   finishRent(id: Float!): String!
-}
-
-input CreateReviewDTO {
-  rating: Float!
-  body: String!
-  user_id: Float!
-  book_id: Float!
+  createFavorite(data: CreateFavoriteDTO!): Favorite!
+  deleteFavorite(id: Float!): Boolean!
+  create(data: CreateReviewDTO!): Review!
+  delete(id: Float!): Boolean!
 }
 
 input UpdatePatchUserDTO {
@@ -123,24 +112,6 @@ input UpdatePatchUserDTO {
   details: String!
 }
 
-input CreateBookDTO {
-  title: String!
-  page: Float!
-  quantity: Float!
-  author_id: Float!
-  synopsis: String!
-  cover: String!
-}
-
-input UpdatePatchBookDTO {
-  title: String!
-  page: Float!
-  quantity: Float!
-  author_id: Float!
-  synopsis: String!
-  cover: String!
-}
-
 input CreateAuthorInput {
   name: String!
 }
@@ -149,9 +120,13 @@ input UpdatePatchAuthorInput {
   name: String!
 }
 
-input CreateFavoriteDTO {
-  user_id: Float!
-  book_id: Float!
+input CreateBookInput {
+  title: String!
+  page: Float!
+  quantity: Float!
+  author_id: Float!
+  synopsis: String
+  cover: String
 }
 
 input CreateRentDTO {
@@ -160,6 +135,18 @@ input CreateRentDTO {
 }
 
 input UpdatePatchRentDTO {
+  user_id: Float!
+  book_id: Float!
+}
+
+input CreateFavoriteDTO {
+  user_id: Float!
+  book_id: Float!
+}
+
+input CreateReviewDTO {
+  rating: Float!
+  body: String!
   user_id: Float!
   book_id: Float!
 }

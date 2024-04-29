@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateBookDTO } from "./inputs/create-book.dto";
+import { CreateBookInput } from "./inputs/create-book.input";
 import { Repository } from "typeorm";
-import { Book } from "./types/book.entity";
+import { Book } from "../book/book.entity"
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthorService } from "../author/author.service";
-import { UpdatePatchBookDTO } from "./inputs/update-patch-book.dto";
+import { UpdatePatchBookInput } from "./inputs/update-patch-book.input";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 
@@ -18,7 +18,7 @@ export class BookService {
         private readonly cloudinaryService: CloudinaryService
     ) { }
 
-    async create(data: CreateBookDTO) {
+    async create(data: CreateBookInput) {
         try {
             if (await this.booksRepository.exists({ where: { title: data.title } })) {
                 throw new BadRequestException('Title already in use');
@@ -37,7 +37,7 @@ export class BookService {
 
     async list() {
         return this.booksRepository.find({
-            // relations: ["author"]
+            relations: ["author"]
         })
     }
 
@@ -52,7 +52,7 @@ export class BookService {
 
     async updatePartial(
         id: number,
-        { title, page, quantity, author_id, synopsis }: UpdatePatchBookDTO
+        { title, page, quantity, author_id, synopsis }: UpdatePatchBookInput
     ) {
 
         try {

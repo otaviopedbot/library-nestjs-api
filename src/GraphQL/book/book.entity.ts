@@ -1,21 +1,20 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Favorite } from "../../favorite/types/favorite.entity";
-import { Rent } from "../../rent/types/rent.entity";
-import { Review } from "../../review/types/review.entity";
-import { Author } from "../../author/types/author.type";
+import { Favorite } from "../favorite/types/favorite.entity";
+import { Rent } from "../rent/types/rent.entity";
+import { Review } from "../review/types/review.entity";
+import { Author } from "../author/types/author.type";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 require('dotenv').config();
 
-
-@ObjectType()
+//@ObjectType()
 @Entity({
     name: 'books',
 })
 export class Book {
 
+
     @PrimaryGeneratedColumn({
     })
-    @Field(() => ID)
     id: number;
 
 
@@ -23,6 +22,7 @@ export class Book {
         length: 127
     })
     title: string;
+
 
     @Column({
     })
@@ -44,7 +44,7 @@ export class Book {
     })
     synopsis: string;
 
-
+  
     @Column({
         nullable: true,
         default: process.env.CLOUDINARY_DEFAULT_BOOK_IMG
