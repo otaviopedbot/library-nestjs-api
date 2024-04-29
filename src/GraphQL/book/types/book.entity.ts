@@ -1,8 +1,8 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Favorite } from "../../favorite/entity/favorite.entity";
-import { Rent } from "../../rent/entity/rent.entity";
-import { Review } from "../../review/entity/review.entity";
-import { Author } from "../../author/entity/author.entity";
+import { Favorite } from "../../favorite/types/favorite.entity";
+import { Rent } from "../../rent/types/rent.entity";
+import { Review } from "../../review/types/review.entity";
+import { Author } from "../../author/types/author.type";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 require('dotenv').config();
 
@@ -46,6 +46,7 @@ export class Book {
 
 
     @Column({
+        nullable: true,
         default: process.env.CLOUDINARY_DEFAULT_BOOK_IMG
     })
     cover: string;

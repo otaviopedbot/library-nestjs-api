@@ -1,45 +1,42 @@
-import { Param, ParseIntPipe } from "@nestjs/common";
-import { CreateAuthorDTO } from "../dto/create-author.dto";
 import { AuthorService } from "../author.service";
-import { UpdatePatchAuthorDTO } from "../dto/update-patch-author.dto";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { Author } from "../entity/author.entity";
+import { Author } from "../types/author.type";
+import { CreateAuthorArgs } from "../args/create-author.args";
+import { UpdateAuthorArgs } from "../args/apdate-author.args";
 
 
 @Resolver('authors')
 export class AuthorResolver {
     constructor(private readonly authorService: AuthorService) { }
 
-    
+
     @Mutation(() => Author)
-    async createAuthor(@Args('data') data: CreateAuthorDTO) {
-        return this.authorService.create(data);
+    async createAuthor(@Args() args: CreateAuthorArgs) {
+        return this.authorService.create(args.data);
     }
 
 
-    @Query(()=> [Author])
+    @Query(() => [Author])
     async listAuthors() {
         return this.authorService.list();
     }
 
 
-    @Query(()=> Author)
+    @Query(() => Author)
     async showAuthor(@Args('id') id: number) {
         return this.authorService.show(id);
     }
 
 
     @Mutation(() => Author)
-    async updatePartialAuthor(@Args('data') data: UpdatePatchAuthorDTO, @Args('id') id: number) {
-        return this.authorService.updatePartial(id, data);
+    async updatePartialAuthor(@Args() args: UpdateAuthorArgs, @Args('id') id: number) {
+        return this.authorService.updatePartial(id, args.data);
     }
 
 
     @Mutation(() => Boolean)
     async deleteAuthor(@Args('id') id: number) {
-        return {
-            success: await this.authorService.delete(id),
-        };
+        return await this.authorService.delete(id)
     }
 
 

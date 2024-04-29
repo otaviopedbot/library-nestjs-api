@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateUserDTO } from "./dto/create-user.dto";
+import { CreateUserDTO } from "./inputs/create-user.dto";
 import { Repository } from "typeorm";
-import { User } from "./entity/user.entity";
+import { User } from "./types/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from 'bcryptjs'
-import { UpdatePatchUserDTO } from "./dto/update-patch-user.dto";
+import { UpdatePatchUserDTO } from "./inputs/update-patch-user.dto";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 
@@ -124,7 +124,7 @@ export class UserService {
                     const newImage = await this.cloudinaryService.uploadFile(image)
                     data.image = newImage.url
                 }
-                else{
+                else {
                     const newImage = await this.cloudinaryService.uploadFile(image)
                     data.image = newImage.url
                 }

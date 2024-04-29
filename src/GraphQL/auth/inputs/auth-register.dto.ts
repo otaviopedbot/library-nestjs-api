@@ -1,5 +1,5 @@
 import { IsEmail, IsMobilePhone, IsOptional, IsString, IsStrongPassword } from "class-validator";
-import { CreateUserDTO } from "../../user/dto/create-user.dto";
+import { CreateUserDTO } from "../../user/inputs/create-user.dto";
 import { Field, InputType } from "@nestjs/graphql";
 
 @InputType()

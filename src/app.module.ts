@@ -10,22 +10,22 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 // modules
 
-import { Author } from '././GraphQL/author/entity/author.entity';
+import { Author } from './GraphQL/author/types/author.type';
 import { AuthorModule } from '././GraphQL/author/author.module';
 
-import { User } from '././GraphQL/user/entity/user.entity';
+import { User } from './GraphQL/user/types/user.entity';
 import { UserModule } from './GraphQL/user/user.module';
 
-import { Rent } from '././GraphQL/rent/entity/rent.entity';
+import { Rent } from './GraphQL/rent/types/rent.entity';
 import { RentModule } from '././GraphQL/rent/rent.module';
 
-import { Review } from '././GraphQL/review/entity/review.entity';
+import { Review } from './GraphQL/review/types/review.entity';
 import { ReviewModule } from '././GraphQL/review/review.module';
 
-import { Book } from './GraphQL/book/entity/book.entity';
+import { Book } from './GraphQL/book/types/book.entity';
 import { BookModule } from './GraphQL/book/book.module';
 
-import { Favorite } from './GraphQL/favorite/entity/favorite.entity';
+import { Favorite } from './GraphQL/favorite/types/favorite.entity';
 import { FavoriteModule } from './GraphQL/favorite/favorite.module';
 
 import { CloudinaryModule } from '././GraphQL/cloudinary/cloudinary.module';
@@ -58,9 +58,9 @@ import { CloudinaryModule } from '././GraphQL/cloudinary/cloudinary.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       include: [AuthorModule, BookModule, FavoriteModule, RentModule, ReviewModule, UserModule],
-      autoSchemaFile: true,
-    })
-    
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    }),
+
   ],
   controllers: [AppController],
   providers: [AppService],

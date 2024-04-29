@@ -4,7 +4,7 @@ import { UnauthorizedException } from '@nestjs/common';
 import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from '../auth.service';
-import { CreateUserDTO } from '../../user/dto/create-user.dto';
+import { CreateUserDTO } from '../../user/inputs/create-user.dto';
 import * as bcrypt from 'bcryptjs';
 
 const mockUserRepository = {
@@ -45,29 +45,29 @@ describe('Authservice', () => {
                 email: 'mail@mail.com',
                 password: await bcrypt.hash('password', 10)
             };
-    
+
             mockUserRepository.findOne.mockResolvedValueOnce(mockUser);
-    
+
             const result = await service.login('mail@mail.com', 'password');
-    
+
             expect(result).toHaveProperty('token');
         });
-    
+
         it('should throw UnauthorizedException when username is correct but password is incorrect', async () => {
             const mockUser = {
                 id: 1,
                 username: 'testuser',
                 password: await bcrypt.hash('password', 10)
             };
-    
+
             mockUserRepository.findOne.mockResolvedValueOnce(mockUser);
 
             await expect(service.login('testuser', 'wrongpassword')).rejects.toThrow(UnauthorizedException);
         });
-    
+
         it('should throw UnauthorizedException when username is not found', async () => {
             mockUserRepository.findOne.mockResolvedValueOnce(null);
-    
+
             await expect(service.login('nonexistentuser', 'password')).rejects.toThrow(UnauthorizedException);
         });
     });

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RentService } from '../rent.service';
-import { CreateRentDTO } from '../dto/create-rent.dto';
-import { Rent } from '../entity/rent.entity';
+import { CreateRentDTO } from '../inputs/create-rent.dto';
+import { Rent } from '../types/rent.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { AuthorService } from '../../author/author.service';
@@ -479,15 +479,15 @@ describe('BookService', () => {
                 createdAt: '',
                 updatedAt: ''
             };
-        
+
             jest.spyOn(service, 'show').mockResolvedValueOnce(undefined);
-        
+
             jest.spyOn(serviceBook, 'addBookQuantity').mockResolvedValueOnce(undefined);
-        
+
             jest.spyOn(mockRentRepository, 'update').mockResolvedValueOnce(mockRent);
 
             const result = await service.finish(1);
-    
+
             expect(result).toEqual(mockRent);
         });
 
@@ -516,7 +516,7 @@ describe('BookService', () => {
         //             favorite: [],
         //             comments: [],
         //         };
-    
+
         //         const mockRent: Rents = {
         //             id: 1,
         //             user_id: 1,
@@ -540,23 +540,23 @@ describe('BookService', () => {
         //             },
         //             book: mockBook
         //         };
-        
+
         //         jest.spyOn(mockRentRepository, 'findOne').mockResolvedValueOnce(mockRent);
         //         jest.spyOn(bookService, 'show').mockResolvedValueOnce(mockBook);
         //         jest.spyOn(bookService, 'updatePartial').mockResolvedValueOnce(mockBook);
-        
+
         //         const updatedRent = { ...mockRent, status: 'returned', date_returned: new Date().toISOString().split('T')[0] };
         //         jest.spyOn(mockRentRepository, 'save').mockResolvedValueOnce(updatedRent);
-        
+
         //         const result = await rentsService.returnBook(1);
-        
+
         //         expect(mockRentRepository.save).toHaveBeenCalledWith(updatedRent);
         //         expect(result).toEqual(updatedRent);
         //     });
-    
+
         //     it('should throw NotFoundException if book with the specified ID is not found', async () => {
         //         jest.spyOn(rentsService, 'exists').mockRejectedValueOnce(new NotFoundException());
-    
+
         //         await expect(rentsService.exists(99999)).rejects.toThrow(NotFoundException);
         //     });
         // });

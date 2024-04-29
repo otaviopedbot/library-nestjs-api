@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthorService } from '../author.service';
-import { CreateAuthorDTO } from '../dto/create-author.dto';
-import { Author } from '../entity/author.entity';
+import { CreateAuthorDTO } from '../inputs/create-author.input';
+import { Author } from '../types/author.type';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 
@@ -72,12 +72,12 @@ describe('AuthorService', () => {
 
         it('should throw BadRequestException if name already exists', async () => {
             const data: CreateAuthorDTO = { name: 'John' };
-        
+
             mockAuthorRepository.exists.mockResolvedValue(true);
-        
+
             await expect(service.create(data)).rejects.toThrow(BadRequestException);
         });
-        
+
     });
 
     // Testes do metodo list
@@ -100,7 +100,7 @@ describe('AuthorService', () => {
     // Testes do metodo show
 
     describe('show', () => {
-        
+
         it('Should return one Author', async () => {
             const mockAuthor: Author = { id: 1, name: 'Author 1', books: [], createdAt: "", updatedAt: "" }
 
@@ -130,30 +130,30 @@ describe('AuthorService', () => {
     describe('updatePartial', () => {
         it('should update the author with the specified ID and return the updated author', async () => {
             const updatedAuthor: Author = { id: 1, name: 'Jane Doe', books: [], createdAt: "", updatedAt: "" };
-    
+
             jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined); // Simula que o autor existe
 
             mockAuthorRepository.update.mockResolvedValueOnce({}); // Simula a atualização do autor
 
             jest.spyOn(service, 'show').mockResolvedValueOnce(updatedAuthor); // Simula a exibição do autor atualizado
-    
+
             const result = await service.updatePartial(1, { name: 'Jane Doe' });
-    
+
             expect(result).toEqual(updatedAuthor);
             expect(service.exist).toHaveBeenCalledWith(1); // Verifica se exist foi chamado com o ID correto
         });
-    
+
         it('should throw NotFoundException if author with the specified ID is not found', async () => {
             jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException()); // Simula que o autor não existe
 
             const invalidId = 999;
-    
+
             await expect(service.updatePartial(invalidId, { name: 'Jane Doe' })).rejects.toThrow(NotFoundException);
         });
     });
 
     // Testes do metodo delete
-    
+
     describe('delete', () => {
 
         it('should remove the author with the specified ID and return the deletion information', async () => {
@@ -184,7 +184,7 @@ describe('AuthorService', () => {
         it('should throw NotFoundException if author does not exist', async () => {
             const nonExistentAuthorId = 999;
             mockAuthorRepository.exists.mockResolvedValue(false);
-     
+
             await expect(service.exist(nonExistentAuthorId)).rejects.toThrowError(NotFoundException);
             expect(mockAuthorRepository.exists).toHaveBeenCalledWith({
                 where: { id: nonExistentAuthorId }

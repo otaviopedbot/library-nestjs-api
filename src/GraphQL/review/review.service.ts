@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateReviewDTO } from "./dto/create-review.dto";
+import { CreateReviewDTO } from "./inputs/create-review.dto";
 import { Repository } from "typeorm";
-import { Review } from "./entity/review.entity";
+import { Review } from "./types/review.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { BookService } from "../book/book.service";
 import { UserService } from "../user/user.service";

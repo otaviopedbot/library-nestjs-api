@@ -1,20 +1,20 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { UserService } from "../user.service";
-import { UpdatePatchUserDTO } from "../dto/update-patch-user.dto";
+import { UpdatePatchUserDTO } from "../inputs/update-patch-user.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { User } from "../entity/user.entity";
+import { User } from "../types/user.entity";
 
 @Resolver('users')
 export class UserResolver {
     constructor(private readonly userService: UserService) { }
 
-    @Query(()=> [User])
+    @Query(() => [User])
     async listUsers() {
         return this.userService.list();
     }
 
-    @Query(()=> User)
+    @Query(() => User)
     async showUser(@Args('id') id: number) {
         return this.userService.show(id);
     }

@@ -1,0 +1,165 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Review {
+  id: ID!
+  rating: Float!
+  body: String!
+  user_id: Float!
+  book_id: Float!
+  user: [User!]!
+  book: [Book!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Favorite {
+  id: ID!
+  user_id: Float!
+  book_id: Float!
+  user: User!
+  book: Book!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type User {
+  id: ID!
+  complete_name: String!
+  phone: String!
+  address: String!
+  username: String!
+  email: String!
+  password: String!
+  image: String!
+  details: String!
+  is_admin: Float!
+  rents: [Rent!]!
+  reviews: [Review!]!
+  favorites: [Favorite!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Rent {
+  id: ID!
+  user_id: Float!
+  book_id: Float!
+  finished_in: String!
+  user: User!
+  book: Book!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  author_id: Float!
+  page: Float!
+  quantity: Float!
+  synopsis: String!
+  cover: String!
+  author: Author!
+  rents: [Rent!]!
+  favorites: [Favorite!]!
+  reviews: [Review!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Author {
+  id: ID!
+  name: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Query {
+  listUsers: [User!]!
+  showUser(id: Float!): User!
+  listBooks: [Book!]!
+  showBook(id: Float!): Book!
+  listAuthors: [Author!]!
+  showAuthor(id: Float!): Author!
+  listRents: [Rent!]!
+  showRent(id: Float!): Rent!
+}
+
+type Mutation {
+  create(data: CreateReviewDTO!): Review!
+  delete(id: Float!): Boolean!
+  updatePartial(data: UpdatePatchUserDTO!, id: Float!): User!
+  deleteUser(id: Float!): Boolean!
+  createBook(data: CreateBookDTO!): Book!
+  updatePartialBook(data: UpdatePatchBookDTO!, id: Float!): Book!
+  deleteBook(id: Float!): Boolean!
+  createAuthor(data: CreateAuthorInput!): Author!
+  updatePartialAuthor(data: UpdatePatchAuthorInput!, id: Float!): Author!
+  deleteAuthor(id: Float!): Boolean!
+  createFavorite(data: CreateFavoriteDTO!): Favorite!
+  deleteFavorite(id: Float!): Boolean!
+  createRent(data: CreateRentDTO!): Rent!
+  updatePartialRent(data: UpdatePatchRentDTO!, id: Float!): Rent!
+  finishRent(id: Float!): String!
+}
+
+input CreateReviewDTO {
+  rating: Float!
+  body: String!
+  user_id: Float!
+  book_id: Float!
+}
+
+input UpdatePatchUserDTO {
+  complete_name: String!
+  phone: String!
+  address: String!
+  username: String!
+  email: String!
+  password: String!
+  image: String!
+  details: String!
+}
+
+input CreateBookDTO {
+  title: String!
+  page: Float!
+  quantity: Float!
+  author_id: Float!
+  synopsis: String!
+  cover: String!
+}
+
+input UpdatePatchBookDTO {
+  title: String!
+  page: Float!
+  quantity: Float!
+  author_id: Float!
+  synopsis: String!
+  cover: String!
+}
+
+input CreateAuthorInput {
+  name: String!
+}
+
+input UpdatePatchAuthorInput {
+  name: String!
+}
+
+input CreateFavoriteDTO {
+  user_id: Float!
+  book_id: Float!
+}
+
+input CreateRentDTO {
+  user_id: Float!
+  book_id: Float!
+}
+
+input UpdatePatchRentDTO {
+  user_id: Float!
+  book_id: Float!
+}

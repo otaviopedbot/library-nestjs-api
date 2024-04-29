@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { User } from "../../user/entity/user.entity";
-import { Book } from "../../book/entity/book.entity";
+import { User } from "../../user/types/user.entity";
+import { Book } from "../../book/types/book.entity";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 
@@ -31,7 +31,7 @@ export class Favorite {
     user: User;
 
 
-    @ManyToOne(() => Book, book => book.favorites,{ onDelete: 'CASCADE' })
+    @ManyToOne(() => Book, book => book.favorites, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'book_id' })
     book: Book
 

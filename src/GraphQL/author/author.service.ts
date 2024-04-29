@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateAuthorDTO } from "./dto/create-author.dto";
+import { CreateAuthorInput } from "./inputs/create-author.input";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from 'bcryptjs'
-import { Author } from "./entity/author.entity";
-import { UpdatePatchAuthorDTO } from "./dto/update-patch-author.dto";
+import { Author } from "./types/author.type";
+import { UpdatePatchAuthorInput } from "./inputs/update-patch-author.input";
 
 
 @Injectable()
@@ -15,11 +15,11 @@ export class AuthorService {
         private authorsRepository: Repository<Author>
     ) { }
 
-    async create(data: CreateAuthorDTO) {
+    async create(data: CreateAuthorInput) {
         if (await this.authorsRepository.exists({ where: { name: data.name } })) {
             throw new BadRequestException('name already in use');
         }
-    
+
         const author = this.authorsRepository.create(data);
         return this.authorsRepository.save(author);
     }
@@ -39,7 +39,7 @@ export class AuthorService {
 
     async updatePartial(
         id: number,
-        { name }: UpdatePatchAuthorDTO
+        { name }: UpdatePatchAuthorInput
     ) {
         try {
             await this.exist(id);
@@ -53,7 +53,7 @@ export class AuthorService {
             await this.authorsRepository.update(id, data);
 
             return this.show(id);
-            
+
         } catch (err) {
             throw err
         }

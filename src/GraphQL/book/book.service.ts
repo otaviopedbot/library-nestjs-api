@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateBookDTO } from "./dto/create-book.dto";
+import { CreateBookDTO } from "./inputs/create-book.dto";
 import { Repository } from "typeorm";
-import { Book } from "./entity/book.entity";
+import { Book } from "./types/book.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthorService } from "../author/author.service";
-import { UpdatePatchBookDTO } from "./dto/update-patch-book.dto";
+import { UpdatePatchBookDTO } from "./inputs/update-patch-book.dto";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 
@@ -112,7 +112,7 @@ export class BookService {
                     const newCover = await this.cloudinaryService.uploadFile(cover)
                     data.cover = newCover.url
                 }
-                else{
+                else {
                     const newCover = await this.cloudinaryService.uploadFile(cover)
                     data.cover = newCover.url
                 }

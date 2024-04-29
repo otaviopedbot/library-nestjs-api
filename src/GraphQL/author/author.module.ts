@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { AuthorResolver } from "./resolve/author.resolver";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Author } from "./entity/author.entity";
+import { Author } from "./types/author.type";
 import { AuthorService } from "./author.service";
 import { BookModule } from "../book/book.module";
 

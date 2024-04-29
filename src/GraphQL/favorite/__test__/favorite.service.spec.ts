@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateFavoriteDTO } from '../dto/create-favorite.dto';
-import { Favorite } from '../entity/favorite.entity';
+import { CreateFavoriteDTO } from '../inputs/create-favorite.dto';
+import { Favorite } from '../types/favorite.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { FavoriteService } from '../favorite.service';
@@ -141,16 +141,16 @@ describe('FavoriteService', () => {
 
         it('should throw BadRequestException if the favorite already exists', async () => {
             const data: CreateFavoriteDTO = { book_id: 1, user_id: 1 };
-        
+
             mockFavoriteRepository.exists.mockResolvedValue(true);
-        
+
             await expect(service.create(data)).rejects.toThrow(NotFoundException);
         });
-        
+
     });
 
     // Testes do metodo delete
-    
+
     describe('delete', () => {
 
         it('should remove the favorite with the specified ID and return the deletion information', async () => {
@@ -181,7 +181,7 @@ describe('FavoriteService', () => {
         it('should throw NotFoundException if author favorite not exist', async () => {
             const nonExistentFavoriteId = 9999;
             mockFavoriteRepository.exists.mockResolvedValue(false);
-     
+
             await expect(service.exist(nonExistentFavoriteId)).rejects.toThrow(NotFoundException);
             expect(mockFavoriteRepository.exists).toHaveBeenCalledWith({
                 where: { id: nonExistentFavoriteId }

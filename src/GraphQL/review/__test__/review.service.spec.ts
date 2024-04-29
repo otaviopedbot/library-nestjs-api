@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ReviewService } from '../review.service';
-import { CreateReviewDTO } from '../dto/create-review.dto';
-import { Review } from '../entity/review.entity';
+import { CreateReviewDTO } from '../inputs/create-review.dto';
+import { Review } from '../types/review.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { BookService } from '../../book/book.service';
@@ -88,7 +88,7 @@ describe('AuthorService', () => {
     describe('create', () => {
 
         it('should create a new review', async () => {
-            const data: CreateReviewDTO = { rating: 5, body:"test review", user_id: 1, book_id: 1 };
+            const data: CreateReviewDTO = { rating: 5, body: "test review", user_id: 1, book_id: 1 };
             const mockReview: Review = {
                 id: 1, ...data, createdAt: "", updatedAt: "",
                 user: [],
@@ -96,7 +96,7 @@ describe('AuthorService', () => {
             };
 
             mockReviewRepository.findOne.mockResolvedValueOnce(null);
-            
+
             jest.spyOn(serviceBook, 'exist').mockResolvedValueOnce(undefined);
             jest.spyOn(serviceUser, 'exist').mockResolvedValueOnce(undefined);
 
@@ -110,7 +110,7 @@ describe('AuthorService', () => {
         });
 
         it('should throw BadRequestException if name already exists', async () => {
-            const data: CreateReviewDTO = { rating: 5, body:"test review", user_id: 1, book_id: 1 };
+            const data: CreateReviewDTO = { rating: 5, body: "test review", user_id: 1, book_id: 1 };
 
             mockReviewRepository.findOne.mockResolvedValue(true);
 

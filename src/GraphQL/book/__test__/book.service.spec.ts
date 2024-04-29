@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BookService } from '../book.service';
-import { CreateBookDTO } from '../dto/create-book.dto';
-import { Book } from '../entity/book.entity';
+import { CreateBookDTO } from '../inputs/create-book.dto';
+import { Book } from '../types/book.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { AuthorService } from '../../author/author.service';
@@ -280,7 +280,7 @@ describe('BookService', () => {
                 createdAt: '',
                 updatedAt: ''
             }
-        
+
             const updatedBook: Book = {
                 id: 1,
                 title: '',
@@ -302,18 +302,18 @@ describe('BookService', () => {
                 createdAt: '',
                 updatedAt: ''
             }
-        
+
             jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
-        
+
             mockBookRepository.findOne.mockReturnValueOnce(oldBook)
-        
+
             mockBookRepository.update.mockResolvedValueOnce(updatedBook);
-        
+
             await expect(service.addBookQuantity(1)).resolves.not.toThrow(NotFoundException); // Verifica se não lança NotFoundException
-        
+
             expect(mockBookRepository.update).toHaveBeenCalledWith(1, { quantity: 10 }); // Verifica se a quantidade foi atualizada corretamente
         });
-        
+
 
         it('should throw NotFoundException if book with the specified ID is not found', async () => {
             jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());
@@ -352,7 +352,7 @@ describe('BookService', () => {
                 createdAt: '',
                 updatedAt: ''
             }
-        
+
             const updatedBook: Book = {
                 id: 1,
                 title: '',
@@ -374,18 +374,18 @@ describe('BookService', () => {
                 createdAt: '',
                 updatedAt: ''
             }
-        
+
             jest.spyOn(service, 'exist').mockResolvedValueOnce(undefined);
-        
+
             mockBookRepository.findOne.mockReturnValueOnce(oldBook)
-        
+
             mockBookRepository.update.mockResolvedValueOnce(updatedBook);
-        
+
             await expect(service.removeBookQuantity(1)).resolves.not.toThrow(NotFoundException); // Verifica se não lança NotFoundException
-        
+
             expect(mockBookRepository.update).toHaveBeenCalledWith(1, { quantity: 9 }); // Verifica se a quantidade foi atualizada corretamente
         });
-        
+
 
         it('should throw NotFoundException if book with the specified ID is not found', async () => {
             jest.spyOn(service, 'exist').mockRejectedValueOnce(new NotFoundException());

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateFavoriteDTO } from "./dto/create-favorite.dto";
+import { CreateFavoriteDTO } from "./inputs/create-favorite.dto";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Favorite } from "./entity/favorite.entity";
+import { Favorite } from "./types/favorite.entity";
 import { UserService } from "../user/user.service";
 import { BookService } from "../book/book.service";
 

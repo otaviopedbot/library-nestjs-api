@@ -1,9 +1,8 @@
-import { Field } from "@nestjs/graphql"
-import { PartialType } from "@nestjs/mapped-types"
+import { Field, InputType } from "@nestjs/graphql"
 import { IsString, IsNumber, IsOptional } from "class-validator"
 
+@InputType()
 export class UpdatePatchBookDTO {
-
 
     @Field()
     @IsString()
@@ -34,7 +33,5 @@ export class UpdatePatchBookDTO {
     @IsOptional()
     @IsString()
     cover: string
-
-
 
 }

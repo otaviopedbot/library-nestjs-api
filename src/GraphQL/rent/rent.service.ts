@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CreateRentDTO } from "./dto/create-rent.dto";
-import { Rent } from "./entity/rent.entity";
-import { UpdatePatchRentDTO } from "./dto/update-patch-rent.dto";
+import { CreateRentDTO } from "./inputs/create-rent.dto";
+import { Rent } from "./types/rent.entity";
+import { UpdatePatchRentDTO } from "./inputs/update-patch-rent.dto";
 import { UserService } from "../user/user.service";
 import { BookService } from "../book/book.service";
 
@@ -40,7 +40,7 @@ export class RentService {
 
         const book = await this.bookService.show(data.book_id)
 
-        if (book.quantity == 0){
+        if (book.quantity == 0) {
             throw new BadRequestException('book not available');
         }
 
