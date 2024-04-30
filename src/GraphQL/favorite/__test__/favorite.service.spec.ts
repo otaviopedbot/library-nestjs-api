@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateFavoriteDTO } from '../inputs/create-favorite.dto';
-import { Favorite } from '../types/favorite.entity';
+import { Favorite } from '../entity/favorite.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { FavoriteService } from '../favorite.service';

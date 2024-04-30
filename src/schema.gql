@@ -8,20 +8,20 @@ type Review {
   body: String!
   user_id: Float!
   book_id: Float!
-  user: [User!]!
-  book: [Book!]!
   createdAt: String!
   updatedAt: String!
+  user: [User!]!
+  book: [Book!]!
 }
 
 type Favorite {
   id: ID!
   user_id: Float!
   book_id: Float!
-  user: User!
-  book: Book!
   createdAt: String!
   updatedAt: String!
+  user: User!
+  book: Book!
 }
 
 type User {
@@ -35,11 +35,11 @@ type User {
   image: String!
   details: String!
   is_admin: Float!
+  createdAt: String!
+  updatedAt: String!
   rents: [Rent!]!
   reviews: [Review!]!
   favorites: [Favorite!]!
-  createdAt: String!
-  updatedAt: String!
 }
 
 type Rent {
@@ -47,57 +47,136 @@ type Rent {
   user_id: Float!
   book_id: Float!
   finished_in: String!
-  user: User!
-  book: Book!
   createdAt: String!
   updatedAt: String!
+  user: User!
+  book: Book!
 }
 
 type Book {
-  id: Float!
+  id: ID!
   title: String!
   author_id: Float!
   page: Float!
   quantity: Float!
   synopsis: String!
   cover: String!
+  createdAt: String!
+  updatedAt: String!
   author: Author!
   rents: [Rent!]!
   favorites: [Favorite!]!
   reviews: [Review!]!
-  createdAt: String!
-  updatedAt: String!
 }
 
 type Author {
   id: ID!
   name: String!
+  books: [Book!]!
+  createdAt: String
+  updatedAt: String
+}
+
+type FavoriteType {
+  id: ID!
+  user_id: Float!
+  book_id: Float!
+  user: UserType!
+  book: BookType!
+  createdAt: String
+  updatedAt: String
+}
+
+type ReviewType {
+  id: ID!
+  rating: Float!
+  body: String!
+  user_id: Float!
+  book_id: Float!
+  user: UserType!
+  book: BookType!
+  createdAt: String
+  updatedAt: String
+}
+
+type UserType {
+  id: ID!
+  complete_name: String!
+  phone: String!
+  address: String!
+  username: String!
+  email: String!
+  password: String!
+  image: String
+  details: String
+  rents: RentType!
+  reviews: ReviewType!
+  favorites: FavoriteType!
+  createdAt: String
+  updatedAt: String
+}
+
+type RentType {
+  id: ID!
+  user_id: Float!
+  book_id: Float!
+  finished_in: String!
+  user: UserType!
+  book: BookType!
+  createdAt: String
+  updatedAt: String
+}
+
+type BookType {
+  id: ID!
+  title: String!
+  author_id: Float!
+  page: Float!
+  quantity: Float!
+  synopsis: String
+  cover: String
+  createdAt: String
+  updatedAt: String
+  author: AuthorType!
+  rents: [RentType!]!
+  Favorites: [FavoriteType!]!
+  Reviews: [ReviewType!]!
+}
+
+type AuthorType {
+  id: ID!
+  name: String!
+  books: BookType!
   createdAt: String
   updatedAt: String
 }
 
 type Query {
-  listUsers: [User!]!
-  showUser(id: Float!): User!
-  listAuthors: [Author!]!
-  showAuthor(id: Float!): Author!
-  listRents: [Rent!]!
-  showRent(id: Float!): Rent!
+  listUsers: [UserType!]!
+  showUser(id: Float!): UserType!
+  listAuthors: [AuthorType!]!
+  showAuthor(id: Float!): AuthorType!
+  listBooks: [BookType!]!
+  showBook(id: Float!): BookType!
+  listRents: [RentType!]!
+  showRent(id: Float!): RentType!
 }
 
 type Mutation {
-  updatePartial(data: UpdatePatchUserDTO!, id: Float!): User!
+  updatePartial(data: UpdatePatchUserDTO!, id: Float!): UserType!
   deleteUser(id: Float!): Boolean!
-  createAuthor(data: CreateAuthorInput!): Author!
-  updatePartialAuthor(data: UpdatePatchAuthorInput!, id: Float!): Author!
+  createAuthor(data: CreateAuthorInput!): AuthorType!
+  updatePartialAuthor(data: UpdatePatchAuthorInput!, id: Float!): AuthorType!
   deleteAuthor(id: Float!): Boolean!
-  createBook(data: CreateBookInput!): Book!
-  createRent(data: CreateRentDTO!): Rent!
-  updatePartialRent(data: UpdatePatchRentDTO!, id: Float!): Rent!
+  createBook(data: CreateBookInput!): BookType!
+  updatePartialBook(data: UpdatePatchBookInput!, id: Float!): BookType!
+  deleteBook(id: Float!): BookType!
+  createRent(data: CreateRentDTO!): RentType!
+  updatePartialRent(data: UpdatePatchRentDTO!, id: Float!): RentType!
   finishRent(id: Float!): String!
-  createFavorite(data: CreateFavoriteDTO!): Favorite!
+  createFavorite(data: CreateFavoriteDTO!): FavoriteType!
   deleteFavorite(id: Float!): Boolean!
-  create(data: CreateReviewDTO!): Review!
+  create(data: CreateReviewDTO!): ReviewType!
   delete(id: Float!): Boolean!
 }
 
@@ -127,6 +206,15 @@ input CreateBookInput {
   author_id: Float!
   synopsis: String
   cover: String
+}
+
+input UpdatePatchBookInput {
+  title: String!
+  page: Float!
+  quantity: Float!
+  author_id: Float!
+  synopsis: String!
+  cover: String!
 }
 
 input CreateRentDTO {

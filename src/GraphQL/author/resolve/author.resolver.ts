@@ -1,6 +1,6 @@
 import { AuthorService } from "../author.service";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { Author } from "../types/author.type";
+import { AuthorType } from "../types/author.type";
 import { CreateAuthorArgs } from "../args/create-author.args";
 import { UpdateAuthorArgs } from "../args/apdate-author.args";
 
@@ -10,26 +10,26 @@ export class AuthorResolver {
     constructor(private readonly authorService: AuthorService) { }
 
 
-    @Mutation(() => Author)
-    async createAuthor(@Args() args: CreateAuthorArgs) {
+    @Mutation(() => AuthorType)
+    async createAuthor(@Args() args: CreateAuthorArgs): Promise<AuthorType> {
         return this.authorService.create(args.data);
     }
 
 
-    @Query(() => [Author])
+    @Query(() => [AuthorType])
     async listAuthors() {
         return this.authorService.list();
     }
 
 
-    @Query(() => Author)
-    async showAuthor(@Args('id') id: number) {
+    @Query(() => AuthorType)
+    async showAuthor(@Args('id') id: number): Promise<AuthorType> {
         return this.authorService.show(id);
     }
 
 
-    @Mutation(() => Author)
-    async updatePartialAuthor(@Args() args: UpdateAuthorArgs, @Args('id') id: number) {
+    @Mutation(() => AuthorType)
+    async updatePartialAuthor(@Args() args: UpdateAuthorArgs, @Args('id') id: number): Promise<AuthorType> {
         return this.authorService.updatePartial(id, args.data);
     }
 

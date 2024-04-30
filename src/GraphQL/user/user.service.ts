@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateUserDTO } from "./inputs/create-user.dto";
 import { Repository } from "typeorm";
-import { User } from "./types/user.entity";
+import { User } from "./entity/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from 'bcryptjs'
 import { UpdatePatchUserDTO } from "./inputs/update-patch-user.dto";

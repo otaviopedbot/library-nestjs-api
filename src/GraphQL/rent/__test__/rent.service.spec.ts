@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RentService } from '../rent.service';
 import { CreateRentDTO } from '../inputs/create-rent.dto';
-import { Rent } from '../types/rent.entity';
+import { Rent } from '../entity/rent.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { AuthorService } from '../../author/author.service';

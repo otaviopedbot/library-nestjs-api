@@ -1,10 +1,14 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { AuthorType } from "../../author/types/author.type";
+import { RentType } from "../../rent/types/rent.types";
+import { FavoriteType } from "../../favorite/types/favorite.type";
+import { ReviewType } from "../../review/types/review.type";
 
 
-@ObjectType('Book')
+@ObjectType()
 export class BookType {
 
-    @Field(()=> ID)
+    @Field(() => ID)
     id: number;
 
     @Field()
@@ -30,5 +34,17 @@ export class BookType {
 
     @Field({ nullable: true })
     updatedAt: string;
+
+    @Field(type => AuthorType)
+    author: AuthorType;
+
+    @Field(type => [RentType])
+    rents?: RentType[];
+
+    @Field(type => [FavoriteType])
+    Favorites?: FavoriteType[];
+
+    @Field(type => [ReviewType])
+    Reviews?: ReviewType[];
 
 }

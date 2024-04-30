@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { CreateFavoriteDTO } from "./inputs/create-favorite.dto";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Favorite } from "./types/favorite.entity";
+import { Favorite } from "./entity/favorite.entity";
 import { UserService } from "../user/user.service";
 import { BookService } from "../book/book.service";
 

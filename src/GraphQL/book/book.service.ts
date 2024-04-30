@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateBookInput } from "./inputs/create-book.input";
 import { Repository } from "typeorm";
-import { Book } from "../book/book.entity"
+import { Book } from "./entity/book.entity"
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthorService } from "../author/author.service";
 import { UpdatePatchBookInput } from "./inputs/update-patch-book.input";

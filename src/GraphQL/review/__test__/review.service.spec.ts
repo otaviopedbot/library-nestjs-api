@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ReviewService } from '../review.service';
 import { CreateReviewDTO } from '../inputs/create-review.dto';
-import { Review } from '../types/review.entity';
+import { Review } from '../entity/review.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { BookService } from '../../book/book.service';

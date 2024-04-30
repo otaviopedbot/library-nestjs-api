@@ -4,7 +4,7 @@ import { AuthRegisterDTO } from "../inputs/auth-register.dto";
 import { UserService } from "../../user/user.service";
 import { AuthService } from "../auth.service";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { User } from "../../user/types/user.entity";
+import { User } from "../../user/entity/user.entity";
 
 
 @Resolver('auth')

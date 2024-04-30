@@ -3,24 +3,24 @@ import { UserService } from "../user.service";
 import { UpdatePatchUserDTO } from "../inputs/update-patch-user.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { User } from "../types/user.entity";
+import { UserType } from "../types/user.type";
 
 @Resolver('users')
 export class UserResolver {
     constructor(private readonly userService: UserService) { }
 
-    @Query(() => [User])
+    @Query(() => [UserType])
     async listUsers() {
         return this.userService.list();
     }
 
-    @Query(() => User)
-    async showUser(@Args('id') id: number) {
+    @Query(() => UserType)
+    async showUser(@Args('id') id: number): Promise<UserType> {
         return this.userService.show(id);
     }
 
-    @Mutation(() => User)
-    async updatePartial(@Args('data') data: UpdatePatchUserDTO, @Args('id') id: number) {
+    @Mutation(() => UserType)
+    async updatePartial(@Args('data') data: UpdatePatchUserDTO, @Args('id') id: number): Promise<UserType> {
         return this.userService.updatePartial(id, data);
     }
 
@@ -32,9 +32,7 @@ export class UserResolver {
 
     @Mutation(() => Boolean)
     async deleteUser(@Args('id') id: number) {
-        return {
-            success: await this.userService.delete(id),
-        };
+        await this.userService.delete(id)
     }
 
 }

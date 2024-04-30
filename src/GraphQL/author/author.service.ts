@@ -3,7 +3,7 @@ import { CreateAuthorInput } from "./inputs/create-author.input";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from 'bcryptjs'
-import { Author } from "./types/author.type";
+import { Author } from "./entity/author.entity";
 import { UpdatePatchAuthorInput } from "./inputs/update-patch-author.input";
 
 
@@ -33,7 +33,7 @@ export class AuthorService {
 
         return this.authorsRepository.findOne({
             where: { id: id },
-            // relations: ["books"]
+            relations: ["books"]
         })
     }
 

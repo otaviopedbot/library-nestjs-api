@@ -2,22 +2,20 @@ import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete } 
 import { CreateReviewDTO } from "../inputs/create-review.dto";
 import { ReviewService } from "../review.service";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { Review } from "../types/review.entity";
+import { ReviewType } from "../types/review.type";
 
 @Resolver('reviews')
 export class ReviewResolver {
     constructor(private readonly reviewService: ReviewService) { }
 
-    @Mutation(() => Review)
-    async create(@Args('data') data: CreateReviewDTO) {
+    @Mutation(() => ReviewType)
+    async create(@Args('data') data: CreateReviewDTO): Promise<ReviewType> {
         return this.reviewService.create(data);
     }
 
     @Mutation(() => Boolean)
     async delete(@Args('id') id: number) {
-        return {
-            success: await this.reviewService.delete(id),
-        };
+        await this.reviewService.delete(id)
     }
 
 }

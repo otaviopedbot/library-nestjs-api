@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateRentDTO } from "./inputs/create-rent.dto";
-import { Rent } from "./types/rent.entity";
+import { Rent } from "./entity/rent.entity";
 import { UpdatePatchRentDTO } from "./inputs/update-patch-rent.dto";
 import { UserService } from "../user/user.service";
 import { BookService } from "../book/book.service";
