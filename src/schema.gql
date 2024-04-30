@@ -182,7 +182,7 @@ type Mutation {
   finishRent(id: Float!): String!
   createFavorite(data: CreateFavoriteInput!): FavoriteType!
   deleteFavorite(id: Float!): Boolean!
-  create(data: CreateReviewDTO!): ReviewType!
+  create(data: CreateReviewInput!): ReviewType!
   delete(id: Float!): Boolean!
   login(data: AuthLoginInput!): RegisterUserType!
   registerUser(data: AuthRegisterInput!): RegisterUserType!
@@ -239,8 +239,8 @@ input CreateFavoriteInput {
   book_id: Float!
 }
 
-input CreateReviewDTO {
-  rating: Float!
+input CreateReviewInput {
+  rating: Float
   body: String!
   user_id: Float!
   book_id: Float!

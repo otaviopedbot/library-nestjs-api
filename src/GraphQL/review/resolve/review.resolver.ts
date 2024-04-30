@@ -1,16 +1,15 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete } from "@nestjs/common";
-import { CreateReviewDTO } from "../inputs/create-review.dto";
-import { ReviewService } from "../review.service";
+import { ReviewService } from "../../../review/review.service";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { ReviewType } from "../types/review.type";
+import { CreateReviewArgs } from "../args/create-review.args";
 
 @Resolver('reviews')
 export class ReviewResolver {
     constructor(private readonly reviewService: ReviewService) { }
 
     @Mutation(() => ReviewType)
-    async create(@Args('data') data: CreateReviewDTO): Promise<ReviewType> {
-        return this.reviewService.create(data);
+    async create(@Args() args: CreateReviewArgs): Promise<ReviewType> {
+        return this.reviewService.create(args.data);
     }
 
     @Mutation(() => Boolean)

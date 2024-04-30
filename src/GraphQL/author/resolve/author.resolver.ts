@@ -1,4 +1,4 @@
-import { AuthorService } from "../author.service";
+import { AuthorService } from "../../../author/author.service";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { AuthorType } from "../types/author.type";
 import { CreateAuthorArgs } from "../args/create-author.args";

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete } from "@nestjs/common";
-import { RentService } from "../rent.service";
+import { RentService } from "../../../rent/rent.service";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { Rent } from "../entity/rent.entity";
 import { RentType } from "../types/rent.types";

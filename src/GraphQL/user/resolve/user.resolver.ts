@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete, UploadedFile, UseInterceptors } from "@nestjs/common";
-import { UserService } from "../user.service";
+import { UserService } from "../../../user/user.service";
 import { UpdatePatchUserInput } from "../inputs/update-patch-user.input";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";

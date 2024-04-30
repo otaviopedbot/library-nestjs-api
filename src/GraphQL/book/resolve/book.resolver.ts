@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete, UseInterceptors, UploadedFile } from "@nestjs/common";
-import { BookService } from "../book.service";
+import { BookService } from "../../../book/book.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { BookType } from "../types/book.type";
 import { CreateBookArgs } from "../args/create-book.args";
 import { UpdateBookArgs } from "../args/apdate-book.args";
-import { Book } from "../entity/book.entity";
+import { Book } from "../../../book/entity/book.entity";
 
 
 @Resolver('books')
@@ -40,7 +40,7 @@ export class BookResolver {
     // }
 
     @Mutation(() => BookType)
-    async deleteBook(@Args('id') id: number){
+    async deleteBook(@Args('id') id: number) {
         return await this.bookService.delete(id)
     }
 

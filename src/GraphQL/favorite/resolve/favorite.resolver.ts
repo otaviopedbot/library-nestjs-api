@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete } from "@nestjs/common";
-import { FavoriteService } from "../favorite.service";
+import { FavoriteService } from "../../../favorite/favorite.service";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { FavoriteType } from "../types/favorite.type";
 import { CreateFavoriteArgs } from "../args/create-favorite.args";
@@ -16,6 +16,6 @@ export class FavoriteResolver {
 
     @Mutation(() => Boolean)
     async deleteFavorite(@Args('id') id: number) {
-       return await this.favoriteService.delete(id)
+        return await this.favoriteService.delete(id)
     }
 }

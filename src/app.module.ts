@@ -11,24 +11,24 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 // modules
 
 import { Author } from './GraphQL/author/entity/author.entity';
-import { AuthorModule } from '././GraphQL/author/author.module';
+import { AuthorModule } from './author/author.module';
 
-import { User } from './GraphQL/user/entity/user.entity';
-import { UserModule } from './GraphQL/user/user.module';
+import { User } from './user/entity/user.entity';
+import { UserModule } from './user/user.module';
 
 import { Rent } from './GraphQL/rent/entity/rent.entity';
-import { RentModule } from '././GraphQL/rent/rent.module';
+import { RentModule } from './rent/rent.module';
 
 import { Review } from './GraphQL/review/entity/review.entity';
-import { ReviewModule } from '././GraphQL/review/review.module';
+import { ReviewModule } from './review/review.module';
 
-import { Book } from './GraphQL/book/entity/book.entity';
-import { BookModule } from './GraphQL/book/book.module';
+import { Book } from './book/entity/book.entity';
+import { BookModule } from './book/book.module';
 
 import { Favorite } from './GraphQL/favorite/entity/favorite.entity';
-import { FavoriteModule } from './GraphQL/favorite/favorite.module';
+import { FavoriteModule } from './favorite/favorite.module';
 
-import { CloudinaryModule } from '././GraphQL/cloudinary/cloudinary.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 import { AuthModule } from './GraphQL/auth/auth.module';
 
