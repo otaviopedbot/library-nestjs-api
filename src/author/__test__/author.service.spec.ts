@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthorService } from '../author.service';
-import { CreateAuthorDTO } from '../inputs/create-author.input';
-import { Author } from '../types/author.type';
+import { CreateAuthorInput } from '../../GraphQL/author/inputs/create-author.input';
+import { Author } from '../entity/author.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 
@@ -33,7 +33,7 @@ describe('AuthorService', () => {
 
     describe('DTO validation', () => {
         it('should pass validation with a valid name', async () => {
-            const data = new CreateAuthorDTO();
+            const data = new CreateAuthorInput();
             data.name = 'John';
 
             const errors = await validate(data);
@@ -42,7 +42,7 @@ describe('AuthorService', () => {
         });
 
         it('should fail validation with an empty name', async () => {
-            const data = new CreateAuthorDTO();
+            const data = new CreateAuthorInput();
             data.name = '';
 
             const errors = await validate(data);
@@ -57,7 +57,7 @@ describe('AuthorService', () => {
     describe('create', () => {
 
         it('should create a new author', async () => {
-            const data: CreateAuthorDTO = { name: 'John Doe' };
+            const data: CreateAuthorInput = { name: 'John Doe' };
             const mockAuthor: Author = { id: 1, ...data, books: [], createdAt: "", updatedAt: "" };
 
             mockAuthorRepository.exists.mockResolvedValueOnce(null);
@@ -71,7 +71,7 @@ describe('AuthorService', () => {
         });
 
         it('should throw BadRequestException if name already exists', async () => {
-            const data: CreateAuthorDTO = { name: 'John' };
+            const data: CreateAuthorInput = { name: 'John' };
 
             mockAuthorRepository.exists.mockResolvedValue(true);
 

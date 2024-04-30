@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RentService } from '../rent.service';
-import { CreateRentDTO } from '../inputs/create-rent.input';
+import { CreateRentInput } from '../../GraphQL/rent/inputs/create-rent.input';
 import { Rent } from '../entity/rent.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
-import { AuthorService } from '../../../author/author.service';
-import { CloudinaryService } from '../../../cloudinary/cloudinary.service';
+import { AuthorService } from '../../author/author.service';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 import { UserService } from '../../user/user.service';
-import { BookService } from '../../../book/book.service';
+import { BookService } from '../../book/book.service';
 
 
 const mockRentRepository = {
@@ -62,7 +62,7 @@ describe('BookService', () => {
 
     describe('DTO validation', () => {
         it('should pass validation with a valid book', async () => {
-            const data = new CreateRentDTO();
+            const data = new CreateRentInput();
             data.user_id = 1;
             data.book_id = 1;
 
@@ -72,7 +72,7 @@ describe('BookService', () => {
         });
 
         it('should fail validation with an empty book', async () => {
-            const data = new CreateRentDTO();
+            const data = new CreateRentInput();
 
             const errors = await validate(data);
 
@@ -87,7 +87,7 @@ describe('BookService', () => {
     describe('create', () => {
 
         it('should create a new rent if quantiti-y >= 1', async () => {
-            const data: CreateRentDTO = {
+            const data: CreateRentInput = {
                 user_id: 1,
                 book_id: 1
             };
@@ -159,7 +159,7 @@ describe('BookService', () => {
 
 
         it('should throw BadRequestException if title already exists', async () => {
-            const data: CreateRentDTO = {
+            const data: CreateRentInput = {
                 user_id: 0,
                 book_id: 0
             };;
@@ -414,7 +414,7 @@ describe('BookService', () => {
 
             jest.spyOn(service, 'show').mockResolvedValueOnce(updatedRent);
 
-            const result = await service.updatePartial(1, { user_id: 2 });
+            const result = await service.updatePartial(1, { user_id: 2, book_id: null });
 
             expect(result).toEqual(updatedRent);
         });
@@ -424,7 +424,7 @@ describe('BookService', () => {
 
             const invalidId = 999;
 
-            await expect(service.updatePartial(invalidId, { user_id: 2 })).rejects.toThrow(NotFoundException);
+            await expect(service.updatePartial(invalidId, { user_id: 2, book_id: null })).rejects.toThrow(NotFoundException);
         });
     });
 

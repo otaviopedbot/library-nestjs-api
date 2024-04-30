@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ReviewService } from '../review.service';
-import { CreateReviewDTO } from '../inputs/create-review.input';
+import { CreateReviewInput } from '../../GraphQL/review/inputs/create-review.input';
 import { Review } from '../entity/review.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
-import { BookService } from '../../../book/book.service';
+import { BookService } from '../../book/book.service';
 import { UserService } from '../../user/user.service';
-import { CloudinaryService } from '../../../cloudinary/cloudinary.service';
-import { AuthorService } from '../../../author/author.service';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
+import { AuthorService } from '../../author/author.service';
 
 const mockReviewRepository = {
     exists: jest.fn(),
@@ -58,7 +58,7 @@ describe('AuthorService', () => {
 
     describe('DTO validation', () => {
         it('should pass validation with a valid review data', async () => {
-            const data = new CreateReviewDTO();
+            const data = new CreateReviewInput();
             data.rating = 5;
             data.body = "review";
             data.user_id = 1;
@@ -70,7 +70,7 @@ describe('AuthorService', () => {
         });
 
         it('should fail validation with a invalid review data', async () => {
-            const data = new CreateReviewDTO();
+            const data = new CreateReviewInput();
             data.rating = -5;
             data.body = "review";
             data.user_id = null;
@@ -88,7 +88,7 @@ describe('AuthorService', () => {
     describe('create', () => {
 
         it('should create a new review', async () => {
-            const data: CreateReviewDTO = { rating: 5, body: "test review", user_id: 1, book_id: 1 };
+            const data: CreateReviewInput = { rating: 5, body: "test review", user_id: 1, book_id: 1 };
             const mockReview: Review = {
                 id: 1, ...data, createdAt: "", updatedAt: "",
                 user: [],
@@ -110,7 +110,7 @@ describe('AuthorService', () => {
         });
 
         it('should throw BadRequestException if name already exists', async () => {
-            const data: CreateReviewDTO = { rating: 5, body: "test review", user_id: 1, book_id: 1 };
+            const data: CreateReviewInput = { rating: 5, body: "test review", user_id: 1, book_id: 1 };
 
             mockReviewRepository.findOne.mockResolvedValue(true);
 

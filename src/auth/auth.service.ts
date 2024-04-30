@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "../../user/entity/user.entity";
-import { UserService } from "../../user/user.service";
+import { User } from "../user/entity/user.entity";
+import { UserService } from "../user/user.service";
 import { Repository } from "typeorm";
 import * as bcrypt from 'bcryptjs';
-import { AuthRegisterInput } from "./inputs/auth-register.input";
+import { AuthRegisterInput } from "../GraphQL/auth/inputs/auth-register.input";
 
 @Injectable()
 export class AuthService {

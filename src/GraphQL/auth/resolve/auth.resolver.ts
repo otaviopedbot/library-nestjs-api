@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
 import { UserService } from "../../../user/user.service";
-import { AuthService } from "../auth.service";
+import { AuthService } from "../../../auth/auth.service";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { User } from "../../../user/entity/user.entity";
 import { LoginArgs } from "../args/login.args";

@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Favorite } from "../../GraphQL/favorite/entity/favorite.entity";
-import { Rent } from "../../GraphQL/rent/entity/rent.entity";
-import { Review } from "../../GraphQL/review/entity/review.entity";
+import { Favorite } from "../../favorite/entity/favorite.entity";
+import { Rent } from "../../rent/entity/rent.entity";
+import { Review } from "../../review/entity/review.entity";
 import { Author } from "../../author/entity/author.entity";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 

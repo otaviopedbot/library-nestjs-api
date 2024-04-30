@@ -1,13 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BookService } from '../book.service';
-import { CreateBookDTO } from '../inputs/create-book.input';
-import { Book } from '../types/book.type';
+import { CreateBookInput } from '../../GraphQL/book/inputs/create-book.input';
+import { Book } from '../entity/book.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
-import { AuthorService } from '../../../author/author.service';
+import { AuthorService } from '../../author/author.service';
 import { CloudinaryService } from '../../cloudinary/cloudinary.service';
-import { AuthorModule } from '../../../author/author.module';
-import { CloudinaryModule } from '../../cloudinary/cloudinary.module';
+
 
 const mockBookRepository = {
     exists: jest.fn(),
@@ -49,7 +48,7 @@ describe('BookService', () => {
 
     describe('DTO validation', () => {
         it('should pass validation with a valid book', async () => {
-            const data = new CreateBookDTO();
+            const data = new CreateBookInput();
             data.title = 'Livro';
             data.page = 1;
             data.quantity = 1;
@@ -61,7 +60,7 @@ describe('BookService', () => {
         });
 
         it('should fail validation with an empty book', async () => {
-            const data = new CreateBookDTO();
+            const data = new CreateBookInput();
 
             const errors = await validate(data);
 
@@ -76,7 +75,7 @@ describe('BookService', () => {
     describe('create', () => {
 
         it('should create a new book', async () => {
-            const data: CreateBookDTO = { title: 'livro', page: 1, quantity: 1, author_id: 1, synopsis: "", cover: "" };
+            const data: CreateBookInput = { title: 'livro', page: 1, quantity: 1, author_id: 1, synopsis: "", cover: "" };
             const mockBook: Book = {
                 id: 1, ...data, rents: [], favorites: [], reviews: [], author: {
                     id: 1,
@@ -99,7 +98,7 @@ describe('BookService', () => {
         });
 
         it('should throw BadRequestException if title already exists', async () => {
-            const data: CreateBookDTO = { title: 'teste', page: 1, quantity: 1, author_id: 1, synopsis: "", cover: "" };;
+            const data: CreateBookInput = { title: 'teste', page: 1, quantity: 1, author_id: 1, synopsis: "", cover: "" };;
 
             mockBookRepository.exists.mockResolvedValue(true)
 
@@ -187,7 +186,7 @@ describe('BookService', () => {
 
             jest.spyOn(service, 'show').mockResolvedValueOnce(updatedBook);
 
-            const result = await service.updatePartial(1, { title: 'Livro' });
+            const result = await service.updatePartial(1, { title: 'Livro', page: null, author_id: null, quantity: null, synopsis: null , cover: null });
 
             expect(result).toEqual(updatedBook);
         });
@@ -197,7 +196,7 @@ describe('BookService', () => {
 
             const invalidId = 999;
 
-            await expect(service.updatePartial(invalidId, { title: 'testeste' })).rejects.toThrow(NotFoundException);
+            await expect(service.updatePartial(invalidId, { title: 'Livro', page: null, author_id: null, quantity: null, synopsis: null , cover: null })).rejects.toThrow(NotFoundException);
         });
     });
 

@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateFavoriteDTO } from '../inputs/create-favorite.input';
+import { CreateFavoriteInput } from '../../GraphQL/favorite/inputs/create-favorite.input';
 import { Favorite } from '../entity/favorite.entity';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { FavoriteService } from '../favorite.service';
 import { UserService } from '../../user/user.service';
-import { BookService } from '../../../book/book.service';
-import { CloudinaryService } from '../../../cloudinary/cloudinary.service';
-import { AuthorService } from '../../../author/author.service';
+import { BookService } from '../../book/book.service';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
+import { AuthorService } from '../../author/author.service';
 
 const mockFavoriteRepository = {
     exists: jest.fn(),
@@ -57,7 +57,7 @@ describe('FavoriteService', () => {
 
     describe('DTO validation', () => {
         it('should pass validation with a valid data', async () => {
-            const data = new CreateFavoriteDTO();
+            const data = new CreateFavoriteInput();
             data.user_id = 1;
             data.book_id = 1;
 
@@ -67,7 +67,7 @@ describe('FavoriteService', () => {
         });
 
         it('should fail validation with a not valid data', async () => {
-            const data = new CreateFavoriteDTO();
+            const data = new CreateFavoriteInput();
             data.user_id = null;
             data.book_id = null;
 
@@ -83,7 +83,7 @@ describe('FavoriteService', () => {
     describe('create', () => {
 
         it('should create a new favorite', async () => {
-            const data: CreateFavoriteDTO = { user_id: 1, book_id: 1 };
+            const data: CreateFavoriteInput = { user_id: 1, book_id: 1 };
             const mockFavorite: Favorite = {
                 id: 1, ...data, createdAt: "", updatedAt: "",
                 user: {
@@ -140,7 +140,7 @@ describe('FavoriteService', () => {
         });
 
         it('should throw BadRequestException if the favorite already exists', async () => {
-            const data: CreateFavoriteDTO = { book_id: 1, user_id: 1 };
+            const data: CreateFavoriteInput = { book_id: 1, user_id: 1 };
 
             mockFavoriteRepository.exists.mockResolvedValue(true);
 

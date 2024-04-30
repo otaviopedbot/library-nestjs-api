@@ -10,27 +10,27 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 // modules
 
-import { Author } from './GraphQL/author/entity/author.entity';
+import { Author } from './author/entity/author.entity';
 import { AuthorModule } from './author/author.module';
 
 import { User } from './user/entity/user.entity';
 import { UserModule } from './user/user.module';
 
-import { Rent } from './GraphQL/rent/entity/rent.entity';
+import { Rent } from './rent/entity/rent.entity';
 import { RentModule } from './rent/rent.module';
 
-import { Review } from './GraphQL/review/entity/review.entity';
+import { Review } from './review/entity/review.entity';
 import { ReviewModule } from './review/review.module';
 
 import { Book } from './book/entity/book.entity';
 import { BookModule } from './book/book.module';
 
-import { Favorite } from './GraphQL/favorite/entity/favorite.entity';
+import { Favorite } from './favorite/entity/favorite.entity';
 import { FavoriteModule } from './favorite/favorite.module';
 
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
-import { AuthModule } from './GraphQL/auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({

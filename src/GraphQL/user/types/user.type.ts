@@ -1,7 +1,3 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Review } from "../../review/entity/review.entity";
-import { Favorite } from "../../favorite/entity/favorite.entity";
-import { Rent } from "../../rent/entity/rent.entity";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { FavoriteType } from "../../favorite/types/favorite.type";
 import { ReviewType } from "../../review/types/review.type";

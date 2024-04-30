@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
-import { AuthResolver } from "./resolve/auth.resolver";
-import { UserModule } from "../../user/user.module";
-import { User } from "../../user/entity/user.entity";
+import { AuthResolver } from "../GraphQL/auth/resolve/auth.resolver";
+import { UserModule } from "../user/user.module";
+import { User } from "../user/entity/user.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthService } from "./auth.service";
-import { BookModule } from "../../book/book.module";
+import { BookModule } from "../book/book.module";
 
 @Module({
     imports: [

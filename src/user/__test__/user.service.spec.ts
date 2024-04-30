@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from '../user.service';
-import { CreateUserDTO } from '../inputs/create-user.input';
+import { UserService } from '../../user/user.service';
+import { CreateUserInput } from '../../GraphQL/user/inputs/create-user.input';
 import { User } from '../entity/user.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';
-import { AuthorService } from '../../../author/author.service';
-import { CloudinaryService } from '../../../cloudinary/cloudinary.service';
-import { AuthorModule } from '../../../author/author.module';
-import { CloudinaryModule } from '../../../cloudinary/cloudinary.module';
+import { AuthorService } from '../../author/author.service';
+import { CloudinaryService } from '../../cloudinary/cloudinary.service';
+import { AuthorModule } from '../../author/author.module';
+import { CloudinaryModule } from '../../cloudinary/cloudinary.module';
 
 const mockUserRepository = {
     exists: jest.fn(),
@@ -49,7 +49,7 @@ describe('Userservice', () => {
 
     describe('DTO validation', () => {
         it('should pass validation with a valid User', async () => {
-            const data = new CreateUserDTO();
+            const data = new CreateUserInput();
             data.complete_name = 'Livro';
             data.phone = '(14)991234567';
             data.address = 'rua teste';
@@ -64,7 +64,7 @@ describe('Userservice', () => {
         });
 
         it('should fail validation with an empty User', async () => {
-            const data = new CreateUserDTO();
+            const data = new CreateUserInput();
 
             const errors = await validate(data);
 
@@ -79,7 +79,7 @@ describe('Userservice', () => {
     describe('create', () => {
 
         it('should create a new user', async () => {
-            const data: CreateUserDTO = {
+            const data: CreateUserInput = {
                 complete_name: '',
                 phone: '',
                 address: '',
@@ -110,7 +110,7 @@ describe('Userservice', () => {
         });
 
         it('should throw BadRequestException if title already exists', async () => {
-            const data: CreateUserDTO = {
+            const data: CreateUserInput = {
                 complete_name: '',
                 phone: '',
                 address: '',
@@ -249,7 +249,7 @@ describe('Userservice', () => {
 
             jest.spyOn(service, 'show').mockResolvedValueOnce(updatedUser);
 
-            const result = await service.updatePartial(1, { complete_name: 'teste' });
+            const result = await service.updatePartial(1, { complete_name: 'teste', phone: null, username: null, email: null, password: null, address: null, details: null});
 
             expect(result).toEqual(updatedUser);
         });
@@ -259,7 +259,7 @@ describe('Userservice', () => {
 
             const invalidId = 999;
 
-            await expect(service.updatePartial(invalidId, { complete_name: 'testeste' })).rejects.toThrow(NotFoundException);
+            await expect(service.updatePartial(invalidId, { complete_name: 'teste', phone: null, username: null, email: null, password: null, address: null, details: null})).rejects.toThrow(NotFoundException);
         });
     });
 

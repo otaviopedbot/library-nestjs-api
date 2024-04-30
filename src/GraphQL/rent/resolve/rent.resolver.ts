@@ -1,7 +1,5 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete } from "@nestjs/common";
 import { RentService } from "../../../rent/rent.service";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { Rent } from "../entity/rent.entity";
 import { RentType } from "../types/rent.types";
 import { CreateRentArgs } from "../args/create-rent.args";
 import { UpdateRentArgs } from "../args/apdate-rent.args";
@@ -32,7 +30,7 @@ export class RentResolver {
     }
 
     @Mutation(() => String)
-    async finishRent(@Args('id', ParseIntPipe) id: number) {
+    async finishRent(@Args('id') id: number) {
         return await this.rentService.finish(id)
     }
 
