@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete } from "@nestjs/common";
-import { CreateRentDTO } from "../inputs/create-rent.dto";
 import { RentService } from "../rent.service";
-import { UpdatePatchRentDTO } from "../inputs/update-patch-rent.dto";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { Rent } from "../entity/rent.entity";
 import { RentType } from "../types/rent.types";
+import { CreateRentArgs } from "../args/create-rent.args";
+import { UpdateRentArgs } from "../args/apdate-rent.args";
 
 
 @Resolver('rents')
@@ -12,8 +12,8 @@ export class RentResolver {
     constructor(private readonly rentService: RentService) { }
 
     @Mutation(() => RentType)
-    async createRent(@Args('data') data: CreateRentDTO): Promise<RentType> {
-        return this.rentService.create(data);
+    async createRent(@Args() args: CreateRentArgs): Promise<RentType> {
+        return this.rentService.create(args.data);
     }
 
     @Query(() => [RentType])
@@ -27,8 +27,8 @@ export class RentResolver {
     }
 
     @Mutation(() => RentType)
-    async updatePartialRent(@Args('data') data: UpdatePatchRentDTO, @Args('id') id: number): Promise<RentType> {
-        return this.rentService.updatePartial(id, data);
+    async updatePartialRent(@Args() args: UpdateRentArgs, @Args('id') id: number): Promise<RentType> {
+        return this.rentService.updatePartial(id, args.data);
     }
 
     @Mutation(() => String)

@@ -1,16 +1,15 @@
 import { IsNumber, IsOptional } from "class-validator"
-import { PartialType } from "@nestjs/mapped-types"
 import { Field, InputType } from "@nestjs/graphql"
 
 @InputType()
-export class UpdatePatchRentDTO {
+export class UpdatePatchRentInput {
 
-    @Field()
+    @Field({ nullable: true })
     @IsNumber()
     @IsOptional()
     user_id: number
 
-    @Field()
+    @Field({ nullable: true })
     @IsNumber()
     @IsOptional()
     book_id: number

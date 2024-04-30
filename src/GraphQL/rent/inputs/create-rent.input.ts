@@ -3,7 +3,7 @@ import { IsNumber, IsNumberString } from "class-validator"
 
 
 @InputType()
-export class CreateRentDTO {
+export class CreateRentInput {
     
     @Field()
     @IsNumber()

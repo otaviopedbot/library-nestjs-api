@@ -55,7 +55,7 @@ export class FavoriteService {
                 },
             }))
         ) {
-            throw new NotFoundException(`the author with id ${id} does not exist`);
+            throw new NotFoundException(`the favorite with id ${id} does not exist`);
         }
     }
 

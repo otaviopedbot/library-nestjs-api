@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CreateRentDTO } from "./inputs/create-rent.dto";
+import { CreateRentInput } from "./inputs/create-rent.input";
 import { Rent } from "./entity/rent.entity";
-import { UpdatePatchRentDTO } from "./inputs/update-patch-rent.dto";
+import { UpdatePatchRentInput } from "./inputs/update-patch-rent.input";
 import { UserService } from "../user/user.service";
 import { BookService } from "../book/book.service";
 
@@ -18,7 +18,7 @@ export class RentService {
         private readonly bookService: BookService
     ) { }
 
-    async create(data: CreateRentDTO) {
+    async create(data: CreateRentInput) {
 
         if (
             await this.rentsRepository.exists({
@@ -67,7 +67,7 @@ export class RentService {
 
     async updatePartial(
         id: number,
-        { user_id, book_id }: UpdatePatchRentDTO
+        { user_id, book_id }: UpdatePatchRentInput
     ) {
 
         try {

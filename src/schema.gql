@@ -177,8 +177,8 @@ type Mutation {
   createBook(data: CreateBookInput!): BookType!
   updatePartialBook(data: UpdatePatchBookInput!, id: Float!): BookType!
   deleteBook(id: Float!): BookType!
-  createRent(data: CreateRentDTO!): RentType!
-  updatePartialRent(data: UpdatePatchRentDTO!, id: Float!): RentType!
+  createRent(data: CreateRentInput!): RentType!
+  updatePartialRent(data: UpdatePatchRentInput!, id: Float!): RentType!
   finishRent(id: Float!): String!
   createFavorite(data: CreateFavoriteInput!): FavoriteType!
   deleteFavorite(id: Float!): Boolean!
@@ -224,14 +224,14 @@ input UpdatePatchBookInput {
   cover: String
 }
 
-input CreateRentDTO {
+input CreateRentInput {
   user_id: Float!
   book_id: Float!
 }
 
-input UpdatePatchRentDTO {
-  user_id: Float!
-  book_id: Float!
+input UpdatePatchRentInput {
+  user_id: Float
+  book_id: Float
 }
 
 input CreateFavoriteInput {
