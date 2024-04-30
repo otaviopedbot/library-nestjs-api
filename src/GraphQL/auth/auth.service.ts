@@ -5,7 +5,7 @@ import { User } from "../user/entity/user.entity";
 import { UserService } from "../user/user.service";
 import { Repository } from "typeorm";
 import * as bcrypt from 'bcryptjs';
-import { AuthRegisterDTO } from "./inputs/auth-register.dto";
+import { AuthRegisterInput } from "./inputs/auth-register.input";
 
 @Injectable()
 export class AuthService {
@@ -63,7 +63,7 @@ export class AuthService {
         return { token, user };
     }
 
-    async register(data: AuthRegisterDTO) {
+    async register(data: AuthRegisterInput) {
 
         const user = await this.userService.create(data);
 

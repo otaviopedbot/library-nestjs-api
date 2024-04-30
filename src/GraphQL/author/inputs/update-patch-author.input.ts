@@ -3,7 +3,7 @@ import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 @InputType()
 export class UpdatePatchAuthorInput {
-    @Field()
+    @Field({ nullable: true })
     @IsOptional()
     @IsString()
     name: string;

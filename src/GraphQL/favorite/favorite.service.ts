@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateFavoriteDTO } from "./inputs/create-favorite.dto";
+import { CreateFavoriteInput } from "./inputs/create-favorite.input";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Favorite } from "./entity/favorite.entity";
@@ -17,7 +17,7 @@ export class FavoriteService {
         private readonly bookService: BookService,
     ) { }
 
-    async create(data: CreateFavoriteDTO) {
+    async create(data: CreateFavoriteInput) {
 
         await this.userService.exist(data.user_id)
 

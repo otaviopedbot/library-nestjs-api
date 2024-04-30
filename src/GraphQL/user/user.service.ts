@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { CreateUserDTO } from "./inputs/create-user.dto";
+import { CreateUserInput } from "./inputs/create-user.input";
 import { Repository } from "typeorm";
 import { User } from "./entity/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from 'bcryptjs'
-import { UpdatePatchUserDTO } from "./inputs/update-patch-user.dto";
+import { UpdatePatchUserInput } from "./inputs/update-patch-user.input";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 
@@ -18,7 +18,7 @@ export class UserService {
         private readonly cloudinaryService: CloudinaryService
     ) { }
 
-    async create(data: CreateUserDTO) {
+    async create(data: CreateUserInput) {
 
         if (
             await this.usersRepository.exists({
@@ -58,7 +58,7 @@ export class UserService {
 
     async updatePartial(
         id: number,
-        { complete_name, phone, address, username, email, password, details }: UpdatePatchUserDTO
+        { complete_name, phone, address, username, email, password, details }: UpdatePatchUserInput
     ) {
         try {
             const oldUser = await this.show(id);
@@ -103,41 +103,41 @@ export class UserService {
         }
     }
 
-    async updateImage(
-        id,
-        image
-    ) {
-        try {
+    // async updateImage(
+    //     id,
+    //     image
+    // ) {
+    //     try {
 
-            const oldUser = await this.show(id);
+    //         const oldUser = await this.show(id);
 
-            const data: any = {};
+    //         const data: any = {};
 
-            const regex = /\/([^\/]+)\.[^\/]+$/;
-            const match = oldUser.image.match(regex);
-            const oldImageId = match[1];
+    //         const regex = /\/([^\/]+)\.[^\/]+$/;
+    //         const match = oldUser.image.match(regex);
+    //         const oldImageId = match[1];
 
-            if (image) {
-                if (oldImageId != process.env.CLOUDINARY_DEFAULT_USER_IMG_ID) {
+    //         if (image) {
+    //             if (oldImageId != process.env.CLOUDINARY_DEFAULT_USER_IMG_ID) {
 
-                    await this.cloudinaryService.deleteFile(oldImageId)
-                    const newImage = await this.cloudinaryService.uploadFile(image)
-                    data.image = newImage.url
-                }
-                else {
-                    const newImage = await this.cloudinaryService.uploadFile(image)
-                    data.image = newImage.url
-                }
-            }
+    //                 await this.cloudinaryService.deleteFile(oldImageId)
+    //                 const newImage = await this.cloudinaryService.uploadFile(image)
+    //                 data.image = newImage.url
+    //             }
+    //             else {
+    //                 const newImage = await this.cloudinaryService.uploadFile(image)
+    //                 data.image = newImage.url
+    //             }
+    //         }
 
-            await this.usersRepository.update(id, data);
+    //         await this.usersRepository.update(id, data);
 
-            return this.show(id);
+    //         return this.show(id);
 
-        } catch (err) {
-            throw err
-        }
-    }
+    //     } catch (err) {
+    //         throw err
+    //     }
+    // }
 
     async delete(id: number) {
         await this.exist(id);

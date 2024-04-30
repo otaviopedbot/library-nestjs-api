@@ -2,14 +2,14 @@ import { Field, InputType } from "@nestjs/graphql"
 import { IsNumber, IsNumberString } from "class-validator"
 
 @InputType()
-export class CreateFavoriteDTO {
+export class CreateFavoriteInput {
 
     @Field()
     @IsNumber()
-    user_id: number
+    user_id: number;
 
     @Field()
     @IsNumber()
-    book_id: number
+    book_id: number;
 
 }

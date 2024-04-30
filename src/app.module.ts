@@ -30,6 +30,8 @@ import { FavoriteModule } from './GraphQL/favorite/favorite.module';
 
 import { CloudinaryModule } from '././GraphQL/cloudinary/cloudinary.module';
 
+import { AuthModule } from './GraphQL/auth/auth.module';
+
 
 @Module({
   imports: [
@@ -42,7 +44,7 @@ import { CloudinaryModule } from '././GraphQL/cloudinary/cloudinary.module';
     FavoriteModule,
     ReviewModule,
     CloudinaryModule,
-    // AuthModule,
+    AuthModule,
 
     TypeOrmModule.forRoot({
       type: 'mysql',

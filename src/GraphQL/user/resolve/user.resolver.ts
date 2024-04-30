@@ -1,9 +1,10 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Put, Delete, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { UserService } from "../user.service";
-import { UpdatePatchUserDTO } from "../inputs/update-patch-user.dto";
+import { UpdatePatchUserInput } from "../inputs/update-patch-user.input";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { UserType } from "../types/user.type";
+import { UpdateUserArgs } from "../args/apdate-user.args";
 
 @Resolver('users')
 export class UserResolver {
@@ -20,8 +21,8 @@ export class UserResolver {
     }
 
     @Mutation(() => UserType)
-    async updatePartial(@Args('data') data: UpdatePatchUserDTO, @Args('id') id: number): Promise<UserType> {
-        return this.userService.updatePartial(id, data);
+    async updatePartial(@Args() args: UpdateUserArgs, @Args('id') id: number): Promise<UserType> {
+        return this.userService.updatePartial(id, args.data);
     }
 
     // @Mutation(() => User)

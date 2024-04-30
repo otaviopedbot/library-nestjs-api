@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from '../user.service';
-import { CreateUserDTO } from '../inputs/create-user.dto';
+import { CreateUserDTO } from '../inputs/create-user.input';
 import { User } from '../entity/user.entity';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { validate } from 'class-validator';

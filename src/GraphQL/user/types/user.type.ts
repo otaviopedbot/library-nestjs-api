@@ -6,11 +6,20 @@ import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { FavoriteType } from "../../favorite/types/favorite.type";
 import { ReviewType } from "../../review/types/review.type";
 import { RentType } from "../../rent/types/rent.types";
+import { User } from "../entity/user.entity";
 require('dotenv').config();
+
+@ObjectType()
+export class RegisterUserType {
+  @Field(() => User)
+  user: User;
+
+  @Field()
+  token: string;
+}
 
 
 @ObjectType()
-
 export class UserType {
 
 
@@ -41,8 +50,8 @@ export class UserType {
     @Field({ nullable: true })
     details: string;
 
-    // @Field({ nullable: true })
-    // is_admin: number;
+    @Field({ nullable: true })
+    is_admin: number;
 
     @Field(type => RentType)
     rents: RentType[];

@@ -4,32 +4,32 @@ import { IsString, IsNumber, IsOptional } from "class-validator"
 @InputType()
 export class UpdatePatchBookInput {
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
     @IsOptional()
     title: string
 
-    @Field()
+    @Field({ nullable: true })
     @IsNumber()
     @IsOptional()
     page: number
 
-    @Field()
+    @Field({ nullable: true })
     @IsNumber()
     @IsOptional()
     quantity: number
 
-    @Field()
+    @Field({ nullable: true })
     @IsNumber()
     @IsOptional()
     author_id: number
 
-    @Field()
+    @Field({ nullable: true })
     @IsOptional()
     @IsString()
     synopsis: string
 
-    @Field()
+    @Field({ nullable: true })
     @IsOptional()
     @IsString()
     cover: string

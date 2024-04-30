@@ -1,9 +1,8 @@
-import { IsEmail, IsMobilePhone, IsOptional, IsString, IsStrongPassword } from "class-validator";
-import { CreateUserDTO } from "../../user/inputs/create-user.dto";
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql"
+import { IsEmail, IsMobilePhone, IsOptional, IsString, IsStrongPassword } from "class-validator"
 
 @InputType()
-export class AuthRegisterDTO {
+export class CreateUserInput {
 
     @Field()
     @IsString()
@@ -35,14 +34,14 @@ export class AuthRegisterDTO {
     })
     password: string
 
-    @Field()
-    @IsOptional()
-    @IsString()
-    image: string
-
-    @Field()
+    @Field({ nullable: true })
     @IsOptional()
     @IsString()
     details: string
+
+    @Field({ nullable: true })
+    @IsOptional()
+    @IsString()
+    image: string
 
 }

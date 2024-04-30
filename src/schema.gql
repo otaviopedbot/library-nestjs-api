@@ -99,6 +99,11 @@ type ReviewType {
   updatedAt: String
 }
 
+type RegisterUserType {
+  user: User!
+  token: String!
+}
+
 type UserType {
   id: ID!
   complete_name: String!
@@ -109,6 +114,7 @@ type UserType {
   password: String!
   image: String
   details: String
+  is_admin: Float
   rents: RentType!
   reviews: ReviewType!
   favorites: FavoriteType!
@@ -163,7 +169,7 @@ type Query {
 }
 
 type Mutation {
-  updatePartial(data: UpdatePatchUserDTO!, id: Float!): UserType!
+  updatePartial(data: UpdatePatchUserInput!, id: Float!): UserType!
   deleteUser(id: Float!): Boolean!
   createAuthor(data: CreateAuthorInput!): AuthorType!
   updatePartialAuthor(data: UpdatePatchAuthorInput!, id: Float!): AuthorType!
@@ -174,21 +180,22 @@ type Mutation {
   createRent(data: CreateRentDTO!): RentType!
   updatePartialRent(data: UpdatePatchRentDTO!, id: Float!): RentType!
   finishRent(id: Float!): String!
-  createFavorite(data: CreateFavoriteDTO!): FavoriteType!
+  createFavorite(data: CreateFavoriteInput!): FavoriteType!
   deleteFavorite(id: Float!): Boolean!
   create(data: CreateReviewDTO!): ReviewType!
   delete(id: Float!): Boolean!
+  login(data: AuthLoginInput!): RegisterUserType!
+  registerUser(data: AuthRegisterInput!): RegisterUserType!
 }
 
-input UpdatePatchUserDTO {
-  complete_name: String!
-  phone: String!
-  address: String!
-  username: String!
-  email: String!
-  password: String!
-  image: String!
-  details: String!
+input UpdatePatchUserInput {
+  complete_name: String
+  phone: String
+  address: String
+  username: String
+  email: String
+  password: String
+  details: String
 }
 
 input CreateAuthorInput {
@@ -196,7 +203,7 @@ input CreateAuthorInput {
 }
 
 input UpdatePatchAuthorInput {
-  name: String!
+  name: String
 }
 
 input CreateBookInput {
@@ -209,12 +216,12 @@ input CreateBookInput {
 }
 
 input UpdatePatchBookInput {
-  title: String!
-  page: Float!
-  quantity: Float!
-  author_id: Float!
-  synopsis: String!
-  cover: String!
+  title: String
+  page: Float
+  quantity: Float
+  author_id: Float
+  synopsis: String
+  cover: String
 }
 
 input CreateRentDTO {
@@ -227,7 +234,7 @@ input UpdatePatchRentDTO {
   book_id: Float!
 }
 
-input CreateFavoriteDTO {
+input CreateFavoriteInput {
   user_id: Float!
   book_id: Float!
 }
@@ -237,4 +244,20 @@ input CreateReviewDTO {
   body: String!
   user_id: Float!
   book_id: Float!
+}
+
+input AuthLoginInput {
+  email: String!
+  password: String!
+}
+
+input AuthRegisterInput {
+  complete_name: String!
+  phone: String!
+  address: String!
+  username: String!
+  email: String!
+  password: String!
+  details: String
+  image: String
 }

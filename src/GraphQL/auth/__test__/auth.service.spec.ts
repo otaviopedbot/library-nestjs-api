@@ -4,7 +4,7 @@ import { UnauthorizedException } from '@nestjs/common';
 import { CloudinaryService } from '../../cloudinary/cloudinary.service';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from '../auth.service';
-import { CreateUserDTO } from '../../user/inputs/create-user.dto';
+import { CreateUserDTO } from '../../user/inputs/create-user.input';
 import * as bcrypt from 'bcryptjs';
 
 const mockUserRepository = {

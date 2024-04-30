@@ -1,30 +1,36 @@
-import { Field, InputType } from "@nestjs/graphql"
 import { IsEmail, IsMobilePhone, IsOptional, IsString, IsStrongPassword } from "class-validator"
+import { Field, InputType } from "@nestjs/graphql"
 
 @InputType()
-export class CreateUserDTO {
+export class UpdatePatchUserInput {
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
+    @IsOptional()
     complete_name: string
 
-    @Field()
+    @Field({ nullable: true })
     @IsMobilePhone('pt-BR')
+    @IsOptional()
     phone: string
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
+    @IsOptional()
     address: string
 
-    @Field()
+    @Field({ nullable: true })
     @IsString()
+    @IsOptional()
     username: string
 
-    @Field()
+    @Field({ nullable: true })
     @IsEmail()
+    @IsOptional()
     email: string
 
-    @Field()
+    @Field({ nullable: true })
+    @IsOptional()
     @IsStrongPassword({
         minLength: 6,
         minNumbers: 0,
@@ -34,12 +40,7 @@ export class CreateUserDTO {
     })
     password: string
 
-    @Field()
-    @IsOptional()
-    @IsString()
-    image: string
-
-    @Field()
+    @Field({ nullable: true })
     @IsOptional()
     @IsString()
     details: string

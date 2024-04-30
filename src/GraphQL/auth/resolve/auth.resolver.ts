@@ -1,27 +1,28 @@
 import { Body, Controller, Post, Req, UseGuards } from "@nestjs/common";
-import { AuthLoginDTO } from "../inputs/auth-login.dto";
-import { AuthRegisterDTO } from "../inputs/auth-register.dto";
 import { UserService } from "../../user/user.service";
 import { AuthService } from "../auth.service";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { User } from "../../user/entity/user.entity";
+import { LoginArgs } from "../args/login.args";
+import { RegisterArgs } from "../args/register.args";
+import { RegisterUserType, UserType } from "../../user/types/user.type";
 
 
 @Resolver('auth')
-export class AuthController {
+export class AuthResolver {
 
     constructor(
         private readonly authService: AuthService,
     ) { }
 
-    @Mutation()
-    async login(@Args('data') data: AuthLoginDTO) {
-        return this.authService.login(data.email, data.password);
+    @Mutation(() => RegisterUserType)
+    async login(@Args() args: LoginArgs): Promise<RegisterUserType> {
+        return this.authService.login(args.data.email, args.data.password);
     }
 
-    @Mutation(() => User)
-    async register(@Args('data') data: AuthRegisterDTO) {
-        return this.authService.register(data)
+    @Mutation(() => RegisterUserType)
+    async registerUser(@Args() args: RegisterArgs): Promise<RegisterUserType> {
+        return this.authService.register(args.data)
     }
 
 }
