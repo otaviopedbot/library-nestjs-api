@@ -14,7 +14,7 @@ import { Favorite } from './favorite/entity/favorite.entity';
 import { AuthorModule } from './author/author.module';
 import { BookModule } from './book/book.module';
 import { RentModule } from './rent/rent.module';
-import { FavoriteModule } from './favorite/author.module';
+import { FavoriteModule } from './favorite/favorite.module';
 import { ReviewModule } from './review/review.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { AuthModule } from './auth/auth.module';

@@ -20,14 +20,13 @@ export class UserController {
     }
 
     @Patch(':id')
-    @UseInterceptors(FileInterceptor('image'))
-    async updatePartial(@Body() data: UpdatePatchUserDTO, @Param('id', ParseIntPipe) id: number, @UploadedFile() image) {
-        return this.userService.updatePartial(id, data, image);
+    async updatePartial(@Body() data: UpdatePatchUserDTO, @Param('id', ParseIntPipe) id: number) {
+        return this.userService.updatePartial(id, data);
     }
 
     @Patch('image/:id')
     @UseInterceptors(FileInterceptor('image'))
-    async updateImager(@Param('id', ParseIntPipe) id: number, @UploadedFile() image: Express.Multer.File) {
+    async updateImage(@Param('id', ParseIntPipe) id: number, @UploadedFile() image: Express.Multer.File) {
 
         return this.userService.updateImage(id, image);
     }
