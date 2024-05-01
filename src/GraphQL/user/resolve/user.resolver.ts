@@ -21,7 +21,7 @@ export class UserResolver {
     }
 
     @Mutation(() => UserType)
-    async updatePartial(@Args() args: UpdateUserArgs, @Args('id') id: number): Promise<UserType> {
+    async updatePartialUser(@Args() args: UpdateUserArgs, @Args('id') id: number): Promise<UserType> {
         return this.userService.updatePartial(id, args.data);
     }
 
@@ -33,7 +33,7 @@ export class UserResolver {
 
     @Mutation(() => Boolean)
     async deleteUser(@Args('id') id: number) {
-        await this.userService.delete(id)
+       return await this.userService.delete(id)
     }
 
 }

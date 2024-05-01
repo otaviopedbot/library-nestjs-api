@@ -145,8 +145,8 @@ type BookType {
   updatedAt: String
   author: AuthorType!
   rents: [RentType!]!
-  Favorites: [FavoriteType!]!
-  Reviews: [ReviewType!]!
+  favorites: [FavoriteType!]!
+  reviews: [ReviewType!]!
 }
 
 type AuthorType {
@@ -169,21 +169,21 @@ type Query {
 }
 
 type Mutation {
-  updatePartial(data: UpdatePatchUserInput!, id: Float!): UserType!
+  updatePartialUser(data: UpdatePatchUserInput!, id: Float!): UserType!
   deleteUser(id: Float!): Boolean!
   createAuthor(data: CreateAuthorInput!): AuthorType!
   updatePartialAuthor(data: UpdatePatchAuthorInput!, id: Float!): AuthorType!
   deleteAuthor(id: Float!): Boolean!
   createBook(data: CreateBookInput!): BookType!
   updatePartialBook(data: UpdatePatchBookInput!, id: Float!): BookType!
-  deleteBook(id: Float!): BookType!
+  deleteBook(id: Float!): Boolean!
   createRent(data: CreateRentInput!): RentType!
   updatePartialRent(data: UpdatePatchRentInput!, id: Float!): RentType!
   finishRent(id: Float!): String!
   createFavorite(data: CreateFavoriteInput!): FavoriteType!
   deleteFavorite(id: Float!): Boolean!
-  create(data: CreateReviewInput!): ReviewType!
-  delete(id: Float!): Boolean!
+  createReview(data: CreateReviewInput!): ReviewType!
+  deleteReview(id: Float!): Boolean!
   login(data: AuthLoginInput!): RegisterUserType!
   registerUser(data: AuthRegisterInput!): RegisterUserType!
 }

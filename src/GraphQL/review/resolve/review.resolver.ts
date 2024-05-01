@@ -8,13 +8,13 @@ export class ReviewResolver {
     constructor(private readonly reviewService: ReviewService) { }
 
     @Mutation(() => ReviewType)
-    async create(@Args() args: CreateReviewArgs): Promise<ReviewType> {
+    async createReview(@Args() args: CreateReviewArgs): Promise<ReviewType> {
         return this.reviewService.create(args.data);
     }
 
     @Mutation(() => Boolean)
-    async delete(@Args('id') id: number) {
-        await this.reviewService.delete(id)
+    async deleteReview(@Args('id') id: number) {
+        return await this.reviewService.delete(id)
     }
 
 }

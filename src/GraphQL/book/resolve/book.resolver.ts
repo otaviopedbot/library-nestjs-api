@@ -39,7 +39,7 @@ export class BookResolver {
     //     return this.bookService.updateCover(id, cover);
     // }
 
-    @Mutation(() => BookType)
+    @Mutation(() => Boolean)
     async deleteBook(@Args('id') id: number) {
         return await this.bookService.delete(id)
     }

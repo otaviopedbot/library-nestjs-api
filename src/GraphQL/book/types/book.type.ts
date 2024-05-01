@@ -39,12 +39,12 @@ export class BookType {
     author: AuthorType;
 
     @Field(type => [RentType])
-    rents?: RentType[];
+    rents: RentType[];
 
     @Field(type => [FavoriteType])
-    Favorites?: FavoriteType[];
+    favorites: FavoriteType[];
 
     @Field(type => [ReviewType])
-    Reviews?: ReviewType[];
+    reviews: ReviewType[];
 
 }
