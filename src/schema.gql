@@ -33,7 +33,7 @@ type User {
   email: String!
   password: String!
   image: String!
-  details: String!
+  details: String
   is_admin: Float!
   createdAt: String!
   updatedAt: String!
@@ -99,11 +99,6 @@ type ReviewType {
   updatedAt: String
 }
 
-type RegisterUserType {
-  user: User!
-  token: String!
-}
-
 type UserType {
   id: ID!
   complete_name: String!
@@ -120,6 +115,11 @@ type UserType {
   favorites: FavoriteType!
   createdAt: String
   updatedAt: String
+}
+
+type RegisterUserType {
+  user: User!
+  token: String!
 }
 
 type RentType {

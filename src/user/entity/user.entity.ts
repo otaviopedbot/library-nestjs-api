@@ -64,7 +64,7 @@ export class User {
     })
     image: string;
 
-    @Field()
+    @Field({ nullable: true })
     @Column({
         nullable: true
     })

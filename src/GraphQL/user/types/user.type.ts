@@ -5,15 +5,6 @@ import { RentType } from "../../rent/types/rent.types";
 import { User } from "../../../user/entity/user.entity";
 require('dotenv').config();
 
-@ObjectType()
-export class RegisterUserType {
-  @Field(() => User)
-  user: User;
-
-  @Field()
-  token: string;
-}
-
 
 @ObjectType()
 export class UserType {
@@ -64,4 +55,13 @@ export class UserType {
   @Field({ nullable: true })
   updatedAt: string;
 
+}
+
+@ObjectType()
+export class RegisterUserType {
+  @Field(() => User)
+  user: User;
+
+  @Field()
+  token: string;
 }
