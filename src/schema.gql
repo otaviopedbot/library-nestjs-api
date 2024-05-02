@@ -118,7 +118,7 @@ type UserType {
 }
 
 type RegisterUserType {
-  user: User!
+  user: UserType!
   token: String!
 }
 
