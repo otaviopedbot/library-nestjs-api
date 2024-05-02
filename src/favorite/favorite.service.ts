@@ -23,14 +23,14 @@ export class FavoriteService {
 
         await this.bookService.exist(data.book_id)
 
-        if (
-            await this.favoritesRepository.exists({
-                where: {
-                    book_id: data.book_id,
-                    user_id: data.user_id,
-                },
-            })
-        ) {
+        const find = await this.favoritesRepository.findOne({
+            where: {
+                book_id: data.book_id,
+                user_id: data.user_id,
+            },
+        })
+
+        if (find) {
             throw new BadRequestException('This book has already been favorited');
         }
 
@@ -39,24 +39,26 @@ export class FavoriteService {
         return this.favoritesRepository.save(favorite)
     }
 
-    async delete(id: number) {
-        await this.exist(id);
+    async delete(user_id, book_id) {
 
-        await this.favoritesRepository.delete(id);
+        await this.userService.exist(user_id)
+
+        await this.bookService.exist(book_id)
+
+        const favorite = await this.favoritesRepository.findOne({
+            where: {
+                book_id: book_id,
+                user_id: user_id,
+            },
+        })
+
+        if (!favorite) {
+            throw new BadRequestException('This favorite does not exists');
+        }
+
+        await this.favoritesRepository.delete(favorite.id);
 
         return true;
-    }
-
-    async exist(id: number) {
-        if (
-            !(await this.favoritesRepository.exists({
-                where: {
-                    id,
-                },
-            }))
-        ) {
-            throw new NotFoundException(`the favorite with id ${id} does not exist`);
-        }
     }
 
 }

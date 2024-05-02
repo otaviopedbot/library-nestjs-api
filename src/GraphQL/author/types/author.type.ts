@@ -11,7 +11,7 @@ export class AuthorType {
     @Field()
     name: string;
 
-    @Field(type => BookType)
+    @Field(type => [BookType])
     books: BookType[];
 
     @Field({ nullable: true })

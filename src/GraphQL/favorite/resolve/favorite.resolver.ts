@@ -15,7 +15,7 @@ export class FavoriteResolver {
     }
 
     @Mutation(() => Boolean)
-    async deleteFavorite(@Args('id') id: number) {
-        return await this.favoriteService.delete(id)
+    async deleteFavorite(@Args('user_id') user_id: number, @Args('book_id') book_id: number) {
+        return await this.favoriteService.delete(user_id, book_id)
     }
 }

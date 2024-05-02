@@ -39,11 +39,11 @@ export class Review {
 
     @ManyToOne(() => User, user => user.reviews)
     @JoinColumn({ name: 'user_id' })
-    user: User[];
+    user: User;
 
     @ManyToOne(() => Book, book => book.reviews, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'book_id' })
-    book: Book[]
+    book: Book
 
     @Field()
     @CreateDateColumn()

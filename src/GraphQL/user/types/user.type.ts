@@ -40,13 +40,13 @@ export class UserType {
   @Field({ nullable: true })
   is_admin: number;
 
-  @Field(type => RentType)
+  @Field(type => [RentType])
   rents: RentType[];
 
-  @Field(type => ReviewType)
+  @Field(type => [ReviewType])
   reviews: ReviewType[];
 
-  @Field(type => FavoriteType)
+  @Field(type => [FavoriteType])
   favorites: FavoriteType[];
 
   @Field({ nullable: true })

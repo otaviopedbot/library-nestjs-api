@@ -10,8 +10,8 @@ type Review {
   book_id: Float!
   createdAt: String!
   updatedAt: String!
-  user: [User!]!
-  book: [Book!]!
+  user: User!
+  book: Book!
 }
 
 type Favorite {
@@ -110,9 +110,9 @@ type UserType {
   image: String
   details: String
   is_admin: Float
-  rents: RentType!
-  reviews: ReviewType!
-  favorites: FavoriteType!
+  rents: [RentType!]!
+  reviews: [ReviewType!]!
+  favorites: [FavoriteType!]!
   createdAt: String
   updatedAt: String
 }
@@ -152,7 +152,7 @@ type BookType {
 type AuthorType {
   id: ID!
   name: String!
-  books: BookType!
+  books: [BookType!]!
   createdAt: String
   updatedAt: String
 }
@@ -181,7 +181,7 @@ type Mutation {
   updatePartialRent(data: UpdatePatchRentInput!, id: Float!): RentType!
   finishRent(id: Float!): String!
   createFavorite(data: CreateFavoriteInput!): FavoriteType!
-  deleteFavorite(id: Float!): Boolean!
+  deleteFavorite(user_id: Float!, book_id: Float!): Boolean!
   createReview(data: CreateReviewInput!): ReviewType!
   deleteReview(id: Float!): Boolean!
   login(data: AuthLoginInput!): RegisterUserType!
