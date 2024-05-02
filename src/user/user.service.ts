@@ -103,41 +103,41 @@ export class UserService {
         }
     }
 
-    // async updateImage(
-    //     id,
-    //     image
-    // ) {
-    //     try {
+    async updateImage(
+        id,
+        image
+    ) {
+        try {
 
-    //         const oldUser = await this.show(id);
+            const oldUser = await this.show(id);
 
-    //         const data: any = {};
+            const data: any = {};
 
-    //         const regex = /\/([^\/]+)\.[^\/]+$/;
-    //         const match = oldUser.image.match(regex);
-    //         const oldImageId = match[1];
+            const regex = /\/([^\/]+)\.[^\/]+$/;
+            const match = oldUser.image.match(regex);
+            const oldImageId = match[1];
 
-    //         if (image) {
-    //             if (oldImageId != process.env.CLOUDINARY_DEFAULT_USER_IMG_ID) {
+            if (image) {
+                if (oldImageId != process.env.CLOUDINARY_DEFAULT_USER_IMG_ID) {
 
-    //                 await this.cloudinaryService.deleteFile(oldImageId)
-    //                 const newImage = await this.cloudinaryService.uploadFile(image)
-    //                 data.image = newImage.url
-    //             }
-    //             else {
-    //                 const newImage = await this.cloudinaryService.uploadFile(image)
-    //                 data.image = newImage.url
-    //             }
-    //         }
+                    await this.cloudinaryService.deleteFile(oldImageId)
+                    const newImage = await this.cloudinaryService.uploadFile(image)
+                    data.image = newImage.url
+                }
+                else {
+                    const newImage = await this.cloudinaryService.uploadFile(image)
+                    data.image = newImage.url
+                }
+            }
 
-    //         await this.usersRepository.update(id, data);
+            await this.usersRepository.update(id, data);
 
-    //         return this.show(id);
+            return this.show(id);
 
-    //     } catch (err) {
-    //         throw err
-    //     }
-    // }
+        } catch (err) {
+            throw err
+        }
+    }
 
     async delete(id: number) {
         await this.exist(id);

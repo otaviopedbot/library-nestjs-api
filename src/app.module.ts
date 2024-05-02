@@ -31,6 +31,7 @@ import { FavoriteModule } from './favorite/favorite.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 import { AuthModule } from './auth/auth.module';
+import { ImageUploadModule } from './imageUpload/imageUpload.module';
 
 
 @Module({
@@ -44,6 +45,7 @@ import { AuthModule } from './auth/auth.module';
     FavoriteModule,
     ReviewModule,
     CloudinaryModule,
+    ImageUploadModule,
     AuthModule,
 
     TypeOrmModule.forRoot({
